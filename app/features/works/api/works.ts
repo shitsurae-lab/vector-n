@@ -52,22 +52,31 @@
 //   return data;
 // }
 
-//①関数の定義（予告）
-//categorySlug('wordPress'など)を受け取って、WPからデータをとってくる関数
-export const fetchWorksByCategory = async (categorySlug: string) => {
-  // ②WPのURLを組み立てる
-  //テストとして、[category]の一覧にアクセス
+/**
+ * 補助関数：カテゴリーの「スラッグ」から「ID番号」を調べる
+ * WP APIは「名前」で作品検索ができないため、この翻訳作業が必要です
+ */
+
+const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
+  // WPのURLを組み立てる
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${categorySlug}`;
 
-  // ③WPに「データをください」と通信
+  // WPに「データをください」と通信
   const res = await fetch(url, { cache: 'no-store' });
 
-  //④届いた封筒を開けて、中身を取り出す
+  //届いた封筒を開けて、中身を取り出す
   const data = await res.json();
 
   console.log(
     ` --- [STEP2]WPからの返信確認 \n 届いたデータの件数: ${data.length} \n データの中身: ${JSON.stringify(data, null, 2)}`,
   );
+  //data[0]のidを返す
+  return data[0].id;
+};
+
+//①関数の定義（予告）
+//categorySlug('wordPress'など)を受け取って、WPからデータをとってくる関数
+export const fetchWorksByCategory = async (categorySlug: string) => {
   //⑤return data;とすることで
   //0. returnで終了
   //1. dataとして関数fetchWorkByCategoryに返る
