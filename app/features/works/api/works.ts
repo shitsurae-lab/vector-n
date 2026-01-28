@@ -1,83 +1,41 @@
-// // features/works/api/works.ts
-
-// // ① slug から タームID を取得する
-// async function fetchCategoryIdBySlug(slug: string): Promise<number> {
-//   const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${slug}`;
-
-//   console.log('📡 category fetch url:', url);
-
-//   const res = await fetch(url, {
-//     cache: 'no-store', // 毎回最新
-//   });
-
-//   if (!res.ok) {
-//     throw new Error('Failed to fetch category');
-//   }
-
-//   const data = await res.json();
-
-//   // slug が存在しない場合
-//   if (!data || data.length === 0) {
-//     throw new Error('Category not found');
-//   }
-
-//   // ★ ここが重要：id を取り出す
-//   return data[0].id;
-// }
-
-// // ② タームIDを使って works を取得する
-// export async function fetchWorksByCategory(categorySlug: string) {
-//   // slug → ID
-//   const categoryId = await fetchCategoryIdBySlug(categorySlug);
-
-//   const url =
-//     `https://naname-lab.net/wp-json/wp/v2/achievement` +
-//     `?achievement_cat=${categoryId}` +
-//     `&_fields=id,title,acf,featured_media`;
-
-//   console.log('📡 works fetch url:', url);
-
-//   const res = await fetch(url, {
-//     next: { revalidate: 60 }, // キャッシュ（任意）
-//   });
-
-//   if (!res.ok) {
-//     throw new Error('Failed to fetch works');
-//   }
-
-//   const data = await res.json();
-
-//   console.log('📦 works response:', data);
-
-//   return data;
-// }
-
 /**
  * 補助関数：カテゴリーの「スラッグ」から「ID番号」を調べる
  * WP APIは「名前」で作品検索ができないため、この翻訳作業が必要です
  */
-
+//①関数の定義（予告）
+//slug('wordPress'など)を受け取って、WPからデータをとってくる関数
 const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
   // WPのURLを組み立てる
-  const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${categorySlug}`;
-
+  const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${slug}`;
   // WPに「データをください」と通信
   const res = await fetch(url, { cache: 'no-store' });
-
   //届いた封筒を開けて、中身を取り出す
   const data = await res.json();
 
   if (!data || data.length === 0) {
-  throw new Error(`Category not found : ${slug}`);
-  
-}
+    throw new Error(`Category not found : ${slug}`);
+  }
+  console.log(`🔍 スラッグ "${slug}" のIDは ${data[0].id} でした`);
   //data[0]のidを返す
   return data[0].id;
 };
 
-//①関数の定義（予告）
-//categorySlug('wordPress'など)を受け取って、WPからデータをとってくる関数
+/**
+ *メイン関数: 指定されたカテゴリーに属する「一覧」を取得
+ */
 export const fetchWorksByCategory = async (categorySlug: string) => {
+  //🟢 STEP A: 補助関数で取得したカテゴリーIDを取得
+  const categoryId = await fetchCategoryIdBySlug(categorySlug);
+
+  // 🟢 STEP B: そのIDを使って、作品（achievement）の名簿にアクセスする
+  // achievement_cat=15 と指定することで、そのカテゴリーの作品だけが届きます
+  // _fields を使うと、必要なデータ（id, title, slugなど）だけに絞れて通信が軽くなります
+  const url = `https://naname-lab.net/wp-json/wp/v2/achievement?achievement_cat=${categoryId}&_fields=id,title,acf,featured_media`;
+
+  console.log(`📡 作品一覧を取得中... URL: ${url}`);
+
+  const res = await fetch(url, { cache: 'no-store' });
+  const data = await res.json();
   //⑤return data;とすることで
   //0. returnで終了
   //1. dataとして関数fetchWorkByCategoryに返る
