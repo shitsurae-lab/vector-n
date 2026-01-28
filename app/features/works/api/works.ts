@@ -67,9 +67,10 @@ const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
   //届いた封筒を開けて、中身を取り出す
   const data = await res.json();
 
-  console.log(
-    ` --- [STEP2]WPからの返信確認 \n 届いたデータの件数: ${data.length} \n データの中身: ${JSON.stringify(data, null, 2)}`,
-  );
+  if (!data || data.length === 0) {
+  throw new Error(`Category not found : ${slug}`);
+  
+}
   //data[0]のidを返す
   return data[0].id;
 };
