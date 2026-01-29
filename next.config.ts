@@ -3,7 +3,14 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['naname-lab.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'naname-lab.net',
+        port: '',
+        pathname: '/**', //すべての画像パスを許可
+      },
+    ],
   },
 };
 
