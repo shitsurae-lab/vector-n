@@ -30,7 +30,7 @@ export const fetchWorksByCategory = async (categorySlug: string) => {
   // 🟢 STEP B: そのIDを使って、作品（achievement）の名簿にアクセスする
   // achievement_cat=15 と指定することで、そのカテゴリーの作品だけが届きます
   // _fields を使うと、必要なデータ（id, title, slugなど）だけに絞れて通信が軽くなります
-  const url = `https://naname-lab.net/wp-json/wp/v2/achievement?achievement_cat=${categoryId}&_fields=id,title,acf,featured_media`;
+  const url = `https://naname-lab.net/wp-json/wp/v2/achievement?achievement_cat=${categoryId}&_embed&_fields=id,title,excerpt,content,slug,date,modified,acf,featured_media,_links,_embedded`;
 
   console.log(`📡 作品一覧を取得中... URL: ${url}`);
 
@@ -45,3 +45,5 @@ export const fetchWorksByCategory = async (categorySlug: string) => {
 
 //ステップ 2：WPから生データを取ってくる ↑↑↑
 //1は終わったので、確認後、** 2. page.tsxからこの関数を呼び出すから
+
+//2. shadcn/ui の Card への流し込み例から。ただしタイトルと本文を変更しなくてはいけない感じ
