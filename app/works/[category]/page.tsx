@@ -1,17 +1,5 @@
-// app/works/[category]/page.tsx
-// import { fetchWorksByCategory } from '@/app/features/works/api/works';
-// import { WorksList } from '@/app/features/works/components/WorksList';
-
-// type pageProps = {
-//   params: Promise<{ category: string }>;
-// };
-// export default async function Page({ params }: pageProps) {
-//   const { category } = await params; //ここでcategory = 'design'になる
-//   const works = await fetchWorksByCategory(category); //designを渡す
-
-//   return <WorksList works={works} />;
-// }
 import { fetchWorksByCategory } from '@/app/features/works/api/works';
+import { WorksList } from '@/app/features/works/components/WorksList';
 
 //①型の宣言
 //「このページはURLから情報を読み取りますよ」と予告
@@ -27,20 +15,22 @@ export default async function Page({ params }: pageProps) {
   //URLの[category]の部分がcategoryという名前で取り出せます。
   const { category } = await params;
 
-  //ステップ2の関数を呼び出す
+  //works.tsのfetchWorksByCategory関数を呼び出す
   const works = await fetchWorksByCategory(category);
 
   //④【重要】ターミナルで中身を確認
-  console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category);
+  console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category, works);
 
-  //画面に表示する(とりあえず確認)
+  //画面に表示する
   return (
-    <main style={{ padding: '40px' }}>
-      <h1>カテゴリー：{category}の一覧ページ</h1>
-      <pre>{JSON.stringify(works, null, 2)}</pre>
-      <p>
-        指定したカテゴリーは<strong>{category}</strong>です
-      </p>
-    </main>
+    // (とりあえず確認)
+    //   <main style={{ padding: '40px' }}>
+    //     <h1>カテゴリー：{category}の一覧ページ</h1>
+    //     <pre>{JSON.stringify(works, null, 2)}</pre>
+    //     <p>
+    //       指定したカテゴリーは<strong>{category}</strong>です
+    //     </p>
+    //   </main>
+    <WorksList works={works} category={category} />
   );
 }
