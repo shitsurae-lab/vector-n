@@ -1,7 +1,7 @@
 import { fetchWorkBySlug } from '@/app/features/works/api/works';
 import he from 'he';
 import Image from 'next/image';
-
+import Link from 'next/link';
 type PageProps = {
   //paramsの中にcagegoryとslugが入ります。
   params: Promise<{ category: string; slug: string }>;
@@ -41,6 +41,24 @@ export default async function WorkDetailPage({ params }: PageProps) {
           </div>
         )}
       </div>
+
+      {/* 🍞 パンくずリスト */}
+      <nav className='flex gap-2 text-sm text-gray-500 mb-6'>
+        <Link href='/' className='hover:underline'>
+          HOME
+        </Link>
+        <span>/</span>
+        <Link
+          href={`/works/${category}`}
+          className='hover:underline capitalize'
+        >
+          {category}
+        </Link>
+        <span>/</span>
+        <span className='text-gary-900 truncate'>
+          {he.decode(work.title.rendered)}
+        </span>
+      </nav>
       {/* 投稿日 */}
       <time className='text-gray-500 text-sm'>
         {new Date(work.date).toLocaleDateString('ja-JP').replace(/\//g, '.')}
