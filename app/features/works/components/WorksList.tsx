@@ -95,7 +95,7 @@ export const WorksList = ({ works, category }: WorkListProps) => {
             </CardHeader>
 
             {/* a. <CardContent>はexcerpt（抜粋）に */}
-            <CardContent className='p-4 pt-0 flex-grow'>
+            <CardContent className='p-4 pt-0 grow'>
               <div className='text-sm text-gray-600 line-clamp-3'>
                 {isProtected ? (
                   <p>この投稿はパスワードで保護されています</p>
