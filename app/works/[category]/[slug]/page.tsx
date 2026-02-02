@@ -1,3 +1,4 @@
+import { NAV_PATHS } from '@/app/constants/config';
 import { fetchWorkBySlug } from '@/app/features/works/api/works';
 import he from 'he';
 import Image from 'next/image';
@@ -7,7 +8,7 @@ type PageProps = {
   params: Promise<{ category: string; slug: string }>;
 };
 export default async function WorkDetailPage({ params }: PageProps) {
-  //①予約券(Promise)からURの情報を解凍する
+  //①予約券(Promise)からURLの情報を解凍する
   const { category, slug } = await params;
 
   //②詳細データをWPからとってくる
@@ -49,7 +50,7 @@ export default async function WorkDetailPage({ params }: PageProps) {
         </Link>
         <span>/</span>
         <Link
-          href={`/works/${category}`}
+          href={`/${NAV_PATHS.WORKS.path}/${category}`}
           className='hover:underline capitalize'
         >
           {category}
