@@ -1,5 +1,6 @@
 import { Breadcrumbs } from '@/app/components/Breadcrumbs';
 import { fetchWorkBySlug } from '@/app/features/works/api/works';
+import { ProtectedContent } from '@/app/features/works/components/ProtectedContent';
 import he from 'he';
 import Image from 'next/image';
 type PageProps = {
@@ -57,13 +58,14 @@ export default async function WorkDetailPage({ params }: PageProps) {
       {/* 本文エリア */}
       <div className='prose max-w-none'>
         {isProtected ? (
-          <div className='bg-slate-100 p-10 text-center rounded-lg border-2 border-dashed'>
-            <p className='text-2xl mb-4'>🔒</p>
-            <p>この実績はパスワードで保護されています。</p>
-            <p className='text-sm text-gray-500 mt-2'>
-              閲覧には別途パスワードが必要です。
-            </p>
-          </div>
+          // <div className='bg-slate-100 p-10 text-center rounded-lg border-2 border-dashed'>
+          //   <p className='text-2xl mb-4'>🔒</p>
+          //   <p>この実績はパスワードで保護されています。</p>
+          //   <p className='text-sm text-gray-500 mt-2'>
+          //     閲覧には別途パスワードが必要です。
+          //   </p>
+          // </div>
+          <ProtectedContent slug={slug} />
         ) : (
           // 普通の投稿ならWPのHTMLを流し込む。🌟CSSはglobal.cssに記述
           <div
