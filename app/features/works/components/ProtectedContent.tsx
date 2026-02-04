@@ -34,7 +34,7 @@ export const ProtectedContent = ({ slug }: Props) => {
       const data = await res.json();
 
       // 🔴 デバッグ：中身がどうなっているかブラウザのコンソールで見る
-      console.log('📦 WPから届いた生データ:', data);
+      //console.log('📦 WPから届いた生データ:', data);
 
       // データが配列（[ ]）で届いているかチェック
       if (!Array.isArray(data) || data.length === 0) {

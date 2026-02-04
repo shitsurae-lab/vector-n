@@ -18,8 +18,8 @@ export default async function Page({ params }: pageProps) {
   //works.tsのfetchWorksByCategory関数を呼び出す
   const works = await fetchWorksByCategory(category);
 
-  //④【重要】ターミナルで中身を確認
-  console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category, works);
+  //④【重要】ターミナルで中身を確認 ※値が長い
+  // console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category, works);
 
   //画面に表示する
   return (
