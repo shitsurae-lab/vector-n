@@ -87,7 +87,7 @@ export const FluffyContainer = ({
   // コンテンツの中身を共通変数化
   const innerContent = (
     <div
-      className={`max-w-[1440px] mx-auto w-full flex flex-col ${
+      className={`max-w-6xl mx-auto w-full flex flex-col ${
         isEven ? 'md:flex-row-reverse' : 'md:flex-row'
       } items-start justify-center gap-12 md:gap-20 py-20 px-6 md:px-16 group`}
     >
