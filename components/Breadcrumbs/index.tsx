@@ -9,7 +9,7 @@ type Props = {
 
 export const Breadcrumbs = ({ category, title }: Props) => {
   return (
-    <nav className='flex gap-2 text-sm text-gray-500 mb-6'>
+    <nav className='flex gap-2 text-sm text-gray-500 pt-6 mb-6'>
       <Link href='/' className='hover:underline'>
         HOME
       </Link>
