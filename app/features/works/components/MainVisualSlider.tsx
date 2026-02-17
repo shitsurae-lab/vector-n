@@ -1,153 +1,184 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-type SliderProps = {
-  // ACFから取得したテキストも含める
-  images: {
-    src: string;
-    alt: string;
-    title?: string;
-    subtitle?: string;
-    desc?: string;
-  }[];
-};
+// 1. 型定義をしっかり行う
+interface MainVisualImage {
+  src: string;
+  subSrc?: string;
+  alt: string;
+  title?: string;
+  subtitle?: string;
+  desc?: string;
+}
+
+interface SliderProps {
+  images: MainVisualImage[];
+}
 
 export const MainVisualSlider = ({ images }: SliderProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const maskRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useGSAP(
-    () => {
-      // 初回のマスク出現
-      gsap.fromTo(
-        maskRef.current,
-        { clipPath: 'inset(0 0 100% 0)' },
-        { clipPath: 'inset(0 0 0% 0)', duration: 2, ease: 'expo.inOut' },
-      );
+  // 1. フックは必ずコンポーネントの「最初」に、条件分岐なしで記述する
+  useEffect(() => {
+    // 早期リターンの代わりに、エフェクト内部で条件判定を行う
+    if (!images || images.length <= 1) return;
 
-      const timer = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % images.length);
-      }, 6000); // 少しゆったり6秒に設定
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [images]); // imagesがundefinedの可能性を考慮して?.を付与
 
-      return () => clearInterval(timer);
-    },
-    { scope: containerRef },
-  );
-
-  // 画像とテキストのアニメーション連動
   useGSAP(() => {
-    // コンテナ内の全スライドを取得
-    const allSlides =
-      containerRef.current?.querySelectorAll('[class*="slide-"]') || [];
-    const activeSlide = containerRef.current?.querySelector(
-      `.slide-${currentIndex}`,
-    );
-    const activeText = containerRef.current?.querySelectorAll(
-      `.text-${currentIndex}`,
-    );
-    if (activeSlide && activeText) {
-      // --- 加筆：古いスライドのクリア ---
-      // 新しいアニメを開始する前に、全スライドの透明度を下げてリセットする。
-      // これにより1枚目が背後に残り続ける現象を防ぎます。
-      gsap.to(allSlides, { opacity: 0, duration: 1.5, ease: 'power2.inOut' });
+    // 同様に、GSAP内部で条件判定を行う
+    if (!images || images.length === 0 || !containerRef.current) return;
 
+    const container = containerRef.current;
+
+    gsap.set('.slide-item, .sub-slide-item', { opacity: 0, zIndex: 0 });
+
+    const activeSlide = container.querySelector(`.slide-${currentIndex}`);
+    const activeSubSlide = container.querySelector(
+      `.sub-slide-${currentIndex}`,
+    );
+    const activeText = container.querySelectorAll(`.text-${currentIndex}`);
+
+    if (activeSlide && activeSubSlide) {
       const tl = gsap.timeline();
+      // アクティブな要素を最前面へ
+      gsap.set([activeSlide, activeSubSlide], { zIndex: 10 });
 
-      // 画像のフェード & ズーム
-      tl.fromTo(
-        activeSlide,
-        { opacity: 0, scale: 1.1 },
-        {
-          opacity: 1,
-          scale: 1.05,
-          duration: 2,
-          ease: 'power2.out',
-          // --- 加筆：z-indexの動的制御 ---
-          // アニメ開始時に最前面(z-10)へ、終了時に少し下げる(z-1)ことで重なりを整理
-          onStart: () => {
-            gsap.set(activeSlide, { zIndex: 10 });
-          },
-          onComplete: () => {
-            gsap.set(activeSlide, { zIndex: 1 });
-          },
-        },
-      );
-
-      // テキストを下からふわっと（画像より少し遅らせる）
+      // メインとサブを同時にフェードイン
+      tl.to([activeSlide, activeSubSlide], {
+        opacity: 1,
+        duration: 1.5,
+        ease: 'power2.out',
+      });
       tl.fromTo(
         activeText,
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.2 },
-        '-=1.2', // 画像のフェード中盤から開始
+        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' },
+        '-=1',
       );
-
-      // 極低速ズーム（継続）
-      gsap.to(activeSlide, { scale: 1, duration: 6, ease: 'linear' });
     }
-  }, [currentIndex]);
+  }, [currentIndex, images]);
+
+  // 2. 早期リターン（レンダリングの除外）はフックより「後」に書く
+  if (!images || images.length === 0) return null;
 
   return (
     <section
       ref={containerRef}
-      className='relative py-24 left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] w-screen h-svh mb-12 overflow-hidden  bg-[#f8f6f3]'
+      className='relative w-screen h-[80vh] md:h-svh overflow-hidden bg-[#f3f1ee] left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]'
     >
-      <div
-        ref={maskRef}
-        className='absolute top-0 left-16 w-[62.5vw] h-[calc(100%-160px)] overflow-hidden rounded-b-[500px] z-10'
-      >
-        {images?.map((image, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 slide-${index} overflow-hidden`}
-            style={{
-              // 初期状態はすべて透明、z-indexも 0 に統一
-              opacity: 0,
-              zIndex: index === currentIndex ? 10 : 0,
-            }}
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              priority
-              className='object-cover'
-            />
-          </div>
-        ))}
+      {/* --- コンテンツエリア (1440px制限) --- */}
+      <div className='relative w-full max-w-[1440px] h-full mx-auto px-6 md:px-12'>
+        {/* --- メイン流体シェイプ画像 --- */}
+        <div
+          className='
+      relative
+      w-[95%] md:w-[65%] max-w-[940px] aspect-[4/3] md:aspect-[1.2/1] mx-auto md:ml-0'
+          style={{ clipPath: 'url(#fluid-mask)' }}
+        >
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 slide-${index} transition-opacity duration-1000 ${
+                index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                priority={index === 0}
+                className='object-cover'
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* 🔘 サブの流体シェイプ（右下のアクセント：1440pxコンテナ内） */}
+        <div
+          className='
+      absolute
+      z-20
+      /* スマホ設定: 右端から少し離し、位置を上に（bottom-24など） */
+      right-4 bottom-32 w-[45vw]
+      /* PC設定: 右側に配置し、サイズを抑える */
+      md:right-10 md:bottom-20 md:w-[22vw] md:max-w-[320px]
+      aspect-square
+    '
+          style={{ clipPath: 'url(#blob-mask)' }}
+        >
+          {images.map((image, index) => (
+            <div
+              key={`sub-${index}`}
+              className={`absolute inset-0 sub-slide-item sub-slide-${index} transition-opacity duration-1000 ${
+                index === currentIndex ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <Image
+                src={image.subSrc || image.src} // subSrcがなければメイン画像を使用
+                alt=''
+                fill
+                className='object-cover'
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* --- テキストレイヤー --- */}
+        <div className='absolute bottom-[10%] left-6 md:left-20 z-20 pointer-events-none'>
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={index === currentIndex ? 'block' : 'hidden'}
+            >
+              <p
+                className={`text-${index} text-xs font-bold tracking-[0.3em] uppercase text-zinc-400 mb-2`}
+              >
+                {image.subtitle}
+              </p>
+              <h2
+                className={`text-${index} text-4xl md:text-7xl font-black leading-none text-zinc-900 uppercase`}
+              >
+                {image.title}
+              </h2>
+              {image.desc && (
+                <p
+                  className={`text-${index} mt-6 max-w-sm text-sm text-zinc-600 leading-relaxed`}
+                >
+                  {image.desc}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* テキストレイヤー：画像のインデックスと連動 */}
-      <div className='absolute top-[60%] left-24 z-20 pointer-events-none'>
-        {images.map(
-          (image, index) =>
-            index === currentIndex && (
-              <div key={index} className='space-y-4'>
-                <div
-                  className={`text-${index} text-sm tracking-[0.3em] uppercase opacity-70`}
-                >
-                  {image.subtitle || 'live wisely and beautifully'}
-                </div>
-                <h2
-                  className={`text-${index} text-5xl md:text-7xl font-serif leading-tight text-slate-900 uppercase`}
-                >
-                  {image.title}
-                </h2>
-                {image.desc && (
-                  <p
-                    className={`text-${index} max-w-sm text-sm leading-loose text-slate-600 mt-6`}
-                  >
-                    {image.desc}
-                  </p>
-                )}
-              </div>
-            ),
-        )}
-      </div>
+      {/* --- 流体シェイプの定義 (画面には出ない) --- */}
+      <svg width='0' height='0' className='absolute pointer-events-none'>
+        <defs>
+          <clipPath id='fluid-mask' clipPathUnits='objectBoundingBox'>
+            {/* 1920pxでも耐えられるようスケーリングを微調整 */}
+            <path
+              transform='scale(0.00105, 0.00155)'
+              d='M119.624 588C14.1239 497.646 -37.8762 170 31.6616 0H824.124C920.624 25.5 950.124 90 950.124 146C950.124 226 880.942 337.14 726.162 389C653.624 413.304 539.124 529.5 457.124 588C353.124 662.195 202.624 659.084 119.624 588Z'
+            />
+          </clipPath>
+          {/* 💡 追加：サブ画像用の正円または有機的な丸 */}
+          <clipPath id='blob-mask' clipPathUnits='objectBoundingBox'>
+            <circle cx='0.5' cy='0.5' r='0.5' />
+            {/* もしここも「ぐにゃっ」とさせたいなら、別の path を入れてみてください */}
+          </clipPath>
+        </defs>
+      </svg>
     </section>
   );
 };
