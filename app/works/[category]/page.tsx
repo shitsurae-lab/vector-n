@@ -46,7 +46,7 @@ export default async function Page({ params }: pageProps) {
     //       指定したカテゴリーは<strong>{category}</strong>です
     //     </p>
     //   </main>
-    <main className='max-w-6xl mx-auto'>
+    <main className='max-w-6xl mx-auto px-6 md:px-16'>
       {/* 修正ポイント：GSAPアニメーション付きのクライアントコンポーネントへ */}
       {acf?.next_image ? (
         <CategoryHero
