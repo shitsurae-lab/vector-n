@@ -1,5 +1,6 @@
 import { fetchAboutPage } from '@/app/features/works/api/works';
 import { CategoryHero } from '@/app/features/works/components/CategoryHero';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FluffyContainer } from '@/components/FluffyContainer';
 
 // 固定ページなので params は不要。async を忘れずに。
@@ -21,7 +22,7 @@ export default async function AboutPage() {
   ];
 
   return (
-    <main className='max-w-6xl mx-auto'>
+    <main className='max-w-6xl mx-auto px-6 md:px-16'>
       {/* CategoryHero に流し込む。ACF名は作成したものに合わせて調整してください */}
       <CategoryHero
         src={acf?.about_hero_main || ''}
@@ -31,7 +32,7 @@ export default async function AboutPage() {
         desc={acf?.about_hero_desc || ''}
         alt={pageData.title.rendered}
       />
-
+      <Breadcrumbs />
       <div className='flex flex-col'>
         {sections.map((section, index) => {
           const item = section.data;
