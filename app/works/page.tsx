@@ -14,7 +14,7 @@ export default async function WorksTopPage() {
     //   <h1 className='text-2xl font-bold mb-6'>カテゴリー一覧</h1>
     //   <pre>{JSON.stringify(categories, null, 2)}</pre>
     // </main>
-    <main className='max-w-6xl mx-auto p-10'>
+    <main className='max-w-6xl mx-auto px-6 md:px-16'>
       <Breadcrumbs />
       <h1 className='text-3xl font-bold mb-10'>制作実績カテゴリー</h1>
 
