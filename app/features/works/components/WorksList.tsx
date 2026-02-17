@@ -8,29 +8,35 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import he from 'he'; // タイトルの特殊文字変換用
+import { WorkData } from '../api/works';
 
 // 型の定義
-type Work = {
-  id: number;
-  slug: string;
-  date: string;
-  title: {
-    rendered: string; //タイトル文字列
-  };
-  excerpt: { rendered: string };
-  content: {
-    protected: boolean;
-  };
-  _embedded: {
-    'wp:featuredmedia'?: Array<{
-      source_url: string;
-      alt_text: string;
-    }>;
-  };
-};
+// type Work = {
+//   id: number;
+//   slug: string;
+//   date: string;
+//   title: {
+//     rendered: string; //タイトル文字列
+//   };
+//   excerpt: { rendered: string };
+//   content: {
+//     protected: boolean;
+//   };
+//   _embedded: {
+//     'wp:featuredmedia'?: Array<{
+//       source_url: string;
+//       alt_text: string;
+//     }>;
+//   };
+//   acf?:
+//     | {
+//         next_api_image?: string;
+//       }
+//     | false;
+// };
 
 type WorkListProps = {
-  works: Work[];
+  works: WorkData[];
   category: string;
 };
 
@@ -40,11 +46,16 @@ export const WorksList = ({ works, category }: WorkListProps) => {
       {works.map((work) => {
         // パスワード保護の判定
         const isProtected = work.content.protected;
-
-        // アイキャッチ画像URLの取得（階層が深いので安全に取り出す）
-        const thumbnail = work._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+        // 1. ACFの 'next_api_image' (詳細データと同じフィールド名と仮定)
+        const acfNextImage = work.acf ? work.acf.next_api_image : null;
+        // 2. 通常のアイキャッチ画像
+        const featureImage =
+          work._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+        //3. 優先順位
+        const thumbnail = acfNextImage || featureImage;
         const altText =
-          work._embedded?.['wp:featuredmedia']?.[0]?.alt_text || '';
+          work._embedded?.['wp:featuredmedia']?.[0]?.alt_text ||
+          he.decode(work.title.rendered);
 
         // 日付を「2026.01.28」の形式に整形
         const formattedDate = new Date(work.date)
@@ -57,7 +68,7 @@ export const WorksList = ({ works, category }: WorkListProps) => {
         return (
           <Card
             key={work.id}
-            className='overflow-hidden flex flex-col h-full hover:shadow-md transition-shadow'
+            className='overflow-hidden flex flex-col h-full hover:shadow-md transition-shadow pt-0 bg-slate-50'
           >
             {/* b. 実際の画像（アイキャッチ画像）を表示 */}
             <div className='relative aspect-video bg-gray-100'>
@@ -68,7 +79,7 @@ export const WorksList = ({ works, category }: WorkListProps) => {
                   fill
                   sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                   priority
-                  className={`object-cover ${isProtected ? 'blur-md' : ''}`}
+                  className={`object-cover ${isProtected ? 'blur-[2px]' : ''}`}
                 />
               ) : (
                 <div className='flex items-center justify-center h-full text-gray-400'>
@@ -101,7 +112,9 @@ export const WorksList = ({ works, category }: WorkListProps) => {
                   <p>この投稿はパスワードで保護されています</p>
                 ) : (
                   <div
-                    dangerouslySetInnerHTML={{ __html: work.excerpt.rendered }}
+                    dangerouslySetInnerHTML={{
+                      __html: work.excerpt.rendered,
+                    }}
                   />
                 )}
               </div>
