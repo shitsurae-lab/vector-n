@@ -29,11 +29,11 @@ export const Header = () => {
       <div className='fixed top-6 left-6 z-[60] flex flex-col items-start gap-1'>
         <Link href='/'>
           <Image
-            src='/logo.webp'
+            src='/logo-thin-y@2x.webp'
             alt='Vector n'
             width={264}
             height={254}
-            className='w-[30%] min-w-[100px] max-w-[160px] md:max-w-[80px] h-auto object-contain' // 高さをクラスで制御するとレスポンシブが楽です
+            className='w-[30%] min-w-[80px] max-w-[160px] md:max-w-[80px] h-auto object-contain' // 高さをクラスで制御するとレスポンシブが楽です
             priority
           />
         </Link>
