@@ -1,62 +1,155 @@
 /**
- * 補助関数：カテゴリーの「スラッグ」から「ID番号」を調べる
- * WP APIは「名前」で作品検索ができないため、この翻訳作業が必要
+ * ------------------------------------------------------------------
+ * 🌻 型定義（Types）
+ * ------------------------------------------------------------------
  */
-//①関数の定義（予告）
-//slug('wordPress'など)を受け取って、WPからデータをとってくる関数
-const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
-  // WPのURLを組み立てる
-  const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${slug}`;
-  // WPに「データをください」と通信
-  const res = await fetch(url, { cache: 'no-store' });
-  //届いた封筒を開けて、中身を取り出す
-  const data = await res.json();
 
-  if (!data || data.length === 0) {
+// 1. カテゴリー（achievement_cat）の型
+export type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  acf?: {
+    term_image?: number;
+    term_hero_image?: string;
+    term_image_url?: string;
+    term_image_api?: string;
+    mv_subtitle?: string;
+    mv_title?: string;
+    mv_desc?: string;
+    term_hero_image_alt?: string;
+    term_title?: string;
+    term_desc?: string;
+    next_image?: string;
+    next_image_sub?: string;
+    next_title?: string;
+    next_desc?: string;
+    next_cta?: string;
+  };
+};
+
+// 2. 制作実績（achievement）詳細の型
+export interface WorkData {
+  id: number;
+  slug: string;
+  date: string;
+  title: { rendered: string };
+  excerpt: { rendered: string };
+  content: { rendered: string; protected: boolean };
+  acf: {
+    work_detail: {
+      next_api_image?: string;
+      period: string;
+      role: string;
+      tools_design: string;
+      tools_coding: string;
+      background: string;
+      design_intent: string;
+      creative_logic: string;
+      results: string;
+      site_url: string;
+      sub_image_01?: string;
+      sub_image_02?: string;
+      sub_image_03?: string;
+      sub_image_04?: string;
+    };
+    next_api_image?: string;
+  };
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{ source_url: string; alt_text?: string }>;
+  };
+}
+
+// 3. 固定ページ（Pages）の型
+export type PageData = {
+  id: number;
+  title: { rendered: string };
+  slug: string;
+  acf: {
+    about_hero_main?: string;
+    about_hero_sub?: string;
+    about_hero_title?: string;
+    about_hero_subtitle?: string;
+    about_hero_desc?: string;
+    about_identity?: {
+      next_title: string;
+      next_ja_title: string;
+      next_desc: string;
+      next_image: string;
+    };
+    about_capabilities?: {
+      next_title: string;
+      next_ja_title: string;
+      next_desc: string;
+      next_image: string;
+    };
+    about_expertise?: {
+      next_title: string;
+      next_ja_title: string;
+      next_desc: string;
+      next_image: string;
+    };
+  };
+};
+
+/**
+ * ------------------------------------------------------------------
+ * 📡 API関数
+ * ------------------------------------------------------------------
+ */
+
+// カテゴリーのスラッグからIDを調べる補助関数
+const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
+  const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${slug}`;
+  const res = await fetch(url, { cache: 'no-store' });
+  const data = await res.json();
+  if (!data || data.length === 0)
     throw new Error(`Category not found : ${slug}`);
-  }
-  console.log(`🔍 スラッグ "${slug}" のIDは ${data[0].id} でした`);
-  //data[0]のidを返す
   return data[0].id;
 };
 
-/**
- *メイン関数: 指定されたカテゴリーに属する「一覧」を取得
- */
-export const fetchWorksByCategory = async (categorySlug: string) => {
-  //🟢 STEP A: 補助関数で取得したカテゴリーIDを取得
+// 1. 指定カテゴリーに属する作品一覧を取得
+export const fetchWorksByCategory = async (
+  categorySlug: string,
+): Promise<WorkData[]> => {
   const categoryId = await fetchCategoryIdBySlug(categorySlug);
-
-  // 🟢 STEP B: そのIDを使って、作品（achievement）の名簿にアクセスする
-  // achievement_cat=15 と指定することで、そのカテゴリーの作品だけが届きます
-  // _fields を使うと、必要なデータ（id, title, slugなど）だけに絞れて通信が軽くなります
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement?achievement_cat=${categoryId}&_embed&_fields=id,title,excerpt,content,slug,date,modified,acf,featured_media,_links,_embedded`;
-
-  console.log(`📡 作品一覧を取得中... URL: ${url}`);
-
   const res = await fetch(url, { cache: 'no-store' });
-  const data = await res.json();
-  //⑤return data;とすることで
-  //0. returnで終了
-  //1. dataとして関数fetchWorkByCategoryに返る
-  //2. 関数をexportしているので、`app/works/[category]/page.tsx`でインポートすることが可能
-  return data;
+  return await res.json();
 };
 
-/**
- * 作品詳細を1件取得する関数
- */
-export const fetchWorkBySlug = async (slug: string) => {
-  // slug(chat-toolなど)を使って、その記事1件だけを注文します
-  // _embed を付けることで画像URLも一緒に届きます
-  const url = `https://naname-lab.net/wp-json/wp/v2/achievement?slug=${slug}&_embed`;
-
-  console.log(`📡 詳細データを取得中... URL: ${url}`);
-
+// 2. 作品詳細（WorkData）をスラッグから1件取得
+export const fetchWorkBySlug = async (
+  slug: string,
+): Promise<WorkData | null> => {
+  const url = `https://naname-lab.net/wp-json/wp/v2/achievement?slug=${slug}&_embed&_fields=id,title,excerpt,content,slug,date,modified,acf,featured_media,_links,_embedded`;
   const res = await fetch(url, { cache: 'no-store' });
   const data = await res.json();
+  return data && data.length > 0 ? (data[0] as WorkData) : null;
+};
 
-  // 検索結果は配列で届くので、最初の1件を返します。見つからなければ null
+// 3. 全カテゴリーを取得
+export const fetchAllCategories = async (): Promise<Category[]> => {
+  const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?_embed&_fields=id,name,slug,description,acf,_embedded`;
+  const res = await fetch(url, { cache: 'no-store' });
+  return await res.json();
+};
 
-  return data && data.length > 0 ? data[0] : null;
+// 4. カテゴリー情報（Category）をスラッグから1件取得
+export const fetchCategoryBySlug = async (
+  slug: string,
+): Promise<Category | null> => {
+  const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?_embed&slug=${slug}&_fields=id,name,slug,description,acf,_embedded`;
+  const res = await fetch(url, { cache: 'no-store' });
+  const data = await res.json();
+  return data && data.length > 0 ? (data[0] as Category) : null;
+};
+
+// 5. 固定ページを取得
+export const fetchAboutPage = async (): Promise<PageData | null> => {
+  const url = `https://naname-lab.net/wp-json/wp/v2/pages?slug=about&_embed&_fields=id,title,slug,acf,_links,_embedded`;
+  const res = await fetch(url, { cache: 'no-store' });
+  const data = await res.json();
+  return data && data.length > 0 ? (data[0] as PageData) : null;
 };
