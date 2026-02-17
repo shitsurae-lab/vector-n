@@ -1,79 +1,46 @@
-import { Breadcrumbs } from '@/app/components/Breadcrumbs';
-import { fetchWorkBySlug } from '@/app/features/works/api/works';
+import {
+  fetchWorkBySlug,
+  fetchCategoryBySlug,
+} from '@/app/features/works/api/works';
 import { ProtectedContent } from '@/app/features/works/components/ProtectedContent';
-import he from 'he';
-import Image from 'next/image';
+import { notFound } from 'next/navigation';
+
 type PageProps = {
-  //paramsの中にcagegoryとslugが入ります。
   params: Promise<{ category: string; slug: string }>;
 };
+
 export default async function WorkDetailPage({ params }: PageProps) {
-  //①予約券(Promise)からURLの情報を解凍する
+  // ① URLパラメータ（カテゴリーとスラッグ）を取得
   const { category, slug } = await params;
 
-  //②詳細データをWPからとってくる
-  const work = await fetchWorkBySlug(slug);
+  // ② デコードしたスラッグで取得を試みる（日本語スラッグ対策）
+  const decodedSlug = decodeURIComponent(slug);
 
-  //もしも記事がなければ404
-  if (!work) return <div>投稿がみつかりませんでした</div>;
+  // ③ 作品データとカテゴリーデータを並列で取得
+  // fetchWorkBySlug の戻り値は WorkData 型、fetchCategoryBySlug は Category 型
+  const [work, categoryData] = await Promise.all([
+    fetchWorkBySlug(slug),
+    fetchCategoryBySlug(category),
+  ]);
 
-  const isProtected = work.content.protected;
-  //画像の取得
-  const mainImage = work._embedded?.['wp:featuredmedia']?.[0]?.source_url;
-  const altText =
-    work._embedded?.['wp:featuredmedia']?.[0]?.alt_text ||
-    he.decode(work.title.rendered);
+  // ③ データが見つからない場合は 404
+  if (!work || !categoryData) {
+    // 🔍 デバッグ用：何を探そうとして失敗したかコンソールに出す
+    console.log(
+      `❌ データが見つかりません: category=${category}, slug=${decodedSlug}`,
+    );
+    notFound();
+  }
 
   return (
-    <article className='max-w-4xl mx-auto p-10'>
-      {/* メインビジュアルエリア */}
-      <div className='relative w-full aspect-video mb-10 overflow-hidden rounded-xl bg-gray-100'>
-        {mainImage ? (
-          <Image
-            src={mainImage}
-            alt={altText}
-            fill
-            priority // 💡 詳細ページのトップ画像なので、最優先で読み込む設定
-            className='object-cover'
-          />
-        ) : (
-          <div className='flex items-center justify-center h-full text-gray-400'>
-            No Image
-          </div>
-        )}
-      </div>
-
-      {/* 🍞 パンくずリスト */}
-      <Breadcrumbs category={category} title={work.title.rendered} />
-      {/* 投稿日 */}
-      <time className='text-gray-500 text-sm'>
-        {new Date(work.date).toLocaleDateString('ja-JP').replace(/\//g, '.')}
-      </time>
-
-      {/* タイトル */}
-      <h1 className='text-4xl font-bold mt-2 mb-8'>
-        {he.decode(work.title.rendered)}
-      </h1>
-
-      {/* 本文エリア */}
-      <div className='prose max-w-none'>
-        {isProtected ? (
-          // <div className='bg-slate-100 p-10 text-center rounded-lg border-2 border-dashed'>
-          //   <p className='text-2xl mb-4'>🔒</p>
-          //   <p>この実績はパスワードで保護されています。</p>
-          //   <p className='text-sm text-gray-500 mt-2'>
-          //     閲覧には別途パスワードが必要です。
-          //   </p>
-          // </div>
-          <ProtectedContent slug={slug} />
-        ) : (
-          // 普通の投稿ならWPのHTMLを流し込む。🌟CSSはglobal.cssに記述
-          <div
-            className='wpCustomContent'
-            dangerouslySetInnerHTML={{ __html: work.content.rendered }}
-          />
-        )}
-      </div>
-    </article>
+    // 左右突き抜けのヒーローエリアを正しく表示するため、
+    // 親に余計な padding や max-width をつけない状態でコンポーネントを呼び出す
+    <div className='min-h-screen bg-white'>
+      <ProtectedContent
+        slug={slug}
+        categorySlug={category}
+        initialWork={work}
+      />
+    </div>
   );
 }

@@ -1,5 +1,13 @@
-import { fetchWorksByCategory } from '@/app/features/works/api/works';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import {
+  fetchCategoryBySlug,
+  fetchWorksByCategory,
+  WorkData,
+} from '@/app/features/works/api/works';
 import { WorksList } from '@/app/features/works/components/WorksList';
+import Image from 'next/image';
+import { Category } from '../../features/works/api/works';
+import { CategoryHero } from '@/app/features/works/components/CategoryHero';
 
 //①型の宣言
 //「このページはURLから情報を読み取りますよ」と予告
@@ -16,11 +24,18 @@ export default async function Page({ params }: pageProps) {
   const { category } = await params;
 
   //works.tsのfetchWorksByCategory関数を呼び出す
-  const works = await fetchWorksByCategory(category);
+  // const works = await fetchWorksByCategory(category);
+  // 作品一覧と、カテゴリー情報の両方をゲット！
+  const [works, categoryData]: [WorkData[], Category | null] =
+    await Promise.all([
+      fetchWorksByCategory(category),
+      fetchCategoryBySlug(category),
+    ]);
 
   //④【重要】ターミナルで中身を確認 ※値が長い
   // console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category, works);
-
+  console.log(`カテゴリーデータ`, categoryData);
+  const acf = categoryData?.acf;
   //画面に表示する
   return (
     // (とりあえず確認)
@@ -31,6 +46,28 @@ export default async function Page({ params }: pageProps) {
     //       指定したカテゴリーは<strong>{category}</strong>です
     //     </p>
     //   </main>
-    <WorksList works={works} category={category} />
+    <main className='max-w-6xl mx-auto'>
+      {/* 修正ポイント：GSAPアニメーション付きのクライアントコンポーネントへ */}
+      {acf?.next_image ? (
+        <CategoryHero
+          src={acf.next_image}
+          title={category}
+          subtitle={acf.mv_subtitle}
+          desc={acf.term_desc}
+          alt={acf.term_title || categoryData?.name || category}
+        />
+      ) : (
+        <section className='relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen aspect-21/9 mb-12 bg-slate-200 flex items-center justify-center'>
+          <span className='text-slate-400 font-bold uppercase tracking-widest'>
+            {category}
+          </span>
+        </section>
+      )}
+      <Breadcrumbs category={category} />
+
+      <h2 className='text-3xl font-bold mb-10 capitalize'>{category}</h2>
+
+      <WorksList works={works} category={category} />
+    </main>
   );
 }
