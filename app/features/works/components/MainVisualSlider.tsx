@@ -111,7 +111,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
           </div>
 
           {/* ③ サブ縦長楕円（セクション跨ぎ） */}
-          <div className='sub-visual-wrapper absolute z-40 right-2 bottom-[-140px] md:bottom-[-160px] lg:bottom-[-120px] w-[35vw] md:w-[24vw] lg:w-[18vw] max-w-[280px] aspect-[3/4] shadow-2xl overflow-hidden rounded-[200px] border-8 border-[#f3f1ee]'>
+          <div className='sub-visual-wrapper absolute z-40 right-2 bottom-[-140px] md:bottom-[-160px] lg:bottom-[-120px] w-[35vw] md:w-[24vw] lg:w-[18vw] max-w-[280px] aspect-[3/4] shadow-2xl overflow-hidden rounded-[200px]'>
             {images.map((image, index) => (
               <div
                 key={`sub-${index}`}
