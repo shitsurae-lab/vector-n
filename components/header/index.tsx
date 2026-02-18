@@ -26,7 +26,7 @@ export const Header = () => {
   return (
     <header className='w-full'>
       {/* --- 左上: ロゴ --- */}
-      <div className='fixed top-6 left-6 z-[60] flex flex-col items-start gap-1'>
+      <div className='fixed top-6 left-4 sm:left-6 z-[60] flex flex-col items-start gap-1'>
         <Link href='/'>
           <Image
             src='/logo-thin-y@2x.webp'

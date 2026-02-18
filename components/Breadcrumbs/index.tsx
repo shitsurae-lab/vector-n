@@ -1,40 +1,68 @@
 import Link from 'next/link';
 import he from 'he';
-import { NAV_PATHS } from '@/app/constants/config';
+import { NAV_PATHS, type NavPath } from '@/app/constants/config';
 
 type Props = {
-  category?: string;
-  title?: string;
+  parent?: NavPath;
+  category?: {
+    name: string; // 表示用（例: Web Design）
+    slug: string; // URL用（例: web-design）
+  };
+  title?: string; // 投稿タイトル（WPの title.rendered）
 };
 
-export const Breadcrumbs = ({ category, title }: Props) => {
+export const Breadcrumbs = ({ parent, category, title }: Props) => {
   return (
-    <nav className='flex gap-2 text-sm text-gray-500 pt-6 mb-6'>
-      <Link href='/' className='hover:underline'>
-        HOME
+    <nav className='flex items-center gap-2 text-[10px] font-bold tracking-[0.3em] text-zinc-400 uppercase py-6 overflow-x-auto whitespace-nowrap scrollbar-hide'>
+      {/* 1. HOME */}
+      <Link
+        href={NAV_PATHS.HOME.path}
+        className='hover:text-zinc-900 transition-colors shrink-0'
+      >
+        {NAV_PATHS.HOME.label}
       </Link>
 
-      <span>/</span>
-      <Link href={`/${NAV_PATHS.WORKS.path}`} className='hover:underline'>
-        {NAV_PATHS.WORKS.label}
-      </Link>
-
-      {category && (
+      {/* 2. Parent (WORKS など) */}
+      {parent && parent.path !== '/' && (
         <>
-          <span>/</span>
-          <Link
-            href={`/${NAV_PATHS.WORKS.path}/${category}`}
-            className='hover:underline capitalize'
-          >
-            {category}
-          </Link>
+          <span className='text-zinc-300 shrink-0'>/</span>
+          {category || title ? (
+            <Link
+              href={`/${parent.path}`}
+              className='hover:text-zinc-900 transition-colors shrink-0'
+            >
+              {parent.label}
+            </Link>
+          ) : (
+            <span className='text-zinc-900 shrink-0'>{parent.label}</span>
+          )}
         </>
       )}
 
+      {/* 3. Category (カスタム投稿のタクソノミー) */}
+      {category && (
+        <>
+          <span className='text-zinc-300 shrink-0'>/</span>
+          {title ? (
+            <Link
+              href={`/${parent?.path || 'works'}/${category.slug}`}
+              className='hover:text-zinc-900 transition-colors shrink-0'
+            >
+              {category.name}
+            </Link>
+          ) : (
+            <span className='text-zinc-900 shrink-0'>{category.name}</span>
+          )}
+        </>
+      )}
+
+      {/* 4. Title (投稿詳細) */}
       {title && (
         <>
-          <span>/</span>
-          <span className='text-gray-900 truncate'>{he.decode(title)}</span>
+          <span className='text-zinc-300 shrink-0'>/</span>
+          <span className='text-zinc-900 truncate max-w-[150px] md:max-w-[300px]'>
+            {he.decode(title)}
+          </span>
         </>
       )}
     </nav>

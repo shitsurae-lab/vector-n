@@ -144,15 +144,12 @@ export const FluffyContainer = ({
           {/* 04. CTAボタン */}
           {link && ctaText && (
             <div className='pl-10 pt-6'>
-              <Link
-                href={link}
-                className='group/btn inline-flex items-center gap-3 text-[10px] font-bold tracking-[0.4em] uppercase text-zinc-400 hover:text-black transition-all'
-              >
+              <div className='group/btn inline-flex items-center gap-3 text-[10px] font-bold tracking-[0.4em] uppercase text-zinc-400 hover:text-black transition-all'>
                 {ctaText}
                 <span className='transform group-hover/btn:translate-x-2 transition-transform duration-300'>
                   <ArrowRight />
                 </span>
-              </Link>
+              </div>
             </div>
           )}
         </div>
