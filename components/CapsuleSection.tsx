@@ -49,21 +49,21 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
   return (
     <section
       ref={containerRef}
-      className='relative pt-20 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden'
+      className='relative 100svh pt-20 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden'
     >
-      <div className='bg-[#f3f1ee] pt-[15vw] pb-[10vh] min-h-[80vh] rounded-[50vw_50vw_0_0]'>
-        <div className='max-w-5xl mx-auto px-6'>
+      <div className='bg-[#f3f1ee] pt-10 pb-[10vh] min-h-[80vh] rounded-[50vw_50vw_0_0]'>
+        <div className='max-w-5xl mx-auto px-6 py-5'>
           {/* opacity-0 と translate-y-8 で初期状態を隠す */}
-          <h2 className='animate-target opacity-0 translate-y-8 text-center text-4xl md:text-5xl font-black tracking-[0.2em] mb-8 text-gray-800 uppercase'>
+          <h2 className='animate-target opacity-0 translate-y-8 text-center text-4xl md:text-5xl font-black tracking-[0.2em] mb-4 text-gray-800 uppercase'>
             about
           </h2>
-          <p className='animate-target max-w-2xl mx-auto mb-16 text-center'>
+          <p className='animate-target w-full px-4 md:max-w-2xl mx-auto mb-10 text-center md:text-left'>
             現場でのEC運営経験を糧に、職人のような丁寧なモノづくりを追求しています。
             誰もが迷わず、未来の変更に耐えうる「血の通った設計」が、私のスタイルです
           </p>
 
           {/* 4. Button (shadcn/ui) */}
-          <div className='animate-target text-center mb-20'>
+          <div className='animate-target text-center mb-10'>
             <Button
               asChild
               className='rounded-full px-8 py-6 bg-zinc-900 text-white hover:bg-zinc-700 hover:text-white border-none transition-all'
