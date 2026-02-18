@@ -22,7 +22,7 @@ export default function ContactPage() {
       </section>
       <div className='w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] relative'>
         <div className='max-w-2xl mx-auto px-6 space-y-12'>
-          <Breadcrumbs parent={NAV_PATHS.ABOUT} />
+          <Breadcrumbs parent={NAV_PATHS.CONTACT} />
         </div>
       </div>
 
