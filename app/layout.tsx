@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google'; // セリフ体を追加
+import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
@@ -34,7 +35,7 @@ export default function RootLayout({
 
         {/* メインコンテンツ */}
         {children}
-
+        <Toaster position='top-center' richColors />
         {/* 全ページ共通：フッター */}
         <Footer />
       </body>

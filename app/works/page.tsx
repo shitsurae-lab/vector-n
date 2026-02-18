@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { fetchAllCategories } from '../features/works/api/works'; //
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
+import { NAV_PATHS } from '../constants/config';
 
 //ページ本体の関数Page(【async】を前につけて、通信待ちができるように定義します)
 
@@ -15,7 +16,7 @@ export default async function WorksTopPage() {
     //   <pre>{JSON.stringify(categories, null, 2)}</pre>
     // </main>
     <main className='max-w-6xl mx-auto px-6 md:px-16'>
-      <Breadcrumbs />
+      <Breadcrumbs parent={NAV_PATHS.ABOUT} />
       <h1 className='text-3xl font-bold mb-10'>制作実績カテゴリー</h1>
 
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>

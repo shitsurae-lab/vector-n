@@ -80,9 +80,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
       <div className='relative w-full max-w-[1440px] h-full mx-auto px-6 md:px-12'>
         {/* --- メイン流体シェイプ画像 --- */}
         <div
-          className='
-      relative
-      w-[95%] md:w-[65%] max-w-[940px] aspect-[4/3] md:aspect-[1.2/1] mx-auto md:ml-0'
+          className='relative w-[84%] sm:w-[95%] md:w-[80%] lg:w-[65%] max-w-[940px] aspect-1/1 sm:aspect-4/3 md:aspect-[1.2/1] mx-auto md:ml-0'
           style={{ clipPath: 'url(#fluid-mask)' }}
         >
           {images.map((image, index) => (
@@ -105,15 +103,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
 
         {/* 🔘 サブの流体シェイプ（右下のアクセント：1440pxコンテナ内） */}
         <div
-          className='
-      absolute
-      z-20
-      /* スマホ設定: 右端から少し離し、位置を上に（bottom-24など） */
-      right-4 bottom-32 w-[45vw]
-      /* PC設定: 右側に配置し、サイズを抑える */
-      md:right-10 md:bottom-20 md:w-[22vw] md:max-w-[320px]
-      aspect-square
-    '
+          className='absolute z-20 right-4 bottom-60 md:bottom-60 lg:bottom-32 w-[50vw] sm:w-[45vw] md:w-[45vw] lg:w-[22vw] md:max-w-[320px] md:right-10  aspect-square'
           style={{ clipPath: 'url(#blob-mask)' }}
         >
           {images.map((image, index) => (
@@ -134,7 +124,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
         </div>
 
         {/* --- テキストレイヤー --- */}
-        <div className='absolute bottom-[10%] left-6 md:left-20 z-20 pointer-events-none'>
+        <div className='absolute bottom-[16%] sm:bottom-[10%] left-6 md:left-20 z-20 pointer-events-none'>
           {images.map((image, index) => (
             <div
               key={index}

@@ -58,6 +58,14 @@ export interface WorkData {
   };
   _embedded?: {
     'wp:featuredmedia'?: Array<{ source_url: string; alt_text?: string }>;
+    'wp:term'?: Array<
+      Array<{
+        id: number;
+        name: string;
+        slug: string;
+        taxonomy: string;
+      }>
+    >;
   };
 }
 
@@ -93,6 +101,19 @@ export type PageData = {
   };
 };
 
+// 4.💡 WPの複雑な階層からカテゴリー名とスラグを安全に取り出す
+export const getCategoryFromWork = (work: WorkData) => {
+  const terms = work._embedded?.['wp:term'];
+  if (!terms || !Array.isArray(terms[0]) || terms[0].length === 0) return null;
+
+  // 0番目の配列（カテゴリー）の最初の要素を取得
+  const category = terms[0][0];
+  return {
+    name: category.name,
+    slug: category.slug,
+  };
+};
+
 /**
  * ------------------------------------------------------------------
  * 📡 API関数
@@ -100,7 +121,7 @@ export type PageData = {
  */
 
 // カテゴリーのスラッグからIDを調べる補助関数
-const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
+export const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${slug}`;
   const res = await fetch(url, { cache: 'no-store' });
   const data = await res.json();

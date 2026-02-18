@@ -1,5 +1,6 @@
+import { ContactForm } from '@/components/ContactForm';
 import { fetchAllCategories, fetchAboutPage } from './features/works/api/works';
-import { CapsuleSection } from './features/works/components/CapsuleSection';
+import { CapsuleSection } from '../components/CapsuleSection';
 import { MainVisualSlider } from './features/works/components/MainVisualSlider';
 import { FluffyContainer } from '@/components/FluffyContainer';
 
@@ -80,6 +81,7 @@ export default async function WorksTopPage() {
           ctaText={cat.acf?.next_cta || 'View More'}
         />
       ))}
+      <ContactForm />
     </main>
   );
 }

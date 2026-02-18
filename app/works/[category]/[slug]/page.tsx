@@ -2,7 +2,7 @@ import {
   fetchWorkBySlug,
   fetchCategoryBySlug,
 } from '@/app/features/works/api/works';
-import { ProtectedContent } from '@/app/features/works/components/ProtectedContent';
+import { ProtectedContent } from '@/components/ProtectedContent';
 import { notFound } from 'next/navigation';
 
 type PageProps = {

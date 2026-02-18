@@ -8,6 +8,7 @@ import { WorksList } from '@/app/features/works/components/WorksList';
 import Image from 'next/image';
 import { Category } from '../../features/works/api/works';
 import { CategoryHero } from '@/app/features/works/components/CategoryHero';
+import { NAV_PATHS } from '@/app/constants/config';
 
 //①型の宣言
 //「このページはURLから情報を読み取りますよ」と予告
@@ -35,6 +36,10 @@ export default async function Page({ params }: pageProps) {
   //④【重要】ターミナルで中身を確認 ※値が長い
   // console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category, works);
   console.log(`カテゴリーデータ`, categoryData);
+
+  if (!categoryData) {
+    return <main className='pt-40 text-center'>Category not found.</main>;
+  }
   const acf = categoryData?.acf;
   //画面に表示する
   return (
@@ -51,6 +56,7 @@ export default async function Page({ params }: pageProps) {
       {acf?.next_image ? (
         <CategoryHero
           src={acf.next_image}
+          subSrc={acf.next_image_sub}
           title={category}
           subtitle={acf.mv_subtitle}
           desc={acf.term_desc}
@@ -63,7 +69,10 @@ export default async function Page({ params }: pageProps) {
           </span>
         </section>
       )}
-      <Breadcrumbs category={category} />
+      <Breadcrumbs
+        parent={NAV_PATHS.WORKS}
+        category={{ name: categoryData.name, slug: categoryData.slug }}
+      />
 
       <h2 className='text-3xl font-bold mb-10 capitalize'>{category}</h2>
 

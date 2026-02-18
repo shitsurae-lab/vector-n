@@ -2,6 +2,7 @@ import { fetchAboutPage } from '@/app/features/works/api/works';
 import { CategoryHero } from '@/app/features/works/components/CategoryHero';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FluffyContainer } from '@/components/FluffyContainer';
+import { NAV_PATHS } from '../constants/config';
 
 // 固定ページなので params は不要。async を忘れずに。
 export default async function AboutPage() {
@@ -32,7 +33,7 @@ export default async function AboutPage() {
         desc={acf?.about_hero_desc || ''}
         alt={pageData.title.rendered}
       />
-      <Breadcrumbs />
+      <Breadcrumbs parent={NAV_PATHS.ABOUT} />
       <div className='flex flex-col'>
         {sections.map((section, index) => {
           const item = section.data;
