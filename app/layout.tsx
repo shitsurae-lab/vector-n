@@ -10,6 +10,7 @@ import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import ScrollToTop from '@/components/ScrollToTop';
 
 // h2用: インパクトのある英単語
 const anton = Anton({
@@ -63,6 +64,7 @@ export default function RootLayout({
       className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${bebasNeue.variable} ${montserrat.variable}`}
     >
       <body className='antialiased bg-[#f8f6f3] text-[#4f545a] selection:bg-black selection:text-white'>
+        <ScrollToTop />
         {/* 全ページ共通：ヘッダー */}
         <Header />
 
