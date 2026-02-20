@@ -54,6 +54,7 @@
   --font-bebas-neue: var(--font-bebas-neue);
   --font-orbitron: var(--font-orbitron);
   --font-michroma: var(--font-michroma);
+  --font-montserrat: var(--font-montserrat);
   --font-mixed: var(--font-michroma), ui-sans-serif, system-ui, sans-serif;
 }
 

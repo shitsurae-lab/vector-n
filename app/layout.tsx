@@ -1,5 +1,11 @@
 import type { Metadata } from 'next';
-import { Anton, Bebas_Neue, Orbitron, Michroma } from 'next/font/google'; //
+import {
+  Anton,
+  Bebas_Neue,
+  Orbitron,
+  Michroma,
+  Montserrat,
+} from 'next/font/google'; //
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 import { Header } from '@/components/header';
@@ -34,6 +40,13 @@ const michroma = Michroma({
   display: 'swap',
 });
 
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: 'Portfolio | Creative Developer', // ここにお名前などを
   description: 'Design and Development Portfolio',
@@ -47,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang='ja'
-      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${bebasNeue.variable}`}
+      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${bebasNeue.variable} ${montserrat.variable}`}
     >
       <body className='antialiased bg-[#f8f6f3] text-[#4f545a] selection:bg-black selection:text-white'>
         {/* 全ページ共通：ヘッダー */}
