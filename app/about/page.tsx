@@ -1,4 +1,4 @@
-import { fetchAboutPage } from '@/app/features/works/api/works';
+import { fetchPageBySlug } from '@/app/features/works/api/works';
 import { CategoryHero } from '@/app/features/works/components/CategoryHero';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FluffyContainer } from '@/components/FluffyContainer';
@@ -7,7 +7,7 @@ import { NAV_PATHS } from '../constants/config';
 // 固定ページなので params は不要。async を忘れずに。
 export default async function AboutPage() {
   // 1. 固定ページ「about」のデータを取得
-  const pageData = await fetchAboutPage();
+  const pageData = await fetchPageBySlug('about');
 
   // データが見つからない場合のガード
   if (!pageData) {

@@ -51,8 +51,8 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
       ref={containerRef}
       className='relative 100svh pt-20 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden'
     >
-      <div className='bg-[#f3f1ee] pt-10 pb-[10vh] min-h-[80vh] rounded-[50vw_50vw_0_0]'>
-        <div className='max-w-5xl mx-auto px-6 py-5'>
+      <div className='bg-[#f3f1ee] py-[10vh] min-h-[80vh] rounded-[50vw_50vw_0_0]'>
+        <div className='max-w-5xl mx-auto px-6 pt-10'>
           {/* opacity-0 と translate-y-8 で初期状態を隠す */}
           <h2 className='animate-target opacity-0 translate-y-8 text-center text-4xl md:text-5xl font-black tracking-[0.2em] mb-4 text-gray-800 uppercase'>
             about

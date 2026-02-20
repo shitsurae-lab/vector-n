@@ -1,20 +1,37 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google'; // セリフ体を追加
+import { Anton, Bebas_Neue, Orbitron, Michroma } from 'next/font/google'; //
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 
-// 1. 本文用のサンセリフ体
-const inter = Inter({
+// h2用: インパクトのある英単語
+const anton = Anton({
+  weight: '400',
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-anton',
+  display: 'swap',
 });
 
-// 2. タイトル用の美しいセリフ体 (Playfair Display)
-const playfair = Playfair_Display({
+//数字
+const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  weight: '400', // Bebas Neueは通常400のみ
+  variable: '--font-bebas-neue',
+});
+
+// h3(英)用: 近未来的な英単語
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  variable: '--font-orbitron',
+  display: 'swap',
+});
+
+const michroma = Michroma({
+  weight: '400', // Michromaは400のみ
+  subsets: ['latin'],
+  variable: '--font-michroma',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -28,7 +45,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='ja' className={`${inter.variable} ${playfair.variable}`}>
+    <html
+      lang='ja'
+      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${bebasNeue.variable}`}
+    >
       <body className='antialiased bg-[#f8f6f3] text-[#4f545a] selection:bg-black selection:text-white'>
         {/* 全ページ共通：ヘッダー */}
         <Header />

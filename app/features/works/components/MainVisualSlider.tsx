@@ -146,7 +146,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
         </div>
 
         {/* --- 🖋️ テキストレイヤー --- */}
-        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] left-6 md:left-20 w-full z-30 pointer-events-none'>
+        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] left-6 md:left-20 sm:w-[calc(100%-40px)] md:w-[calc(100%-160px)] w-[calc(100%-100px)] z-30 pointer-events-none'>
           {images.map((image, index) => (
             <div
               key={`text-group-${index}`}
@@ -154,12 +154,12 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
             >
               <div className={`text-${index} flex items-center gap-4 mb-4`}>
                 <div className='h-[1px] w-12 bg-zinc-300' />
-                <p className='text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase text-zinc-400'>
+                <p className='font-[family-name:var(--font-mixed)] text-[10px] md:text-xs tracking-[0.3em] uppercase text-zinc-500'>
                   {image.subtitle}
                 </p>
               </div>
               <h2
-                className={`text-${index} text-4xl sm:text-6xl md:text-8xl font-bold leading-[0.9] text-zinc-800 uppercase tracking-[0.1em]`}
+                className={`text-${index} font-[family-name:var(--font-anton)] text-5xl md:text-7xl lg:text-8xl leading-tight text-zinc-900 uppercase tracking-wider text-zinc-800 uppercase tracking-[0.1em]`}
                 style={{ fontSize: 'clamp(2rem, 8vw, 6rem)' }} // 💡 ここで調整！
               >
                 {image.title}
@@ -176,9 +176,9 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
         </div>
 
         {/* --- 🖱️ Scroll Indicator --- */}
-        <div className='absolute bottom-4 sm:bottom-8 md:bottom-40 lg:bottom-12 right-8 md:right-12 z-50 flex flex-col items-start gap-4'>
+        <div className='absolute bottom-4 sm:bottom-8 md:bottom-40 lg:bottom-12 right-8 md:right-12 z-50 flex flex-col items-start gap-4 overflow-hidden'>
           <span
-            className='text-[9px] tracking-[0.2em] text-zinc-300 uppercase vertical-text'
+            className='text-[9px] tracking-[0.2em] text-zinc-400 uppercase vertical-text'
             style={{ writingMode: 'vertical-rl' }}
           >
             (scroll down)

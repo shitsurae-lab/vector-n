@@ -1,5 +1,8 @@
 import { ContactForm } from '@/components/ContactForm';
-import { fetchAllCategories, fetchAboutPage } from './features/works/api/works';
+import {
+  fetchAllCategories,
+  fetchPageBySlug,
+} from './features/works/api/works';
 import { CapsuleSection } from '../components/CapsuleSection';
 import { MainVisualSlider } from './features/works/components/MainVisualSlider';
 import { FluffyContainer } from '@/components/FluffyContainer';
@@ -8,7 +11,7 @@ export default async function WorksTopPage() {
   // 1. カテゴリー一覧と、Aboutページ（固定ページ）のデータを同時に取得
   const [categories, aboutData] = await Promise.all([
     fetchAllCategories(),
-    fetchAboutPage(),
+    fetchPageBySlug('about'),
   ]);
 
   // スライダー用に画像を抽出（画像があるカテゴリーだけを対象にする）

@@ -98,6 +98,11 @@ export type PageData = {
       next_desc: string;
       next_image: string;
     };
+    works_hero_main?: string;
+    works_hero_sub?: string;
+    works_hero_title?: string;
+    works_hero_subtitle?: string;
+    works_hero_desc?: string;
   };
 };
 
@@ -168,8 +173,10 @@ export const fetchCategoryBySlug = async (
 };
 
 // 5. 固定ページを取得
-export const fetchAboutPage = async (): Promise<PageData | null> => {
-  const url = `https://naname-lab.net/wp-json/wp/v2/pages?slug=about&_embed&_fields=id,title,slug,acf,_links,_embedded`;
+export const fetchPageBySlug = async (
+  slug: PageData['slug'],
+): Promise<PageData | null> => {
+  const url = `https://naname-lab.net/wp-json/wp/v2/pages?slug=${slug}&_embed&_fields=id,title,slug,acf,_links,_embedded`;
   const res = await fetch(url, { cache: 'no-store' });
   const data = await res.json();
   return data && data.length > 0 ? (data[0] as PageData) : null;

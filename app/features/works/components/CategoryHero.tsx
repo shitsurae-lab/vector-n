@@ -108,7 +108,7 @@ export const CategoryHero = ({
             <Image src={src} alt={alt} fill priority className='object-cover' />
           </div>
           {/* ② サブ縦長楕円画像 */}
-          <div className='sub-visual-wrapper absolute z-40 right-2 bottom-[-160px] md:bottom-[-160px] lg:bottom-[-120px] w-[35vw] md:w-[24vw] lg:w-[18vw] max-w-[280px] aspect-[3/4] shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden rounded-[200px]'>
+          <div className='sub-visual-wrapper absolute z-40 right-2 bottom-[-160px] md:bottom-[-160px] lg:bottom-[-120px] w-[35vw] md:w-[24vw] lg:w-[18vw] max-w-[280px] aspect-[3/4] shadow-2xl [0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden rounded-[200px]'>
             <Image
               src={subSrc || src}
               alt=''
@@ -127,18 +127,18 @@ export const CategoryHero = ({
             </p>
           </div>
         </div>
-
-        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] left-6 md:left-20 w-[calc(100%-100px)] sm:w-[calc(100%-40px)] md:w-[calc(100%-160px)] z-30'>
-          {/* キャッチコピー：少し右側に流すあしらい */}
+        {/* --- 🖋️ テキストレイヤー --- */}
+        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] left-6 md:left-20 z-30'>
           <div className='flex items-center gap-4 mb-4'>
-            <div className='h-[1px] w-12 bg-zinc-300' /> {/* 繊細なライン */}
-            <p className='animate-text text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase text-zinc-300'>
+            <div className='h-[1px] w-12 bg-zinc-400'></div>
+            {/* ここを 英語ではMichroma、文字間を広げる */}
+            <p className='font-[family-name:var(--font-mixed)] text-[10px] md:text-xs tracking-[0.3em] uppercase text-zinc-500'>
               {subtitle}
             </p>
           </div>
 
           {/* メインタイトル：ウェイトを少し落とし、字間を広げる */}
-          <h1 className='animate-text text-5xl md:text-8xl font-bold leading-[0.8] text-zinc-800 uppercase tracking-[0.1em]'>
+          <h1 className='font-[family-name:var(--font-anton)] text-5xl md:text-7xl lg:text-8xl leading-tight text-zinc-900 uppercase tracking-wider'>
             {title}
           </h1>
 
@@ -152,13 +152,13 @@ export const CategoryHero = ({
         {/* --- 🖱️ Scroll Indicator (1pxライン) --- */}
         <div className='absolute bottom-4 md:bottom-12 right-8 md:right-12 flex flex-col items-center gap-4 overflow-hidden'>
           <span
-            className='text-[9px] tracking-[0.2em] text-zinc-300 uppercase vertical-text'
+            className='text-[9px] tracking-[0.2em] text-zinc-400 uppercase vertical-text'
             style={{ writingMode: 'vertical-rl' }}
           >
             (scroll down)
           </span>
           <div className='relative w-[1px] h-12 bg-zinc-200/30 overflow-hidden'>
-            <div className='animate-scroll-line absolute inset-0 bg-zinc-400' />
+            <div className='animate-scroll-line-inner absolute inset-0 bg-zinc-400' />
           </div>
         </div>
       </div>

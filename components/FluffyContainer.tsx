@@ -120,10 +120,10 @@ export const FluffyContainer = ({
           {/* 👈 ここが提案の「要素間の距離」 */}
           {/* 01. 数字 ＋ 英語メインタイトル */}
           <div className='flex items-start gap-3 transition-transform duration-700 group-hover:translate-x-1'>
-            <span className='text-[10px] font-mono text-zinc-400 tracking-tighter pt-2'>
+            <span className='font-[family-name:var(--font-bebas-neue)] text-[10px] text-zinc-400 tracking-tighter pt-2'>
               {num}
             </span>
-            <h3 className='text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.85] text-zinc-900'>
+            <h3 className='text-4xl md:text-5xl font-anton tracking-wider uppercase leading-[0.85] text-zinc-900'>
               {enTitle}
             </h3>
           </div>
