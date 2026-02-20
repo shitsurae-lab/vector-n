@@ -54,14 +54,21 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
       <div className='bg-[#f3f1ee] py-[10vh] min-h-[80vh] rounded-[50vw_50vw_0_0]'>
         <div className='max-w-5xl mx-auto px-6 pt-10'>
           {/* opacity-0 と translate-y-8 で初期状態を隠す */}
-          <h2 className='animate-target opacity-0 translate-y-8 text-center text-4xl md:text-5xl font-black tracking-[0.2em] mb-4 text-gray-800 uppercase'>
-            about
-          </h2>
-          <p className='animate-target w-full px-4 md:max-w-2xl mx-auto mb-10 text-center md:text-left'>
-            現場でのEC運営経験を糧に、職人のような丁寧なモノづくりを追求しています。
-            誰もが迷わず、未来の変更に耐えうる「血の通った設計」が、私のスタイルです
-          </p>
+          <div className='flex flex-col items-center mb-12'>
+            {/* 英語メイン: Michromaで「設計」の精密さを表現 */}
+            <h2 className='animate-target opacity-0 translate-y-8 font-[family-name:var(--font-michroma)] font-bold text-3xl md:text-4xl tracking-[0.5em] text-zinc-800 uppercase mb-2'>
+              about
+            </h2>
 
+            {/* 日本語サブ: 意味を補完し、視線を本文へ繋ぐ */}
+            <div className='animate-target opacity-0 translate-y-8 flex items-center gap-3'>
+              <span className='h-[1px] w-4 bg-zinc-400' />
+              <p className='font-[family-name:var(--font-mixed)] text-[10px] md:text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase'>
+                Creative Philosophy
+              </p>
+              <span className='h-[1px] w-4 bg-zinc-400' />
+            </div>
+          </div>
           {/* 4. Button (shadcn/ui) */}
           <div className='animate-target text-center mb-10'>
             <Button
