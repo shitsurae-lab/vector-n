@@ -113,45 +113,59 @@ export const FluffyContainer = ({
       {/* 🖋️ テキスト領域：最新の文字組みレイアウト */}
       <div
         ref={contentRef}
-        className='basis-full md:basis-1/2 pt-4 md:pt-10' // 外側の余白
+        className='basis-full md:basis-1/2 pt-10 md:pt-20 relative'
       >
-        <div className='space-y-4 group'>
-          {' '}
-          {/* 👈 ここが提案の「要素間の距離」 */}
-          {/* 01. 数字 ＋ 英語メインタイトル */}
-          <div className='flex items-start gap-3 transition-transform duration-700 group-hover:translate-x-1'>
-            <span className='font-[family-name:var(--font-bebas-neue)] text-[10px] text-zinc-400 tracking-tighter pt-2'>
-              {num}
-            </span>
-            <h3 className='text-4xl md:text-5xl font-anton tracking-wider uppercase leading-[0.85] text-zinc-900'>
-              {enTitle}
-            </h3>
-          </div>
-          {/* 02. ライン ＋ 日本語サブタイトル */}
-          <div className='flex items-center gap-4 pl-10'>
-            <span className='h-[1px] w-8 bg-zinc-200' />{' '}
-            {/* 水平のあしらい線 */}
-            <p className='text-xs md:text-sm tracking-[0.2em] font-bold text-zinc-400 uppercase'>
-              {jaTitle}
-            </p>
-          </div>
-          {/* 03. 本文：カテゴリー・説明 */}
-          <div className='pl-10 pt-4'>
-            <div className='text-[13px] leading-relaxed tracking-wider text-zinc-500 whitespace-pre-wrap max-w-sm border-l border-zinc-100 pl-4'>
-              {category}
+        <div className='group relative'>
+          {/* --- 01. ビッグナンバー (Anton) ---
+        text-transparent と -webkit-text-stroke で「線」にして、Michromaの空間美を邪魔しないようにします */}
+          <span
+            className='absolute -top-16 -left-10 md:-top-24 md:-left-14 select-none pointer-events-none
+    font-[family-name:var(--font-anton)] text-[140px] md:text-[220px]
+    leading-none transition-all duration-1000 text-zinc-900 opacity-[0.04] group-hover:opacity-[0.08]'
+          >
+            {num}
+          </span>
+
+          <div className='relative z-10 space-y-6'>
+            {/* --- 02. 英語メインタイトル (Anton) --- */}
+            <div className='transition-transform duration-700 group-hover:translate-x-2'>
+              <h3 className='font-[family-name:var(--font-anton)] text-5xl md:text-6xl tracking-tight uppercase leading-[0.85] text-zinc-900'>
+                {enTitle}
+              </h3>
             </div>
-          </div>
-          {/* 04. CTAボタン */}
-          {link && ctaText && (
-            <div className='pl-10 pt-6'>
-              <div className='group/btn inline-flex items-center gap-3 text-[10px] font-bold tracking-[0.4em] uppercase text-zinc-400 hover:text-black transition-all'>
-                {ctaText}
-                <span className='transform group-hover/btn:translate-x-2 transition-transform duration-300'>
-                  <ArrowRight />
-                </span>
+
+            {/* --- 03. ライン ＋ 日本語サブタイトル (Michroma) ---
+          Michromaは横長なので、trackingを広げすぎると読みづらくなります。
+          [0.2em] 程度に抑えつつ、font-boldで存在感を出します。 */}
+            <div className='flex items-center gap-4 pl-1'>
+              <span className='h-[1px] w-10 bg-zinc-300 transition-all duration-700 group-hover:w-20 group-hover:bg-zinc-900' />
+              <p className='font-[family-name:var(--font-mixed)] text-xs md:text-sm tracking-[0.2em] font-bold text-zinc-500 uppercase'>
+                {jaTitle}
+              </p>
+            </div>
+
+            {/* --- 04. 本文 (Michroma) --- */}
+            <div className='pl-1 pt-2'>
+              <div className='font-[family-name:var(--font-mixed)] text-[12px] md:text-[13px] leading-[1.8] tracking-widest text-zinc-500 whitespace-pre-wrap max-w-sm border-l-2 border-zinc-50 pl-5 transition-colors duration-500 group-hover:border-zinc-200'>
+                {category}
               </div>
             </div>
-          )}
+
+            {/* --- 05. CTAボタン (Michroma) --- */}
+            {link && ctaText && (
+              <div className='pl-1 pt-6'>
+                <div className='group/btn inline-flex items-center gap-5 font-[family-name:var(--font-mixed)] text-[10px] font-black tracking-[0.3em] uppercase text-zinc-400 hover:text-zinc-900 transition-all'>
+                  <span className='relative'>
+                    {ctaText}
+                    <span className='absolute -bottom-1 left-0 w-0 h-[1.5px] bg-zinc-900 transition-all duration-300 group-hover/btn:w-full' />
+                  </span>
+                  <span className='p-2 rounded-full border border-zinc-100 group-hover/btn:border-zinc-900 group-hover/btn:translate-x-2 transition-all duration-300'>
+                    <ArrowRight size={12} />
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
