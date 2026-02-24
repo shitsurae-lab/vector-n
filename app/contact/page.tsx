@@ -10,7 +10,7 @@ export default function ContactPage() {
           <span className='text-[10px] font-bold tracking-[0.4em] uppercase text-zinc-400 mb-2'>
             Ready to start a project?
           </span>
-          <h1 className='font-[family-name:var(--font-michroma)] text-center font-bold text-2xl md:text-3xl tracking-[0.5em] text-zinc-800 uppercase mb-8 md:mb-12'>
+          <h1 className='font-michroma text-center font-bold text-2xl md:text-3xl tracking-[0.5em] text-zinc-800 uppercase mb-8 md:mb-12'>
             Contact
           </h1>
         </div>
