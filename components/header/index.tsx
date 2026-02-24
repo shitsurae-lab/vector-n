@@ -48,7 +48,7 @@ export const Header = () => {
           <Link
             key={item.name}
             href={item.href}
-            className='text-sm font-bold tracking-[0.2em] hover:opacity-60 transition-all uppercase drop-shadow-sm'
+            className='text-sm font-bold font-michroma tracking-[0.2em] hover:opacity-60 transition-all uppercase'
           >
             {item.name}
           </Link>
@@ -85,7 +85,7 @@ export const Header = () => {
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsOpen(false)} // 遷移時に閉じる
-                  className='text-2xl font-bold tracking-widest uppercase hover:opacity-50'
+                  className='text-xl font-bold tracking-widest uppercase hover:opacity-50 font-michroma'
                 >
                   {item.name}
                 </Link>
