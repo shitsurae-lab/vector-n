@@ -49,8 +49,10 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title:
-    "Vector-n | Toshiyuki Kurashima's Portfolio | デザインからCMS実装まで一貫対応のWebエンジニア",
+  title: {
+    template: '%s | Vector-n',
+    default: "Vector-n | Toshiyuki Kurashima's Portfolio",
+  },
   description:
     '「運用まで視野に入れた」Web制作を提供。デザイン、フロントエンド開発、WordPress・CMS実装まで一貫して対応可能です。後任が迷わない保守性の高い設計と、モダンな技術スタック（Next.js / TypeScript）でビジネスの成長を支援します。',
 

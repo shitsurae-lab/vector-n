@@ -3,7 +3,11 @@ import { CategoryHero } from '@/app/features/works/components/CategoryHero';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FluffyContainer } from '@/components/FluffyContainer';
 import { NAV_PATHS } from '../constants/config';
+import { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'About',
+};
 // 固定ページなので params は不要。async を忘れずに。
 export default async function AboutPage() {
   // 1. 固定ページ「about」のデータを取得

@@ -9,16 +9,35 @@ import Image from 'next/image';
 import { Category } from '../../features/works/api/works';
 import { CategoryHero } from '@/app/features/works/components/CategoryHero';
 import { NAV_PATHS } from '@/app/constants/config';
+import { Metadata } from 'next';
 
 //①型の宣言
 //「このページはURLから情報を読み取りますよ」と予告
-type pageProps = {
+type customPageProps = {
   params: Promise<{ category: string }>;
 };
+export async function generateMetadata(
+  props: customPageProps,
+): Promise<Metadata> {
+  // Promiseを解決してslugを取得
+  const { category } = await props.params;
+
+  // データの取得
+  const categoryData = await fetchCategoryBySlug(category);
+
+  // 値を確定（ここでは変数として定義）
+  const displayName =
+    categoryData?.acf?.next_title || categoryData?.name || category;
+
+  // Metadata オブジェクトを返す
+  return {
+    title: `${displayName}`,
+  };
+}
 
 //②ページ本体の関数Page(【async】を前につけて、通信待ちができるように定義します)
 //{params}はNext.jsが【自動で】渡してくれる「URLの情報は入った箱」として定義
-export default async function Page({ params }: pageProps) {
+export default async function Page({ params }: customPageProps) {
   //
   //③「予約券(Promise)」を実際の文字に交換する
   //URLの[category]の部分がcategoryという名前で取り出せます。

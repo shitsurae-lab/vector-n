@@ -1,7 +1,11 @@
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ContactForm } from '@/components/ContactForm';
 import { NAV_PATHS } from '../constants/config';
+import { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'Contact',
+};
 export default function ContactPage() {
   return (
     <main className='max-w-6xl mx-auto px-6 md:px-16'>

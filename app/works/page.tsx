@@ -9,9 +9,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { NAV_PATHS } from '../constants/config';
 import { CategoryHero } from '../features/works/components/CategoryHero';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Works',
+};
 
 //ページ本体の関数Page(【async】を前につけて、通信待ちができるように定義します)
-
 export default async function WorksTopPage() {
   const categories = await fetchAllCategories();
   // 1. 固定ページ「about」のデータを取得
@@ -39,14 +43,14 @@ export default async function WorksTopPage() {
       />
       <Breadcrumbs parent={NAV_PATHS.WORKS} />
       <section className='pt-10 md:pt-20 flex flex-col gap-15 md:gap-20'>
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col'>
+          <p className='font-[family-name:var(--font-mixed)] text-center font-bold text-xs mb-2 text-zinc-400'>
+            カテゴリー
+          </p>
           {/* 英語メイン: Michromaで「設計」の精密さを表現 */}
           <h2 className='font-[family-name:var(--font-michroma)] text-center font-bold text-2xl md:text-3xl tracking-[0.5em] text-zinc-800 uppercase mb-6'>
             Categories
           </h2>
-          <p className='font-[family-name:var(--font-mixed)] font-bold text-inline-center text-sm text-zinc-400'>
-            カテゴリー
-          </p>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
