@@ -13,18 +13,24 @@ export async function sendEmail(formData: FormData) {
   console.log('API Key存在確認:', !!process.env.RESEND_API_KEY); // 👈 falseなら読み込めていない
 
   try {
-    const data = await resend.emails.send({
-      from: 'onboarding@resend.dev', // 👈 最初は一旦これ固定にする
-      to: ['mahalo.morganite33@gmail.com'],
-      subject: `【テスト】${name}様より`,
+    const { data, error } = await resend.emails.send({
+      from: 'お問い合わせ <info@vector-n.net>',
+      to: ['mahalo.morganite33@gmail.com'], // または info@vector-n.net
+      subject: `【お問い合わせ】${name}様より`,
       replyTo: email,
-      text: message,
+      // 誰からのメールか本文にも記載する
+      text: `お名前: ${name}\nメールアドレス: ${email}\n\n内容:\n${message}`,
     });
+    // 👇 これで error が定義され、チェックできるようになります
+    if (error) {
+      console.error('❌ Resend APIエラー:', error);
+      return { success: false };
+    }
 
-    console.log('Resendレスポンス:', data);
+    console.log('✅ 送信成功:', data);
     return { success: true };
-  } catch (error) {
-    console.error('❌ Resendエラー詳細:', error); // 👈 ここにエラーの正体が出ます
+  } catch (err) {
+    console.error('❌ Resendエラー詳細:', err); // 👈 ここにエラーの正体が出ます
     return { success: false };
   }
 }
