@@ -36,21 +36,13 @@ export default async function Page({ params }: pageProps) {
   //④【重要】ターミナルで中身を確認 ※値が長い
   // console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category, works);
   console.log(`カテゴリーデータ`, categoryData);
-
+  console.log('ACF Data:', JSON.stringify(categoryData?.acf, null, 2));
   if (!categoryData) {
     return <main className='pt-40 text-center'>Category not found.</main>;
   }
   const acf = categoryData?.acf;
   //画面に表示する
   return (
-    // (とりあえず確認)
-    //   <main style={{ padding: '40px' }}>
-    //     <h1>カテゴリー：{category}の一覧ページ</h1>
-    //     <pre>{JSON.stringify(works, null, 2)}</pre>
-    //     <p>
-    //       指定したカテゴリーは<strong>{category}</strong>です
-    //     </p>
-    //   </main>
     <main className='max-w-6xl mx-auto px-6 md:px-16'>
       {/* 修正ポイント：GSAPアニメーション付きのクライアントコンポーネントへ */}
       {acf?.next_image ? (
@@ -73,10 +65,19 @@ export default async function Page({ params }: pageProps) {
         parent={NAV_PATHS.WORKS}
         category={{ name: categoryData.name, slug: categoryData.slug }}
       />
-
-      <h2 className='text-3xl font-bold mb-10 capitalize'>{category}</h2>
-
-      <WorksList works={works} category={category} />
+      <section className='pt-10 md:pt-20 flex flex-col gap-15 md:gap-20'>
+        <div className='flex flex-col py-10'>
+          <h2 className='font-[family-name:var(--font-michroma)] text-center font-bold text-2xl md:text-3xl tracking-[0.5em] text-zinc-800 uppercase mb-8 md:mb-12'>
+            {category}
+          </h2>
+          {acf?.next_desc && (
+            <p className='font-[family-name:var(--font-mixed)] text-center text-sm md:text-base leading-relaxed tracking-widest text-zinc-500 max-w-prose font-light break-keep word-break-loose'>
+              {acf.next_desc}
+            </p>
+          )}
+        </div>
+        <WorksList works={works} category={category} />
+      </section>
     </main>
   );
 }
