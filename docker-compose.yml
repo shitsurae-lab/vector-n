@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: next-portfolio-dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    # .env.localを読み込む設定
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+    # ここがAdobeソフトとの共存のカギです
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0' # CPUを2枚分に制限
+          memory: 4G # メモリを4GBに制限（残り12GBをAdobeやOSが自由に使える）
