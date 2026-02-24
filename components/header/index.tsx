@@ -26,20 +26,17 @@ export const Header = () => {
   return (
     <header className='w-full'>
       {/* --- 左上: ロゴ --- */}
-      <div className='fixed top-6 left-4 sm:left-6 z-[60] flex flex-col items-start gap-1'>
-        <Link href='/'>
+      <div className='fixed top-0 left-0 z-[60] w-[140px] h-[160px] flex items-center justify-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none pointer-events-none'>
+        <Link href='/' className='pointer-events-auto'>
           <Image
             src='/logo-thin-y@2x.webp'
             alt='Vector n'
-            width={264}
-            height={254}
-            className='w-[30%] min-w-[80px] max-w-[160px] md:max-w-[80px] h-auto object-contain' // 高さをクラスで制御するとレスポンシブが楽です
+            width={80}
+            height={102}
+            className='w-[80px] h-auto object-contain'
             priority
           />
         </Link>
-        <span className='text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 leading-none'>
-          Designer / Engineer
-        </span>
       </div>
 
       {/* --- PC版: 右上・縦並びナビゲーション --- */}
