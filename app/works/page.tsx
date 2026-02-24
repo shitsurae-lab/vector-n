@@ -38,44 +38,54 @@ export default async function WorksTopPage() {
         alt={pageData.title.rendered}
       />
       <Breadcrumbs parent={NAV_PATHS.WORKS} />
-      <h1 className='text-3xl font-bold mb-10'>制作実績カテゴリー</h1>
+      <section className='pt-10 md:pt-20 flex flex-col gap-15 md:gap-20'>
+        <div className='flex flex-col items-center'>
+          {/* 英語メイン: Michromaで「設計」の精密さを表現 */}
+          <h2 className='font-[family-name:var(--font-michroma)] text-center font-bold text-2xl md:text-3xl tracking-[0.5em] text-zinc-800 uppercase mb-6'>
+            Categories
+          </h2>
+          <p className='font-[family-name:var(--font-mixed)] font-bold text-inline-center text-sm text-zinc-400'>
+            カテゴリー
+          </p>
+        </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-        {categories.map((cat) => (
-          <Link href={`/works/${cat.slug}`} key={cat.id} className='group'>
-            <Card className='overflow-hidden hover:shadow-lg transition-shadow border-none bg-slate-50 pt-0 h-full'>
-              {/* カテゴリー画像 (term_image) */}
-              <div className='relative aspect-4/3 bg-slate-200'>
-                {cat.acf?.next_image ? (
-                  <Image
-                    src={cat.acf.next_image}
-                    alt={cat.acf.term_title || cat.name}
-                    fill
-                    className='object-cover group-hover:scale-105 transition-transform duration-300'
-                  />
-                ) : (
-                  <div className='flex items-center justify-center h-full text-slate-400'>
-                    No Image
-                  </div>
-                )}
-              </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          {categories.map((cat) => (
+            <Link href={`/works/${cat.slug}`} key={cat.id} className='group'>
+              <Card className='overflow-hidden hover:shadow-lg transition-shadow border-none bg-slate-50 pt-0 h-full'>
+                {/* カテゴリー画像 (term_image) */}
+                <div className='relative aspect-4/3 bg-slate-200'>
+                  {cat.acf?.next_image ? (
+                    <Image
+                      src={cat.acf.next_image}
+                      alt={cat.acf.term_title || cat.name}
+                      fill
+                      className='object-cover group-hover:scale-105 transition-transform duration-300'
+                    />
+                  ) : (
+                    <div className='flex items-center justify-center h-full text-slate-400'>
+                      No Image
+                    </div>
+                  )}
+                </div>
 
-              <CardHeader>
-                {/* term_title がなければ標準の name を出す */}
-                <CardTitle className='text-xl'>
-                  {cat.acf?.term_title || cat.name}
-                </CardTitle>
-              </CardHeader>
-              {/* term_desc がなければ標準の description を出す */}
-              <CardContent>
-                <p className='text-sm text-muted-foreground line-clamp-2 mt-2'>
-                  {cat.acf?.term_desc || cat.description}
-                </p>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
+                <CardHeader>
+                  {/* term_title がなければ標準の name を出す */}
+                  <CardTitle className='text-xl'>
+                    {cat.acf?.term_title || cat.name}
+                  </CardTitle>
+                </CardHeader>
+                {/* term_desc がなければ標準の description を出す */}
+                <CardContent>
+                  <p className='text-sm text-muted-foreground line-clamp-2 mt-2'>
+                    {cat.acf?.term_desc || cat.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
