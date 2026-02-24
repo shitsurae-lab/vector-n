@@ -49,8 +49,30 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: 'Portfolio | Creative Developer', // ここにお名前などを
-  description: 'Design and Development Portfolio',
+  title:
+    "Vector-n | Toshiyuki Kurashima's Portfolio | デザインからCMS実装まで一貫対応のWebエンジニア",
+  description:
+    '「運用まで視野に入れた」Web制作を提供。デザイン、フロントエンド開発、WordPress・CMS実装まで一貫して対応可能です。後任が迷わない保守性の高い設計と、モダンな技術スタック（Next.js / TypeScript）でビジネスの成長を支援します。',
+
+  metadataBase: new URL('https://www.vector-n.net'),
+
+  // OGP
+  openGraph: {
+    title: "Vector-n | Toshiyuki Kurashima's Portfolio",
+    description: 'デザインと実装、その先にある運用を繋ぐ。現場目線のWeb制作。',
+    url: 'https://www.vector-n.net',
+    siteName: 'Vector-n',
+    locale: 'ja_JP',
+    type: 'website',
+    images: [
+      {
+        url: '/opengraph-image.png', // ファイル名と拡張子を合わせる
+        width: 1200,
+        height: 630,
+        alt: 'Vector-n OGP Image',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
