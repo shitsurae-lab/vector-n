@@ -12,20 +12,18 @@ export const Footer = () => {
           <div>
             <Link
               href='/'
-              className='text-xl font-bold tracking-tighter uppercase'
+              className='hover:opacity-70 transition-opacity block'
             >
               <Image
                 src='/logo-thin-y@2x.webp'
                 alt='Vector n'
-                width={264}
-                height={254}
-                className='w-[30%] min-w-[80px] max-w-[160px] md:max-w-[80px] h-auto object-contain' // 高さをクラスで制御するとレスポンシブが楽です
+                /* 比率を 40:51 に合わせる (80x102) */
+                width={80}
+                height={102}
+                className='w-[80px] h-auto object-contain'
                 priority
               />
             </Link>
-            {/* <p className='text-[10px] tracking-[0.2em] opacity-50 uppercase'>
-              © {currentYear} vector-n. All rights reserved.
-            </p> */}
           </div>
 
           {/* 右側：リンク */}
@@ -44,8 +42,9 @@ export const Footer = () => {
                   </Link>
                 </li>
                 <li>
+                  {/* href を /works に修正 */}
                   <Link
-                    href='/about'
+                    href='/works'
                     className='hover:opacity-50 transition-opacity'
                   >
                     Works
@@ -90,7 +89,9 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <p className='text-[10px] text-center tracking-[0.2em] opacity-50 uppercase'>
+
+        {/* コピーライトの余白微調整 */}
+        <p className='text-[10px] text-center tracking-[0.2em] opacity-50 uppercase pt-10'>
           © {currentYear} vector-n. All rights reserved.
         </p>
       </div>
