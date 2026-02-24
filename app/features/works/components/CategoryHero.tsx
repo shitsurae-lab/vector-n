@@ -128,7 +128,7 @@ export const CategoryHero = ({
           </div>
         </div>
         {/* --- 🖋️ テキストレイヤー --- */}
-        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] left-6 md:left-20 z-30'>
+        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] sm:w-[calc(100%-40px)] md:w-[calc(100%-160px)] w-[calc(100%-100px)] right-0 md:right-auto md:left-20 z-30'>
           <div className='flex items-center gap-4 mb-4'>
             <div className='h-[1px] w-12 bg-zinc-400'></div>
             {/* ここを 英語ではMichroma、文字間を広げる */}
@@ -150,12 +150,12 @@ export const CategoryHero = ({
           )}
         </div>
         {/* --- 🖱️ Scroll Indicator (1pxライン) --- */}
-        <div className='absolute bottom-4 md:bottom-12 right-8 md:right-12 flex flex-col items-center gap-4 overflow-hidden'>
+        <div className='absolute bottom-24 sm:bottom-8 md:bottom-40 lg:bottom-12 left-8 md:left-auto right-auto md:right-12 z-50 flex flex-col items-end md:items-start gap-4 overflow-hidden'>
           <span
-            className='text-[9px] tracking-[0.2em] text-zinc-400 uppercase vertical-text'
+            className='font-[family-name:var(--font-michroma)] text-[6px] tracking-[0.2em] text-zinc-400 uppercase vertical-text'
             style={{ writingMode: 'vertical-rl' }}
           >
-            (scroll down)
+            scroll down
           </span>
           <div className='relative w-[1px] h-12 bg-zinc-200/30 overflow-hidden'>
             <div className='animate-scroll-line-inner absolute inset-0 bg-zinc-400' />

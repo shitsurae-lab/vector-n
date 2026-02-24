@@ -146,7 +146,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
         </div>
 
         {/* --- 🖋️ テキストレイヤー --- */}
-        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] left-6 md:left-20 sm:w-[calc(100%-40px)] md:w-[calc(100%-160px)] w-[calc(100%-100px)] z-30 pointer-events-none'>
+        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] sm:w-[calc(100%-40px)] md:w-[calc(100%-160px)] w-[calc(100%-100px)] right-0 md:right-auto md:left-20 z-30 pointer-events-none'>
           {images.map((image, index) => (
             <div
               key={`text-group-${index}`}
@@ -159,8 +159,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
                 </p>
               </div>
               <h2
-                className={`text-${index} font-[family-name:var(--font-anton)] text-5xl md:text-7xl lg:text-8xl leading-tight text-zinc-900 uppercase tracking-wider text-zinc-800 uppercase tracking-[0.1em]`}
-                style={{ fontSize: 'clamp(2rem, 8vw, 6rem)' }} // 💡 ここで調整！
+                className={`text-${index} font-[family-name:var(--font-anton)] text-5xl md:text-7xl lg:text-8xl leading-tight text-zinc-900 uppercase tracking-wider`}
               >
                 {image.title}
               </h2>
@@ -176,12 +175,12 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
         </div>
 
         {/* --- 🖱️ Scroll Indicator --- */}
-        <div className='absolute bottom-4 sm:bottom-8 md:bottom-40 lg:bottom-12 right-8 md:right-12 z-50 flex flex-col items-start gap-4 overflow-hidden'>
+        <div className='absolute bottom-24 sm:bottom-8 md:bottom-40 lg:bottom-12 left-8 md:left-auto right-auto md:right-12 z-50 flex flex-col items-end md:items-start gap-4 overflow-hidden'>
           <span
-            className='text-[9px] tracking-[0.2em] text-zinc-400 uppercase vertical-text'
+            className='font-[family-name:var(--font-michroma)] text-[6px] tracking-[0.2em] text-zinc-400 uppercase vertical-text'
             style={{ writingMode: 'vertical-rl' }}
           >
-            (scroll down)
+            scroll down
           </span>
           <div className='relative w-[1px] h-12 bg-zinc-200/30 overflow-hidden'>
             <div className='animate-scroll-line-inner absolute inset-0 bg-zinc-400' />
