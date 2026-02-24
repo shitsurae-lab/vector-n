@@ -79,7 +79,7 @@ export const WorksList = ({ works, category }: WorkListProps) => {
                   fill
                   sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                   priority
-                  className={`object-cover ${isProtected ? 'blur-[2px]' : ''}`}
+                  className={`object-cover ${isProtected ? 'blur-[1px]' : ''}`}
                 />
               ) : (
                 <div className='flex items-center justify-center h-full text-gray-400'>
@@ -88,7 +88,7 @@ export const WorksList = ({ works, category }: WorkListProps) => {
               )}
               {isProtected && (
                 <div className='absolute inset-0 flex items-center justify-center bg-black/10'>
-                  <span className='text-2xl'>🔒</span>
+                  {/* <span className='text-2xl'>🔒</span> */}
                 </div>
               )}
             </div>
