@@ -63,7 +63,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
       tl.fromTo(
         [activeSlide, activeSubSlide],
         { opacity: 0, scale: 1.02 },
-        { opacity: 1, scale: 1, duration: 1.5, ease: "power2.out" },
+        { opacity: 1, scale: 1, duration: 1.5, ease: "power2.out", delay: 0.3 },
       ).fromTo(
         [activeTextElements, activeMeta],
         { opacity: 0, y: 20 },
