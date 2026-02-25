@@ -1,15 +1,15 @@
-import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import {
   fetchCategoryBySlug,
   fetchWorksByCategory,
   WorkData,
-} from '@/app/features/works/api/works';
-import { WorksList } from '@/app/features/works/components/WorksList';
-import Image from 'next/image';
-import { Category } from '../../features/works/api/works';
-import { CategoryHero } from '@/app/features/works/components/CategoryHero';
-import { NAV_PATHS } from '@/app/constants/config';
-import { Metadata } from 'next';
+} from "@/app/features/works/api/works";
+import { WorksList } from "@/app/features/works/components/WorksList";
+import Image from "next/image";
+import { Category } from "../../features/works/api/works";
+import { CategoryHero } from "@/app/features/works/components/CategoryHero";
+import { NAV_PATHS } from "@/app/constants/config";
+import { Metadata } from "next";
 
 //①型の宣言
 //「このページはURLから情報を読み取りますよ」と予告
@@ -55,14 +55,14 @@ export default async function Page({ params }: customPageProps) {
   //④【重要】ターミナルで中身を確認 ※値が長い
   // console.log('--- [STEP1]窓口の確認 ---- \nURLから届いた値:', category, works);
   console.log(`カテゴリーデータ`, categoryData);
-  console.log('ACF Data:', JSON.stringify(categoryData?.acf, null, 2));
+  console.log("ACF Data:", JSON.stringify(categoryData?.acf, null, 2));
   if (!categoryData) {
-    return <main className='pt-40 text-center'>Category not found.</main>;
+    return <main className="pt-40 text-center">Category not found.</main>;
   }
   const acf = categoryData?.acf;
   //画面に表示する
   return (
-    <main className='max-w-6xl mx-auto px-6 md:px-16'>
+    <main className="mx-auto max-w-6xl px-6 md:px-16">
       {/* 修正ポイント：GSAPアニメーション付きのクライアントコンポーネントへ */}
       {acf?.next_image ? (
         <CategoryHero
@@ -74,8 +74,8 @@ export default async function Page({ params }: customPageProps) {
           alt={acf.term_title || categoryData?.name || category}
         />
       ) : (
-        <section className='relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen aspect-21/9 mb-12 bg-slate-200 flex items-center justify-center'>
-          <span className='text-slate-400 font-bold uppercase tracking-widest'>
+        <section className="relative right-1/2 left-1/2 -mr-[50vw] mb-12 -ml-[50vw] flex aspect-21/9 w-screen items-center justify-center bg-slate-200">
+          <span className="font-bold tracking-widest text-slate-400 uppercase">
             {category}
           </span>
         </section>
@@ -84,13 +84,13 @@ export default async function Page({ params }: customPageProps) {
         parent={NAV_PATHS.WORKS}
         category={{ name: categoryData.name, slug: categoryData.slug }}
       />
-      <section className='pt-10 md:pt-20 flex flex-col gap-15 md:gap-20'>
-        <div className='flex flex-col py-10'>
-          <h2 className='font-[family-name:var(--font-michroma)] text-center font-bold text-2xl md:text-3xl tracking-[0.5em] text-zinc-800 uppercase mb-8 md:mb-12'>
+      <section className="flex flex-col gap-15 pt-10 md:gap-20 md:pt-20">
+        <div className="flex flex-col py-10">
+          <h2 className="mb-8 text-center font-[family-name:var(--font-michroma)] text-2xl font-bold tracking-[0.5em] text-zinc-800 uppercase md:mb-12 md:text-3xl">
             {category}
           </h2>
           {acf?.next_desc && (
-            <p className='font-[family-name:var(--font-mixed)] text-center text-sm md:text-base leading-relaxed tracking-widest text-zinc-500 max-w-prose font-light break-keep word-break-loose'>
+            <p className="word-break-loose max-w-prose text-center font-[family-name:var(--font-mixed)] text-sm leading-relaxed font-light tracking-widest break-keep text-zinc-500 md:text-base">
               {acf.next_desc}
             </p>
           )}

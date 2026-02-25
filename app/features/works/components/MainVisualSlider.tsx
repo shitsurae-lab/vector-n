@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useRef, useState, useEffect } from 'react';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 interface MainVisualImage {
   src: string;
@@ -40,13 +40,13 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
 
     // --- A. スクロール指示器の無限ループ (独立動作) ---
     gsap.fromTo(
-      '.animate-scroll-line-inner',
-      { y: '-100%' },
-      { y: '100%', duration: 1.5, repeat: -1, ease: 'power1.inOut' },
+      ".animate-scroll-line-inner",
+      { y: "-100%" },
+      { y: "100%", duration: 1.5, repeat: -1, ease: "power1.inOut" },
     );
 
     // --- B. スライドのアニメーション ---
-    gsap.set('.slide-item, .sub-slide-item', { opacity: 0, zIndex: 0 });
+    gsap.set(".slide-item, .sub-slide-item", { opacity: 0, zIndex: 0 });
     const activeSlide = container.querySelector(`.slide-${currentIndex}`);
     const activeSubSlide = container.querySelector(
       `.sub-slide-${currentIndex}`,
@@ -63,12 +63,12 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
       tl.fromTo(
         [activeSlide, activeSubSlide],
         { opacity: 0, scale: 1.02 },
-        { opacity: 1, scale: 1, duration: 1.5, ease: 'power2.out' },
+        { opacity: 1, scale: 1, duration: 1.5, ease: "power2.out" },
       ).fromTo(
         [activeTextElements, activeMeta],
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' },
-        '-=1',
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" },
+        "-=1",
       );
     }
   }, [currentIndex, images]);
@@ -78,50 +78,50 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
   return (
     <section
       ref={containerRef}
-      className='relative w-screen h-[85vh] md:h-svh overflow-hidden bg-[#f3f1ee] left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]'
+      className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] h-[85vh] w-screen overflow-hidden bg-[#f3f1ee] md:h-svh"
     >
-      <div className='relative w-full max-w-[1440px] h-full mx-auto px-6 md:px-12 flex flex-col'>
+      <div className="relative mx-auto flex h-full w-full max-w-[1440px] flex-col px-6 md:px-12">
         {/* --- 🖼️ ビジュアルエリア --- */}
-        <div className='relative w-full max-w-[1200px] aspect-[4/3] md:aspect-[16/9]'>
+        <div className="relative aspect-[4/3] w-full max-w-[1200px] md:aspect-[16/9]">
           {/* ① 背面のさりげない影 */}
           <div
-            className='hero-bg-shape absolute inset-0 bg-zinc-300/10 translate-x-6 translate-y-6 scale-[1.02] blur-[20px]'
-            style={{ clipPath: 'url(#fluid-mask-mv)' }}
+            className="hero-bg-shape absolute inset-0 translate-x-6 translate-y-6 scale-[1.02] bg-zinc-300/10 blur-[20px]"
+            style={{ clipPath: "url(#fluid-mask-mv)" }}
           />
 
           {/* ② メイン流体スライダー */}
           <div
-            className='relative z-10 w-full h-full shadow-2xl overflow-hidden'
-            style={{ clipPath: 'url(#fluid-mask-mv)' }}
+            className="relative z-10 h-full w-full overflow-hidden shadow-2xl"
+            style={{ clipPath: "url(#fluid-mask-mv)" }}
           >
             {images.map((image, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 slide-item slide-${index}`}
+                className={`slide-item absolute inset-0 slide-${index}`}
               >
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
                   priority={index === 0}
-                  className='object-cover'
+                  className="object-cover"
                 />
               </div>
             ))}
           </div>
 
           {/* ③ サブ縦長楕円（セクション跨ぎ） */}
-          <div className='sub-visual-wrapper absolute z-40 right-2 bottom-[-140px] md:bottom-[-160px] lg:bottom-[-120px] w-[35vw] md:w-[24vw] lg:w-[18vw] max-w-[280px] aspect-[3/4] shadow-2xl overflow-hidden rounded-[200px]'>
+          <div className="sub-visual-wrapper absolute right-2 bottom-[-140px] z-40 aspect-[3/4] w-[35vw] max-w-[280px] overflow-hidden rounded-[200px] shadow-2xl md:bottom-[-160px] md:w-[24vw] lg:bottom-[-120px] lg:w-[18vw]">
             {images.map((image, index) => (
               <div
                 key={`sub-${index}`}
-                className={`absolute inset-0 sub-slide-item sub-slide-${index}`}
+                className={`sub-slide-item absolute inset-0 sub-slide-${index}`}
               >
                 <Image
                   src={image.subSrc || image.src}
-                  alt=''
+                  alt=""
                   fill
-                  className='object-cover scale-110'
+                  className="scale-110 object-cover"
                 />
               </div>
             ))}
@@ -146,26 +146,26 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
         </div>
 
         {/* --- 🖋️ テキストレイヤー --- */}
-        <div className='absolute bottom-[10%] sm:bottom-[24%] md:bottom-[12%] sm:w-[calc(100%-40px)] md:w-[calc(100%-160px)] w-[calc(100%-100px)] right-0 md:right-auto md:left-20 z-30 pointer-events-none'>
+        <div className="pointer-events-none absolute right-0 bottom-[10%] z-30 w-[calc(100%-100px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[12%] md:left-20 md:w-[calc(100%-160px)]">
           {images.map((image, index) => (
             <div
               key={`text-group-${index}`}
-              className={index === currentIndex ? 'block' : 'hidden'}
+              className={index === currentIndex ? "block" : "hidden"}
             >
-              <div className={`text-${index} flex items-center gap-4 mb-4`}>
-                <div className='h-[1px] w-12 bg-zinc-300' />
-                <p className='font-[family-name:var(--font-mixed)] text-[10px] md:text-xs tracking-[0.3em] uppercase text-zinc-500'>
+              <div className={`text-${index} mb-4 flex items-center gap-4`}>
+                <div className="h-[1px] w-12 bg-zinc-300" />
+                <p className="font-[family-name:var(--font-mixed)] text-[10px] tracking-[0.3em] text-zinc-500 uppercase md:text-xs">
                   {image.subtitle}
                 </p>
               </div>
               <h2
-                className={`text-${index} font-[family-name:var(--font-anton)] text-5xl md:text-7xl lg:text-8xl leading-tight text-zinc-900 uppercase tracking-wider`}
+                className={`text-${index} font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-zinc-900 uppercase md:text-7xl lg:text-8xl`}
               >
                 {image.title}
               </h2>
               {image.desc && (
                 <p
-                  className={`text-${index} mt-10 ml-16 max-w-sm text-xs md:text-sm text-zinc-500 leading-relaxed tracking-wider border-l border-zinc-200 pl-6`}
+                  className={`text-${index} mt-10 ml-16 max-w-sm border-l border-zinc-200 pl-6 text-xs leading-relaxed tracking-wider text-zinc-500 md:text-sm`}
                 >
                   {image.desc}
                 </p>
@@ -175,25 +175,25 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
         </div>
 
         {/* --- 🖱️ Scroll Indicator --- */}
-        <div className='absolute bottom-24 sm:bottom-8 md:bottom-40 lg:bottom-12 left-8 md:left-auto right-auto md:right-12 z-50 flex flex-col items-end md:items-start gap-4 overflow-hidden'>
+        <div className="absolute right-auto bottom-24 left-8 z-50 flex flex-col items-end gap-4 overflow-hidden sm:bottom-8 md:right-12 md:bottom-40 md:left-auto md:items-start lg:bottom-12">
           <span
-            className='font-[family-name:var(--font-michroma)] text-[6px] tracking-[0.2em] text-zinc-400 uppercase vertical-text'
-            style={{ writingMode: 'vertical-rl' }}
+            className="vertical-text font-[family-name:var(--font-michroma)] text-[6px] tracking-[0.2em] text-zinc-400 uppercase"
+            style={{ writingMode: "vertical-rl" }}
           >
             scroll down
           </span>
-          <div className='relative w-[1px] h-12 bg-zinc-200/30 overflow-hidden'>
-            <div className='animate-scroll-line-inner absolute inset-0 bg-zinc-400' />
+          <div className="relative h-12 w-[1px] overflow-hidden bg-zinc-200/30">
+            <div className="animate-scroll-line-inner absolute inset-0 bg-zinc-400" />
           </div>
         </div>
       </div>
 
-      <svg width='0' height='0' className='absolute'>
+      <svg width="0" height="0" className="absolute">
         <defs>
-          <clipPath id='fluid-mask-mv' clipPathUnits='objectBoundingBox'>
+          <clipPath id="fluid-mask-mv" clipPathUnits="objectBoundingBox">
             <path
-              transform='scale(0.00105, 0.00155)'
-              d='M119.624 588C14.1239 497.646 -37.8762 170 31.6616 0H824.124C920.624 25.5 950.124 90 950.124 146C950.124 226 880.942 337.14 726.162 389C653.624 413.304 539.124 529.5 457.124 588C353.124 662.195 202.624 659.084 119.624 588Z'
+              transform="scale(0.00105, 0.00155)"
+              d="M119.624 588C14.1239 497.646 -37.8762 170 31.6616 0H824.124C920.624 25.5 950.124 90 950.124 146C950.124 226 880.942 337.14 726.162 389C653.624 413.304 539.124 529.5 457.124 588C353.124 662.195 202.624 659.084 119.624 588Z"
             />
           </clipPath>
         </defs>

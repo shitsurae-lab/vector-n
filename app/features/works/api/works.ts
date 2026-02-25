@@ -57,8 +57,8 @@ export interface WorkData {
     next_api_image?: string;
   };
   _embedded?: {
-    'wp:featuredmedia'?: Array<{ source_url: string; alt_text?: string }>;
-    'wp:term'?: Array<
+    "wp:featuredmedia"?: Array<{ source_url: string; alt_text?: string }>;
+    "wp:term"?: Array<
       Array<{
         id: number;
         name: string;
@@ -108,7 +108,7 @@ export type PageData = {
 
 // 4.💡 WPの複雑な階層からカテゴリー名とスラグを安全に取り出す
 export const getCategoryFromWork = (work: WorkData) => {
-  const terms = work._embedded?.['wp:term'];
+  const terms = work._embedded?.["wp:term"];
   if (!terms || !Array.isArray(terms[0]) || terms[0].length === 0) return null;
 
   // 0番目の配列（カテゴリー）の最初の要素を取得
@@ -128,7 +128,7 @@ export const getCategoryFromWork = (work: WorkData) => {
 // カテゴリーのスラッグからIDを調べる補助関数
 export const fetchCategoryIdBySlug = async (slug: string): Promise<number> => {
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?slug=${slug}`;
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url, { cache: "no-store" });
   const data = await res.json();
   if (!data || data.length === 0)
     throw new Error(`Category not found : ${slug}`);
@@ -141,7 +141,7 @@ export const fetchWorksByCategory = async (
 ): Promise<WorkData[]> => {
   const categoryId = await fetchCategoryIdBySlug(categorySlug);
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement?achievement_cat=${categoryId}&_embed&_fields=id,title,excerpt,content,slug,date,modified,acf,featured_media,_links,_embedded`;
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url, { cache: "no-store" });
   return await res.json();
 };
 
@@ -150,7 +150,7 @@ export const fetchWorkBySlug = async (
   slug: string,
 ): Promise<WorkData | null> => {
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement?slug=${slug}&_embed&_fields=id,title,excerpt,content,slug,date,modified,acf,featured_media,_links,_embedded`;
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url, { cache: "no-store" });
   const data = await res.json();
   return data && data.length > 0 ? (data[0] as WorkData) : null;
 };
@@ -158,7 +158,7 @@ export const fetchWorkBySlug = async (
 // 3. 全カテゴリーを取得
 export const fetchAllCategories = async (): Promise<Category[]> => {
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?_embed&_fields=id,name,slug,description,acf,_embedded`;
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url, { cache: "no-store" });
   return await res.json();
 };
 
@@ -167,17 +167,17 @@ export const fetchCategoryBySlug = async (
   slug: string,
 ): Promise<Category | null> => {
   const url = `https://naname-lab.net/wp-json/wp/v2/achievement_cat?_embed&slug=${slug}&_fields=id,name,slug,description,acf,_embedded`;
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url, { cache: "no-store" });
   const data = await res.json();
   return data && data.length > 0 ? (data[0] as Category) : null;
 };
 
 // 5. 固定ページを取得
 export const fetchPageBySlug = async (
-  slug: PageData['slug'],
+  slug: PageData["slug"],
 ): Promise<PageData | null> => {
   const url = `https://naname-lab.net/wp-json/wp/v2/pages?slug=${slug}&_embed&_fields=id,title,slug,acf,_links,_embedded`;
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url, { cache: "no-store" });
   const data = await res.json();
   return data && data.length > 0 ? (data[0] as PageData) : null;
 };

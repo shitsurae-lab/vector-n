@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import he from 'he';
-import { NAV_PATHS, type NavPath } from '@/app/constants/config';
+import Link from "next/link";
+import he from "he";
+import { NAV_PATHS, type NavPath } from "@/app/constants/config";
 
 type Props = {
   parent?: NavPath;
@@ -13,28 +13,28 @@ type Props = {
 
 export const Breadcrumbs = ({ parent, category, title }: Props) => {
   return (
-    <nav className='flex items-center gap-2 text-[10px] font-bold tracking-[0.3em] text-zinc-400 uppercase py-6 overflow-x-auto whitespace-nowrap scrollbar-hide'>
+    <nav className="scrollbar-hide flex items-center gap-2 overflow-x-auto py-6 text-[10px] font-bold tracking-[0.3em] whitespace-nowrap text-zinc-400 uppercase">
       {/* 1. HOME */}
       <Link
         href={NAV_PATHS.HOME.path}
-        className='hover:text-zinc-900 transition-colors shrink-0'
+        className="shrink-0 transition-colors hover:text-zinc-900"
       >
         {NAV_PATHS.HOME.label}
       </Link>
 
       {/* 2. Parent (WORKS など) */}
-      {parent && parent.path !== '/' && (
+      {parent && parent.path !== "/" && (
         <>
-          <span className='text-zinc-300 shrink-0'>/</span>
+          <span className="shrink-0 text-zinc-300">/</span>
           {category || title ? (
             <Link
               href={`/${parent.path}`}
-              className='hover:text-zinc-900 transition-colors shrink-0'
+              className="shrink-0 transition-colors hover:text-zinc-900"
             >
               {parent.label}
             </Link>
           ) : (
-            <span className='text-zinc-900 shrink-0'>{parent.label}</span>
+            <span className="shrink-0 text-zinc-900">{parent.label}</span>
           )}
         </>
       )}
@@ -42,16 +42,16 @@ export const Breadcrumbs = ({ parent, category, title }: Props) => {
       {/* 3. Category (カスタム投稿のタクソノミー) */}
       {category && (
         <>
-          <span className='text-zinc-300 shrink-0'>/</span>
+          <span className="shrink-0 text-zinc-300">/</span>
           {title ? (
             <Link
-              href={`/${parent?.path || 'works'}/${category.slug}`}
-              className='hover:text-zinc-900 transition-colors shrink-0'
+              href={`/${parent?.path || "works"}/${category.slug}`}
+              className="shrink-0 transition-colors hover:text-zinc-900"
             >
               {category.name}
             </Link>
           ) : (
-            <span className='text-zinc-900 shrink-0'>{category.name}</span>
+            <span className="shrink-0 text-zinc-900">{category.name}</span>
           )}
         </>
       )}
@@ -59,8 +59,8 @@ export const Breadcrumbs = ({ parent, category, title }: Props) => {
       {/* 4. Title (投稿詳細) */}
       {title && (
         <>
-          <span className='text-zinc-300 shrink-0'>/</span>
-          <span className='text-zinc-900 truncate max-w-[150px] md:max-w-[300px]'>
+          <span className="shrink-0 text-zinc-300">/</span>
+          <span className="max-w-[150px] truncate text-zinc-900 md:max-w-[300px]">
             {he.decode(title)}
           </span>
         </>

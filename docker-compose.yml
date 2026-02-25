@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: next-portfolio-dev
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - .:/app
       - /app/node_modules
@@ -20,5 +20,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2.0' # CPUを2枚分に制限
+          cpus: "2.0" # CPUを2枚分に制限
           memory: 4G # メモリを4GBに制限（残り12GBをAdobeやOSが自由に使える）

@@ -1,10 +1,10 @@
 import {
   fetchWorkBySlug,
   fetchCategoryBySlug,
-} from '@/app/features/works/api/works';
-import { ProtectedContent } from '@/components/ProtectedContent';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+} from "@/app/features/works/api/works";
+import { ProtectedContent } from "@/components/ProtectedContent";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type customPageProps = {
   params: Promise<{ category: string; slug: string }>;
@@ -59,7 +59,7 @@ export default async function WorkDetailPage({ params }: customPageProps) {
   return (
     // 左右突き抜けのヒーローエリアを正しく表示するため、
     // 親に余計な padding や max-width をつけない状態でコンポーネントを呼び出す
-    <div className='min-h-screen bg-white'>
+    <div className="min-h-screen bg-white">
       <ProtectedContent
         slug={slug}
         categorySlug={category}

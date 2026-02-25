@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image'; // Next.jsのImageコンポーネントをインポート
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-import { ArrowRight } from 'lucide-react';
-import { Arrow } from 'radix-ui/internal';
+import { useRef } from "react";
+import Link from "next/link";
+import Image from "next/image"; // Next.jsのImageコンポーネントをインポート
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { ArrowRight } from "lucide-react";
+import { Arrow } from "radix-ui/internal";
 
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
@@ -44,7 +44,7 @@ export const FluffyContainer = ({
   // 1. 背景色の条件分岐（2番目と4番目の時だけ色を変える）
   // プログラミングのindexは0から始まるので、2番目(index:1)と4番目(index:3)を指定します
   const isTargetIndex = index === 1 || index === 3;
-  const bgColorClass = isTargetIndex ? 'bg-[#f3f1ee]' : 'bg-transparent'; // ターゲットの色を少し濃いめに設定
+  const bgColorClass = isTargetIndex ? "bg-[#f3f1ee]" : "bg-transparent"; // ターゲットの色を少し濃いめに設定
 
   useGSAP(
     () => {
@@ -58,7 +58,7 @@ export const FluffyContainer = ({
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
-          start: 'top 80%',
+          start: "top 80%",
           once: true,
         },
       });
@@ -66,7 +66,7 @@ export const FluffyContainer = ({
       tl.fromTo(
         imageWrapperRef.current,
         { opacity: 0, y: 50, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power2.out' },
+        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power2.out" },
       ).fromTo(
         children,
         { opacity: 0, y: 30 },
@@ -75,35 +75,35 @@ export const FluffyContainer = ({
           y: 0,
           duration: 0.8,
           stagger: 0.15,
-          ease: 'power2.out',
+          ease: "power2.out",
         },
-        '-=0.8',
+        "-=0.8",
       );
     },
     { scope: containerRef },
   );
   // link がある場合のみ cursor-pointer と hover背景を付与する
-  const wrapperClasses = ` group w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] relative flex flex-col items-center overflow-hidden transition-colors  duration-500 ${bgColorClass} ${link ? 'cursor-pointer hover:bg-black/[0.02]' : ''}`;
+  const wrapperClasses = ` group w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] relative flex flex-col items-center overflow-hidden transition-colors  duration-500 ${bgColorClass} ${link ? "cursor-pointer hover:bg-black/[0.02]" : ""}`;
   // コンテンツの中身を共通変数化
   const innerContent = (
     <div
-      className={`max-w-6xl mx-auto w-full flex flex-col ${
-        isEven ? 'md:flex-row-reverse' : 'md:flex-row'
-      } items-start justify-center gap-12 md:gap-20 py-20 px-6 md:px-16 group`}
+      className={`mx-auto flex w-full max-w-6xl flex-col ${
+        isEven ? "md:flex-row-reverse" : "md:flex-row"
+      } group items-start justify-center gap-12 px-6 py-20 md:gap-20 md:px-16`}
     >
       {/* 🖼️ 画像領域：PCで大きくなりすぎないよう制限 */}
       <div
         ref={imageWrapperRef}
-        className='basis-full md:basis-1/2 w-full flex justify-center'
+        className="flex w-full basis-full justify-center md:basis-1/2"
       >
-        <div className='relative aspect-square w-full max-w-[480px] overflow-hidden rounded-2xl shadow-2xl bg-slate-100'>
+        <div className="relative aspect-square w-full max-w-[480px] overflow-hidden rounded-2xl bg-slate-100 shadow-2xl">
           <Image
             src={imageHref}
             alt={enTitle}
             fill
-            sizes='(max-width: 768px) 100vw, 480px'
+            sizes="(max-width: 768px) 100vw, 480px"
             className={`object-cover transition-transform duration-1000 ease-out ${
-              link ? 'group-hover:scale-110' : ''
+              link ? "group-hover:scale-110" : ""
             }`}
             priority={index === 0}
           />
@@ -113,23 +113,19 @@ export const FluffyContainer = ({
       {/* 🖋️ テキスト領域：最新の文字組みレイアウト */}
       <div
         ref={contentRef}
-        className='basis-full md:basis-1/2 pt-10 md:pt-20 relative'
+        className="relative basis-full pt-10 md:basis-1/2 md:pt-20"
       >
-        <div className='group relative'>
+        <div className="group relative">
           {/* --- 01. ビッグナンバー (Anton) ---
         text-transparent と -webkit-text-stroke で「線」にして、Michromaの空間美を邪魔しないようにします */}
-          <span
-            className='absolute -top-16 -left-10 md:-top-24 md:-left-14 select-none pointer-events-none
-    font-[family-name:var(--font-anton)] text-[140px] md:text-[220px]
-    leading-none transition-all duration-1000 text-zinc-900 opacity-[0.04] group-hover:opacity-[0.08]'
-          >
+          <span className="pointer-events-none absolute -top-16 -left-10 font-[family-name:var(--font-anton)] text-[140px] leading-none text-zinc-900 opacity-[0.04] transition-all duration-1000 select-none group-hover:opacity-[0.08] md:-top-24 md:-left-14 md:text-[220px]">
             {num}
           </span>
 
-          <div className='relative z-10 space-y-6'>
+          <div className="relative z-10 space-y-6">
             {/* --- 02. 英語メインタイトル (Anton) --- */}
-            <div className='transition-transform duration-700 group-hover:translate-x-2'>
-              <h3 className='font-[family-name:var(--font-anton)] text-5xl md:text-6xl tracking-tight uppercase leading-[0.85] text-zinc-900'>
+            <div className="transition-transform duration-700 group-hover:translate-x-2">
+              <h3 className="font-[family-name:var(--font-anton)] text-5xl leading-[0.85] tracking-tight text-zinc-900 uppercase md:text-6xl">
                 {enTitle}
               </h3>
             </div>
@@ -137,29 +133,29 @@ export const FluffyContainer = ({
             {/* --- 03. ライン ＋ 日本語サブタイトル (Michroma) ---
           Michromaは横長なので、trackingを広げすぎると読みづらくなります。
           [0.2em] 程度に抑えつつ、font-boldで存在感を出します。 */}
-            <div className='flex items-center gap-4 pl-1'>
-              <span className='h-[1px] w-10 bg-zinc-300 transition-all duration-700 group-hover:w-20 group-hover:bg-zinc-900' />
-              <p className='font-[family-name:var(--font-mixed)] text-xs md:text-sm tracking-[0.2em] font-bold text-zinc-500 uppercase'>
+            <div className="flex items-center gap-4 pl-1">
+              <span className="h-[1px] w-10 bg-zinc-300 transition-all duration-700 group-hover:w-20 group-hover:bg-zinc-900" />
+              <p className="font-[family-name:var(--font-mixed)] text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase md:text-sm">
                 {jaTitle}
               </p>
             </div>
 
             {/* --- 04. 本文 (Michroma) --- */}
-            <div className='pl-1 pt-2'>
-              <div className='font-[family-name:var(--font-mixed)] text-[12px] md:text-[13px] leading-[1.8] tracking-widest text-zinc-500 whitespace-pre-wrap max-w-sm border-l-2 border-zinc-50 pl-5 transition-colors duration-500 group-hover:border-zinc-200'>
+            <div className="pt-2 pl-1">
+              <div className="max-w-sm border-l-2 border-zinc-50 pl-5 font-[family-name:var(--font-mixed)] text-[12px] leading-[1.8] tracking-widest whitespace-pre-wrap text-zinc-500 transition-colors duration-500 group-hover:border-zinc-200 md:text-[13px]">
                 {category}
               </div>
             </div>
 
             {/* --- 05. CTAボタン (Michroma) --- */}
             {link && ctaText && (
-              <div className='pl-1 pt-6'>
-                <div className='group/btn inline-flex items-center gap-5 font-[family-name:var(--font-mixed)] text-[10px] font-black tracking-[0.3em] uppercase text-zinc-400 hover:text-zinc-900 transition-all'>
-                  <span className='relative'>
+              <div className="pt-6 pl-1">
+                <div className="group/btn inline-flex items-center gap-5 font-[family-name:var(--font-mixed)] text-[10px] font-black tracking-[0.3em] text-zinc-400 uppercase transition-all hover:text-zinc-900">
+                  <span className="relative">
                     {ctaText}
-                    <span className='absolute -bottom-1 left-0 w-0 h-[1.5px] bg-zinc-900 transition-all duration-300 group-hover/btn:w-full' />
+                    <span className="absolute -bottom-1 left-0 h-[1.5px] w-0 bg-zinc-900 transition-all duration-300 group-hover/btn:w-full" />
                   </span>
-                  <span className='p-2 rounded-full border border-zinc-100 group-hover/btn:border-zinc-900 group-hover/btn:translate-x-2 transition-all duration-300'>
+                  <span className="rounded-full border border-zinc-100 p-2 transition-all duration-300 group-hover/btn:translate-x-2 group-hover/btn:border-zinc-900">
                     <ArrowRight size={12} />
                   </span>
                 </div>

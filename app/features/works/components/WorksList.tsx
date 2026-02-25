@@ -1,14 +1,14 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardFooter,
-} from '@/components/ui/card';
-import he from 'he'; // タイトルの特殊文字変換用
-import { WorkData } from '../api/works';
+} from "@/components/ui/card";
+import he from "he"; // タイトルの特殊文字変換用
+import { WorkData } from "../api/works";
 
 // 型の定義
 // type Work = {
@@ -42,7 +42,7 @@ type WorkListProps = {
 
 export const WorksList = ({ works, category }: WorkListProps) => {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {works.map((work) => {
         // パスワード保護の判定
         const isProtected = work.content.protected;
@@ -50,55 +50,55 @@ export const WorksList = ({ works, category }: WorkListProps) => {
         const acfNextImage = work.acf ? work.acf.next_api_image : null;
         // 2. 通常のアイキャッチ画像
         const featureImage =
-          work._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+          work._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
         //3. 優先順位
         const thumbnail = acfNextImage || featureImage;
         const altText =
-          work._embedded?.['wp:featuredmedia']?.[0]?.alt_text ||
+          work._embedded?.["wp:featuredmedia"]?.[0]?.alt_text ||
           he.decode(work.title.rendered);
 
         // 日付を「2026.01.28」の形式に整形
         const formattedDate = new Date(work.date)
-          .toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
+          .toLocaleDateString("ja-JP", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
           })
-          .replace(/\//g, '.');
+          .replace(/\//g, ".");
         return (
           <Card
             key={work.id}
-            className='overflow-hidden flex flex-col h-full hover:shadow-md transition-shadow pt-0 bg-slate-50'
+            className="flex h-full flex-col overflow-hidden bg-slate-50 pt-0 transition-shadow hover:shadow-md"
           >
             {/* b. 実際の画像（アイキャッチ画像）を表示 */}
-            <div className='relative aspect-video bg-gray-100'>
+            <div className="relative aspect-video bg-gray-100">
               {thumbnail ? (
                 <Image
                   src={thumbnail}
                   alt={altText}
                   fill
-                  sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority
-                  className={`object-cover ${isProtected ? 'blur-[1px]' : ''}`}
+                  className={`object-cover ${isProtected ? "blur-[1px]" : ""}`}
                 />
               ) : (
-                <div className='flex items-center justify-center h-full text-gray-400'>
+                <div className="flex h-full items-center justify-center text-gray-400">
                   No Image
                 </div>
               )}
               {isProtected && (
-                <div className='absolute inset-0 flex items-center justify-center bg-black/10'>
+                <div className="absolute inset-0 flex items-center justify-center bg-black/10">
                   {/* <span className='text-2xl'>🔒</span> */}
                 </div>
               )}
             </div>
 
-            <CardHeader className='p-4 pb-2'>
-              <div className='text-xs text-gray-500 mb-1'>{formattedDate}</div>
-              <CardTitle className='text-lg leading-tight'>
+            <CardHeader className="p-4 pb-2">
+              <div className="mb-1 text-xs text-gray-500">{formattedDate}</div>
+              <CardTitle className="text-lg leading-tight">
                 <Link
                   href={`/works/${category}/${work.slug}`}
-                  className='hover:underline'
+                  className="hover:underline"
                 >
                   {he.decode(work.title.rendered)}
                 </Link>
@@ -106,8 +106,8 @@ export const WorksList = ({ works, category }: WorkListProps) => {
             </CardHeader>
 
             {/* a. <CardContent>はexcerpt（抜粋）に */}
-            <CardContent className='p-4 pt-0 grow'>
-              <div className='text-sm text-gray-600 line-clamp-3'>
+            <CardContent className="grow p-4 pt-0">
+              <div className="line-clamp-3 text-sm text-gray-600">
                 {isProtected ? (
                   <p>この投稿はパスワードで保護されています</p>
                 ) : (
@@ -120,12 +120,12 @@ export const WorksList = ({ works, category }: WorkListProps) => {
               </div>
             </CardContent>
 
-            <CardFooter className='p-4 pt-0'>
+            <CardFooter className="p-4 pt-0">
               <Link
                 href={`/works/${category}/${work.slug}`}
-                className='text-xs font-bold uppercase tracking-wider text-blue-600 hover:text-blue-800'
+                className="text-xs font-bold tracking-wider text-blue-600 uppercase hover:text-blue-800"
               >
-                {isProtected ? 'View with Password' : 'Read More →'}
+                {isProtected ? "View with Password" : "Read More →"}
               </Link>
             </CardFooter>
           </Card>

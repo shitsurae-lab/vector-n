@@ -1,42 +1,42 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='w-full py-20 px-10 mt-20 border-t border-black/5 text-[#4f545a]'>
-      <div className='max-w-[1600px] mx-auto flex flex-col space-y-6'>
-        <div className='flex flex-col md:flex-row justify-between items-start gap-12'>
+    <footer className="mt-20 w-full border-t border-black/5 px-10 py-20 text-[#4f545a]">
+      <div className="mx-auto flex max-w-[1600px] flex-col space-y-6">
+        <div className="flex flex-col items-start justify-between gap-12 md:flex-row">
           {/* 左側：ロゴ */}
           <div>
             <Link
-              href='/'
-              className='hover:opacity-70 transition-opacity block'
+              href="/"
+              className="block transition-opacity hover:opacity-70"
             >
               <Image
-                src='/logo-thin-y@2x.webp'
-                alt='Vector n'
+                src="/logo-thin-y@2x.webp"
+                alt="Vector n"
                 /* 比率を 40:51 に合わせる (80x102) */
                 width={80}
                 height={102}
-                className='w-[80px] h-auto object-contain'
+                className="h-auto w-[80px] object-contain"
                 priority
               />
             </Link>
           </div>
 
           {/* 右側：リンク */}
-          <div className='flex gap-16 md:gap-24'>
-            <div className='space-y-4'>
-              <p className='text-[10px] uppercase tracking-[0.3em] opacity-40 font-bold'>
+          <div className="flex gap-16 md:gap-24">
+            <div className="space-y-4">
+              <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
                 Navigation
               </p>
-              <ul className='space-y-2 text-sm uppercase tracking-widest font-light'>
+              <ul className="space-y-2 text-sm font-light tracking-widest uppercase">
                 <li>
                   <Link
-                    href='/'
-                    className='hover:opacity-50 transition-opacity'
+                    href="/"
+                    className="transition-opacity hover:opacity-50"
                   >
                     Top
                   </Link>
@@ -44,24 +44,24 @@ export const Footer = () => {
                 <li>
                   {/* href を /works に修正 */}
                   <Link
-                    href='/works'
-                    className='hover:opacity-50 transition-opacity'
+                    href="/works"
+                    className="transition-opacity hover:opacity-50"
                   >
                     Works
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href='/about'
-                    className='hover:opacity-50 transition-opacity'
+                    href="/about"
+                    className="transition-opacity hover:opacity-50"
                   >
                     About
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href='/contact'
-                    className='hover:opacity-50 transition-opacity'
+                    href="/contact"
+                    className="transition-opacity hover:opacity-50"
                   >
                     Contact
                   </Link>
@@ -69,20 +69,20 @@ export const Footer = () => {
               </ul>
             </div>
 
-            <div className='space-y-4'>
-              <p className='text-[10px] uppercase tracking-[0.3em] opacity-40 font-bold'>
+            <div className="space-y-4">
+              <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
                 Source
               </p>
-              <ul className='space-y-2 text-sm uppercase tracking-widest font-light'>
+              <ul className="space-y-2 text-sm font-light tracking-widest uppercase">
                 <li>
                   <a
-                    href='https://github.com'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='hover:opacity-50 transition-opacity flex items-center gap-2'
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 transition-opacity hover:opacity-50"
                   >
                     GitHub
-                    <span className='text-[8px]'>↗</span>
+                    <span className="text-[8px]">↗</span>
                   </a>
                 </li>
               </ul>
@@ -91,7 +91,7 @@ export const Footer = () => {
         </div>
 
         {/* コピーライトの余白微調整 */}
-        <p className='text-[10px] text-center tracking-[0.2em] opacity-50 uppercase pt-10'>
+        <p className="pt-10 text-center text-[10px] tracking-[0.2em] uppercase opacity-50">
           © {currentYear} vector-n. All rights reserved.
         </p>
       </div>

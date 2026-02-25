@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useRef, useState } from 'react';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+import { useRef, useState } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 type SliderProps = {
   images: {
@@ -55,24 +55,24 @@ export const CarouselFade = ({ images }: SliderProps) => {
       // メイン画像：上端固定のズームアウト
       tl.fromTo(
         activeSlide,
-        { opacity: 0, scale: 1.1, transformOrigin: 'center top' },
-        { opacity: 1, scale: 1.02, duration: 1.8, ease: 'power2.out' },
+        { opacity: 0, scale: 1.1, transformOrigin: "center top" },
+        { opacity: 1, scale: 1.02, duration: 1.8, ease: "power2.out" },
       );
 
       // サブ画像：少し遅れてスライドイン
       tl.fromTo(
         activeSubSlide,
         { opacity: 0, x: 30 },
-        { opacity: 1, x: 0, duration: 1.5, ease: 'expo.out' },
-        '-=1.5',
+        { opacity: 1, x: 0, duration: 1.5, ease: "expo.out" },
+        "-=1.5",
       );
 
       // テキスト：出現
       tl.fromTo(
         activeText,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out' },
-        '-=1.2',
+        { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out" },
+        "-=1.2",
       );
     }
   }, [currentIndex]);
@@ -80,61 +80,61 @@ export const CarouselFade = ({ images }: SliderProps) => {
   return (
     <section
       ref={containerRef}
-      className='relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] h-svh md:h-[800px] mb-24 overflow-hidden bg-[#f8f6f3]'
+      className="relative right-1/2 left-1/2 -mr-[50vw] mb-24 -ml-[50vw] h-svh w-screen overflow-hidden bg-[#f8f6f3] md:h-[800px]"
     >
       {/* インナーコンテナ：ここで1200pxに制限し、中央寄せにする */}
-      <div className='relative w-full max-w-[1200px] h-full mx-auto px-6 lg:px-0'>
+      <div className="relative mx-auto h-full w-full max-w-[1200px] px-6 lg:px-0">
         {/* 1. メインマスク：インナー内の左側に配置 (880x640pxイメージ) */}
         <div
           ref={maskRef}
-          className='absolute top-0 left-0 w-full md:w-[880px] h-[70vh] md:h-[640px] overflow-hidden rounded-b-[200px] md:rounded-b-[320px] z-10 bg-slate-100'
+          className="absolute top-0 left-0 z-10 h-[70vh] w-full overflow-hidden rounded-b-[200px] bg-slate-100 md:h-[640px] md:w-[880px] md:rounded-b-[320px]"
         >
           {images?.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 slide-${index} ${index === currentIndex ? 'block' : 'hidden'}`}
+              className={`absolute inset-0 slide-${index} ${index === currentIndex ? "block" : "hidden"}`}
             >
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
                 priority
-                className='object-cover'
+                className="object-cover"
               />
             </div>
           ))}
         </div>
 
         {/* 2. サブ画像：インナー内の右下付近に配置 */}
-        <div className='absolute right-0 md:right-4 bottom-[20%] md:bottom-20 w-[35%] md:w-[320px] aspect-square overflow-hidden rounded-full z-20 shadow-2xl border-8 border-[#f8f6f3]'>
+        <div className="absolute right-0 bottom-[20%] z-20 aspect-square w-[35%] overflow-hidden rounded-full border-8 border-[#f8f6f3] shadow-2xl md:right-4 md:bottom-20 md:w-[320px]">
           {images?.map((image, index) => (
             <div
               key={`sub-${index}`}
-              className={`absolute inset-0 sub-slide-${index} ${index === currentIndex ? 'block' : 'hidden'}`}
+              className={`absolute inset-0 sub-slide-${index} ${index === currentIndex ? "block" : "hidden"}`}
             >
               <Image
                 src={image.subSrc || image.src}
-                alt=''
+                alt=""
                 fill
-                className='object-cover'
+                className="object-cover"
               />
             </div>
           ))}
         </div>
 
         {/* 3. テキストエリア：インナー内の左下に配置 */}
-        <div className='absolute bottom-4 md:bottom-12 left-0 md:left-12 z-30 pointer-events-none'>
+        <div className="pointer-events-none absolute bottom-4 left-0 z-30 md:bottom-12 md:left-12">
           {images.map(
             (image, index) =>
               index === currentIndex && (
-                <div key={index} className='space-y-4'>
+                <div key={index} className="space-y-4">
                   <div
-                    className={`text-${index} text-[10px] md:text-sm tracking-[0.4em] uppercase opacity-60 font-bold`}
+                    className={`text-${index} text-[10px] font-bold tracking-[0.4em] uppercase opacity-60 md:text-sm`}
                   >
-                    {image.subtitle || 'Creative Portfolio'}
+                    {image.subtitle || "Creative Portfolio"}
                   </div>
                   <h2
-                    className={`text-${index} text-4xl md:text-7xl font-black leading-tight text-slate-900 uppercase`}
+                    className={`text-${index} text-4xl leading-tight font-black text-slate-900 uppercase md:text-7xl`}
                   >
                     {image.title}
                   </h2>

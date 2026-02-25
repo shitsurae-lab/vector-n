@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+import { useRef } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 type WorkHeroProps = {
   src: string;
@@ -30,23 +30,23 @@ export const WorkHero = ({
       const textLayer = textRef.current;
       if (!mainMask || !textLayer) return;
 
-      const mainImg = mainMask.querySelector('img');
-      const animateTexts = textLayer.querySelectorAll('.animate-text');
+      const mainImg = mainMask.querySelector("img");
+      const animateTexts = textLayer.querySelectorAll(".animate-text");
       if (!mainImg || animateTexts.length === 0) return;
 
-      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
       tl.fromTo(
         mainMask,
-        { clipPath: 'inset(0 0 100% 0)' },
-        { clipPath: 'inset(0 0 0% 0)', duration: 2.5, ease: 'expo.inOut' },
+        { clipPath: "inset(0 0 100% 0)" },
+        { clipPath: "inset(0 0 0% 0)", duration: 2.5, ease: "expo.inOut" },
       )
-        .fromTo(mainImg, { scale: 1.3 }, { scale: 1, duration: 3 }, '<')
+        .fromTo(mainImg, { scale: 1.3 }, { scale: 1, duration: 3 }, "<")
         .fromTo(
           animateTexts,
           { opacity: 0, x: -30 }, // 左からふわっと
           { opacity: 1, x: 0, duration: 1.5, stagger: 0.2 },
-          '-=1.5',
+          "-=1.5",
         );
     },
     { scope: containerRef },
@@ -55,25 +55,25 @@ export const WorkHero = ({
   return (
     <section
       ref={containerRef}
-      className='relative w-screen h-[80vh] mb-16 overflow-hidden bg-[#f8f6f3] left-[50%] right-[50%] -ml-[50vw] -mr-[50vw]'
+      className="relative right-[50%] left-[50%] -mr-[50vw] mb-16 -ml-[50vw] h-[80vh] w-screen overflow-hidden bg-[#f8f6f3]"
     >
       {/* メイン画像（右配置：right-0 md:right-16） */}
       <div
         ref={mainMaskRef}
-        className='absolute top-0 right-0 md:right-16 w-full md:w-[62.5vw] h-full md:h-[calc(100%-120px)] overflow-hidden rounded-b-[100px] md:rounded-b-[400px] z-10'
+        className="absolute top-0 right-0 z-10 h-full w-full overflow-hidden rounded-b-[100px] md:right-16 md:h-[calc(100%-120px)] md:w-[62.5vw] md:rounded-b-[400px]"
       >
-        <Image src={src} alt={alt} fill priority className='object-cover' />
+        <Image src={src} alt={alt} fill priority className="object-cover" />
       </div>
 
       {/* テキストエリア（左配置） */}
       <div
         ref={textRef}
-        className='absolute bottom-12 left-8 md:left-24 z-20 pointer-events-none'
+        className="pointer-events-none absolute bottom-12 left-8 z-20 md:left-24"
       >
-        <div className='animate-text text-xs tracking-[0.3em] uppercase opacity-60 mb-2'>
+        <div className="animate-text mb-2 text-xs tracking-[0.3em] uppercase opacity-60">
           {categoryName} / {date}
         </div>
-        <h1 className='animate-text text-3xl md:text-6xl font-bold leading-tight text-slate-900 max-w-[80vw] md:max-w-2xl'>
+        <h1 className="animate-text max-w-[80vw] text-3xl leading-tight font-bold text-slate-900 md:max-w-2xl md:text-6xl">
           {title}
         </h1>
       </div>
