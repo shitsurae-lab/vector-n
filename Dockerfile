@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 # もしビルドでエラーが出る場合は、ここに build-essential 等を追加しますが、
 # Next.js 16ならまずはこのままでOKです。
-RUN npm install
+RUN npm ci
 
 # ソースのコピー
 COPY . .
