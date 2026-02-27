@@ -117,15 +117,15 @@ export const CategoryHero = ({
             />
           </div>
 
-          {/* ④ メタデータ（あしらいテキスト：生成画像を再現） */}
-          <div className="absolute top-0 left-0 z-30 space-y-1 pt-10 pl-4 font-mono md:pl-0">
+          {/* ④ メタデータ */}
+          {/* <div className="absolute top-0 left-0 z-30 space-y-1 pt-10 pl-4 font-mono md:pl-0">
             <p className="animate-text text-[9px] tracking-[0.2em] text-zinc-400 uppercase">
               PUBLISHED / {formattedDate}
             </p>
             <p className="animate-text text-[9px] tracking-[0.2em] text-zinc-400">
               35.4504° N, 139.6342° E
             </p>
-          </div>
+          </div> */}
         </div>
         {/* --- 🖋️ テキストレイヤー --- */}
         <div className="absolute right-0 bottom-[10%] z-30 w-[calc(100%-100px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[12%] md:left-20 md:w-[calc(100%-160px)]">
