@@ -11,6 +11,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import OpeningProvider from "./features/works/components/OpeningProvider";
 
 // h2用: インパクトのある英単語
 const anton = Anton({
@@ -88,15 +89,17 @@ export default function RootLayout({
       className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${bebasNeue.variable} ${montserrat.variable}`}
     >
       <body className="bg-[#f8f6f3] text-[#4f545a] antialiased selection:bg-black selection:text-white">
-        <ScrollToTop />
-        {/* 全ページ共通：ヘッダー */}
-        <Header />
+        <OpeningProvider>
+          <ScrollToTop />
+          {/* 全ページ共通：ヘッダー */}
+          <Header />
 
-        {/* メインコンテンツ */}
-        {children}
-        <Toaster position="top-center" richColors />
-        {/* 全ページ共通：フッター */}
-        <Footer />
+          {/* メインコンテンツ */}
+          {children}
+          <Toaster position="top-center" richColors />
+          {/* 全ページ共通：フッター */}
+          <Footer />
+        </OpeningProvider>
       </body>
     </html>
   );
