@@ -51,7 +51,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Vector-n",
+    template: "%s | Toshiyuki Kurashima's Portfolio",
     default: "Vector-n | Toshiyuki Kurashima's Portfolio",
   },
   description:
