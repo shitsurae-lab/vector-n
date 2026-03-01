@@ -1,4 +1,5 @@
-"use client";
+// バックアップの為、use clientをコメントアウト
+//  "use client";
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";

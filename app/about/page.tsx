@@ -1,5 +1,5 @@
 import { fetchPageBySlug } from "@/app/features/works/api/works";
-import { CategoryHero } from "@/app/features/works/components/CategoryHero";
+import { CategoryHero } from "@/components/Hero/CategoryHero";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { FluffyContainer } from "@/components/FluffyContainer";
 import { NAV_PATHS } from "../constants/config";

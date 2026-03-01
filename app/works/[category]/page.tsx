@@ -7,7 +7,7 @@ import {
 import { WorksList } from "@/app/features/works/components/WorksList";
 import Image from "next/image";
 import { Category } from "../../features/works/api/works";
-import { CategoryHero } from "@/app/features/works/components/CategoryHero";
+import { CategoryHero } from "@/components/Hero/CategoryHero";
 import { NAV_PATHS } from "@/app/constants/config";
 import { Metadata } from "next";
 

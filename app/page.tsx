@@ -4,7 +4,7 @@ import {
   fetchPageBySlug,
 } from "./features/works/api/works";
 import { CapsuleSection } from "../components/CapsuleSection";
-import { MainVisualSlider } from "./features/works/components/MainVisualSlider";
+import { HeroSlider } from "../components/Hero/HeroSlider";
 import { FluffyContainer } from "@/components/FluffyContainer";
 
 export default async function WorksTopPage() {
@@ -66,7 +66,7 @@ export default async function WorksTopPage() {
   return (
     <main className="mx-auto max-w-6xl">
       {/* スライダーを表示 */}
-      {sliderImages.length > 0 && <MainVisualSlider images={sliderImages} />}
+      {sliderImages.length > 0 && <HeroSlider images={sliderImages} />}
       {/* END スライダーを表示 */}
       {/* 2. Capsule Section (Aboutページからのデータを表示) */}
       {capsuleItems.length > 0 && <CapsuleSection items={capsuleItems} />}

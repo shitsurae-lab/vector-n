@@ -8,7 +8,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { NAV_PATHS } from "../constants/config";
-import { CategoryHero } from "../features/works/components/CategoryHero";
+import { CategoryHero } from "../../components/Hero/CategoryHero";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
