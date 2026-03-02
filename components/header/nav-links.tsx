@@ -21,7 +21,8 @@ export const NavLinks = ({
 }) => (
   <ul className={className}>
     {navItems.map((item) => {
-      const isActive = pathname === item.href;
+      const isActive =
+        item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
       return (
         <li key={item.name}>
           <Link
