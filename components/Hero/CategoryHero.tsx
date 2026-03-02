@@ -92,7 +92,7 @@ export const CategoryHero = ({
         <div className="main-visual-wrapper relative mx-auto aspect-[4/3] w-full max-w-[1280px] md:aspect-[4/3] lg:aspect-[16/9]">
           {/* ① 背面のゆらゆら動く影 */}
           <div
-            className="hero-bg-shape-animated pointer-events-none absolute top-4 -right-4 -bottom-8 left-4 z-0 bg-zinc-400/10 blur-[60px]"
+            className="hero-bg-shape-animated pointer-events-none absolute top-4 -right-4 -bottom-8 left-4 z-0 bg-zinc-400/10 blur-[80px]"
             style={{ clipPath: "url(#fluid-mask-mv)" }}
           />
 
@@ -111,7 +111,7 @@ export const CategoryHero = ({
           </div>
 
           {/* ③ サブ画像 */}
-          <div className="sub-visual-wrapper absolute -right-2 bottom-[-140px] z-40 aspect-[3/4] w-[35vw] max-w-[280px] overflow-hidden rounded-[200px] shadow-2xl md:-right-10 md:bottom-[-160px] md:w-[24vw] lg:bottom-[-120px] lg:w-[18vw]">
+          <div className="sub-visual-wrapper absolute -right-4 bottom-[-120px] z-40 aspect-square w-[40vw] max-w-[280px] overflow-hidden rounded-full shadow-2xl md:-right-10 md:bottom-[-160px] md:w-[22vw] lg:bottom-[-120px] lg:w-[18vw]">
             <Image
               src={subSrc || src}
               alt=""
@@ -122,10 +122,11 @@ export const CategoryHero = ({
         </div>
 
         {/* --- 🖋️ テキストレイヤー --- */}
-        <div className="absolute right-0 bottom-[10%] z-30 w-[calc(100%-100px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[12%] md:left-20 md:w-[calc(100%-160px)]">
+        <div className="absolute right-0 bottom-[10%] z-30 w-[calc(100%-80px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[8%] md:left-20 md:w-[calc(100%-160px)]">
           <div className="animate-text mb-4 flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-zinc-400"></div>
-            <p className="font-[family-name:var(--font-michroma)] text-[10px] tracking-[0.3em] text-zinc-500 uppercase md:text-xs">
+            <div className="pointer-events-none absolute inset-y-0 -left-10 -z-10 w-[200%] bg-gradient-to-r from-[#f8f6f3]/80 via-[#f8f6f3]/40 to-transparent blur-md" />
+            <div className="mt-[7px] h-6 w-[1px] bg-zinc-300" />
+            <p className="max-w-[240px] font-[family-name:var(--font-mixed)] text-[9px] text-[10px] leading-relaxed tracking-[0.4em] text-zinc-600 uppercase md:max-w-[400px] md:text-[10px]">
               {subtitle}
             </p>
           </div>
@@ -142,7 +143,7 @@ export const CategoryHero = ({
         </div>
 
         {/* --- 🖱️ Scroll Indicator --- */}
-        <div className="absolute right-auto bottom-24 left-8 z-50 flex flex-col items-end gap-4 overflow-hidden sm:bottom-8 md:right-12 md:bottom-40 md:left-auto md:items-start lg:bottom-12">
+        <div className="absolute right-auto bottom-24 left-8 z-50 flex flex-col items-start gap-4 overflow-hidden sm:bottom-8 md:bottom-40 md:left-0 lg:bottom-12">
           <span
             className="vertical-text font-[family-name:var(--font-michroma)] text-[6px] tracking-[0.2em] text-zinc-400 uppercase"
             style={{ writingMode: "vertical-rl" }}
