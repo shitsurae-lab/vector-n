@@ -76,8 +76,7 @@ export const metadata: Metadata = {
     ],
   },
   verification: {
-    google:
-      '<meta name="google-site-verification" content="PjRLYbD4gNZLG08S39rg08iMHKhm4-4GPcdBveUjiiU" />',
+    google: "PjRLYbD4gNZLG08S39rg08iMHKhm4-4GPcdBveUjiiU",
   },
 };
 
