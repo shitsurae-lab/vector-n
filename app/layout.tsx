@@ -5,7 +5,8 @@ import {
   Orbitron,
   Michroma,
   Montserrat,
-} from "next/font/google"; //
+} from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { Header } from "@/components/header";
@@ -101,6 +102,7 @@ export default function RootLayout({
           <Footer />
         </OpeningProvider>
       </body>
+      <GoogleAnalytics gaId="G-DEVPKC45TK" />
     </html>
   );
 }
