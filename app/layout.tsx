@@ -57,9 +57,7 @@ export const metadata: Metadata = {
   },
   description:
     "「運用まで視野に入れた」Web制作を提供。デザイン、フロントエンド開発、WordPress・CMS実装まで一貫して対応可能です。後任が迷わない保守性の高い設計と、モダンな技術スタック（Next.js / TypeScript）でビジネスの成長を支援します。",
-
   metadataBase: new URL("https://www.vector-n.net"),
-
   // OGP
   openGraph: {
     title: "Vector-n | Toshiyuki Kurashima's Portfolio",
@@ -76,6 +74,10 @@ export const metadata: Metadata = {
         alt: "Vector-n OGP Image",
       },
     ],
+  },
+  verification: {
+    google:
+      '<meta name="google-site-verification" content="PjRLYbD4gNZLG08S39rg08iMHKhm4-4GPcdBveUjiiU" />',
   },
 };
 
