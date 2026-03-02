@@ -14,8 +14,7 @@ services:
       - .env.local
     environment:
       - NODE_ENV=development
-      - WATCHPACK_POLLING=true
-    # ここがAdobeソフトとの共存のカギです
+      # ここがAdobeソフトとの共存のカギです
     deploy:
       resources:
         limits:
