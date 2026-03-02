@@ -122,7 +122,7 @@ export const CategoryHero = ({
         </div>
 
         {/* --- 🖋️ テキストレイヤー --- */}
-        <div className="absolute right-0 bottom-[10%] z-30 w-[calc(100%-80px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[8%] md:left-20 md:w-[calc(100%-160px)]">
+        <div className="absolute right-0 bottom-[20%] z-30 w-[calc(100%-80px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[8%] md:left-20 md:w-[calc(100%-160px)]">
           <div className="animate-text mb-4 flex items-center gap-4">
             <div className="pointer-events-none absolute inset-y-0 -left-10 -z-10 w-[200%] bg-gradient-to-r from-[#f8f6f3]/80 via-[#f8f6f3]/40 to-transparent blur-md" />
             <div className="mt-[7px] h-6 w-[1px] bg-zinc-300" />
@@ -143,7 +143,7 @@ export const CategoryHero = ({
         </div>
 
         {/* --- 🖱️ Scroll Indicator --- */}
-        <div className="absolute right-auto bottom-24 left-8 z-50 flex flex-col items-start gap-4 overflow-hidden sm:bottom-8 md:bottom-40 md:left-0 lg:bottom-12">
+        <div className="absolute right-auto bottom-20 left-8 z-50 flex flex-col items-start gap-4 overflow-hidden sm:bottom-8 md:bottom-24 md:left-0 lg:bottom-12 lg:bottom-40">
           <span
             className="vertical-text font-[family-name:var(--font-michroma)] text-[6px] tracking-[0.2em] text-zinc-400 uppercase"
             style={{ writingMode: "vertical-rl" }}
