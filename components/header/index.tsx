@@ -3,7 +3,8 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react"; // アイコンをインポート
+import { usePathname } from "next/navigation";
+import { Menu } from "lucide-react"; // アイコンをインポート
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,6 +13,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { NavLinks } from "./nav-links";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -22,6 +24,7 @@ const navItems = [
 
 export const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="w-full">
@@ -40,16 +43,11 @@ export const Header = () => {
       </div>
 
       {/* --- PC版: 右上・縦並びナビゲーション --- */}
-      <nav className="fixed top-6 right-6 z-50 hidden flex-col items-end gap-4 text-right md:flex">
-        {navItems.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className="font-michroma text-sm font-bold tracking-[0.2em] uppercase transition-all hover:opacity-60"
-          >
-            {item.name}
-          </Link>
-        ))}
+      <nav className="fixed top-6 right-6 z-50 hidden md:flex">
+        <NavLinks
+          pathname={pathname}
+          className="flex flex-col items-end gap-4"
+        />
       </nav>
 
       {/* --- モバイル版: ハンバーガーメニュー --- */}
@@ -76,17 +74,12 @@ export const Header = () => {
             side="right"
             className="flex w-[80%] flex-col items-center justify-center sm:w-[350px]"
           >
-            <nav className="flex flex-col items-center gap-10">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)} // 遷移時に閉じる
-                  className="font-michroma text-xl font-bold tracking-widest uppercase hover:opacity-50"
-                >
-                  {item.name}
-                </Link>
-              ))}
+            <nav>
+              <NavLinks
+                pathname={pathname}
+                onItemClick={() => setIsOpen(false)}
+                className="flex flex-col items-center gap-10"
+              />
             </nav>
           </SheetContent>
         </Sheet>
