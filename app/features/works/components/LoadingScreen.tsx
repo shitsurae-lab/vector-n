@@ -9,6 +9,7 @@ export default function LoadingScreen() {
   return (
     <motion.div
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.8, ease: easeQuart }}
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#f8f6f3]"
     >
       <div className="w-[300px] md:w-[420px]">
@@ -40,8 +41,8 @@ export default function LoadingScreen() {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 1.5,
-              duration: 1.0,
+              delay: 2.0,
+              duration: 1.2,
               ease: "easeOut",
             }}
           />
