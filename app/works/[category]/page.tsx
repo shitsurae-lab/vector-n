@@ -85,17 +85,11 @@ export default async function Page({ params }: customPageProps) {
         category={{ name: categoryData.name, slug: categoryData.slug }}
       />
       <section className="flex flex-col gap-15 pt-10 md:gap-20 md:pt-20">
-        <div className="flex flex-col py-10">
-          <h2 className="mb-8 text-center font-[family-name:var(--font-michroma)] text-2xl font-bold tracking-[0.5em] text-zinc-800 uppercase md:mb-12 md:text-3xl">
-            {category}
-          </h2>
-          {acf?.next_desc && (
-            <p className="word-break-loose max-w-prose text-center font-[family-name:var(--font-mixed)] text-sm leading-relaxed font-light tracking-widest break-keep text-zinc-500 md:text-base">
-              {acf.next_desc}
-            </p>
-          )}
-        </div>
-        <WorksList works={works} category={category} />
+        <WorksList
+          works={works}
+          category={category}
+          categoryDesc={acf?.next_desc}
+        />
       </section>
     </main>
   );
