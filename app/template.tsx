@@ -13,9 +13,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
       key={pathname} // ページごとに確実にアニメーションをリセット
       initial={{ opacity: 0, y: 15 }} // 固定pxでイラストのシャープさを維持
       animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
       style={{ willChange: "transform, opacity" }}
       transition={{
-        duration: 0.7, // ページ遷移は少し速め（0.7s）がストレスフリー
+        duration: 0.6, // ページ遷移は少し速め（0.6s）がストレスフリー
         ease: MDN_EASE_QUART,
       }}
     >
