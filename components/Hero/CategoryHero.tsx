@@ -1,10 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { FluidMaskPrimary } from "../ui/FluidMasks"; // 共通マスク
+import { FluidMaskPrimary } from "../ui/FluidMasks";
 
 type HeroProps = {
   src: string;
@@ -16,6 +14,20 @@ type HeroProps = {
   date?: string;
 };
 
+// 登場時のふわっとしたアニメーション設定
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 1.2 + i * 0.15, // オープニング後の発火を想定して少し遅延
+      duration: 1,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  }),
+};
+
 export const CategoryHero = ({
   src,
   subSrc,
@@ -24,82 +36,35 @@ export const CategoryHero = ({
   desc,
   alt,
 }: HeroProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (!containerRef.current) return;
-
-      // --- A. 常時の「生命感」アニメーション (HeroSliderと共通) ---
-      gsap.to(".main-mask-container", {
-        scaleY: 1.03,
-        duration: 9,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        transformOrigin: "50% 0%",
-      });
-
-      gsap.to(".hero-bg-shape-animated", {
-        y: 20,
-        x: 10,
-        duration: 7,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(".sub-visual-wrapper", {
-        y: -25,
-        x: 10,
-        rotation: 1.5,
-        duration: 5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      // --- B. 登場時のアニメーション ---
-      const tl = gsap.timeline();
-      tl.fromTo(
-        ".main-visual-wrapper",
-        { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, duration: 1.8, ease: "power4.out" },
-      ).fromTo(
-        ".animate-text",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power3.out" },
-        "-=1.2",
-      );
-
-      // Scroll line
-      gsap.fromTo(
-        ".animate-scroll-line-inner",
-        { y: "-100%" },
-        { y: "100%", duration: 1.5, repeat: -1, ease: "power1.inOut" },
-      );
-    },
-    { scope: containerRef },
-  );
-
   return (
-    <section
-      ref={containerRef}
-      className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] h-[85vh] w-screen overflow-hidden bg-gradient-to-br from-[#f8f6f3] via-[#f3f1ee] to-[#eceae7] md:h-svh"
-    >
+    <section className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] h-[85vh] w-screen overflow-hidden bg-gradient-to-br from-[#f8f6f3] via-[#f3f1ee] to-[#eceae7] md:h-svh">
       <div className="relative mx-auto flex h-full w-full max-w-[1440px] flex-col px-6 md:px-12">
-        {/* --- 🖼️ ビジュアルエリア：HeroSliderと構造を統一 --- */}
-        <div className="main-visual-wrapper relative mx-auto aspect-[4/3] w-full max-w-[1280px] md:aspect-[4/3] lg:aspect-[16/9]">
-          {/* ① 背面のゆらゆら動く影 */}
-          <div
+        {/* --- 🖼️ ビジュアルエリア --- */}
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] as const }}
+          className="main-visual-wrapper relative mx-auto aspect-[4/3] w-full max-w-[1280px] md:aspect-[4/3] lg:aspect-[16/9]"
+        >
+          {/* ① 背面のゆらゆら動く影 (生命感) */}
+          <motion.div
+            animate={{
+              y: [0, 20, 0],
+              x: [0, 10, 0],
+              scale: [1, 1.05, 1],
+            }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             className="hero-bg-shape-animated pointer-events-none absolute top-4 -right-4 -bottom-8 left-4 z-0 bg-zinc-400/10 blur-[80px]"
             style={{ clipPath: "url(#fluid-mask-mv)" }}
           />
 
-          {/* ② メイン画像 */}
-          <div
+          {/* ② メイン画像 (常時の伸縮アニメーション) */}
+          <motion.div
+            animate={{ scaleY: [1, 1.03, 1] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
             className="main-mask-container relative z-10 h-full w-full overflow-hidden"
             style={{ clipPath: "url(#fluid-mask-mv)" }}
+            onContextMenu={(e) => e.preventDefault()} // イラスト保護の例
           >
             <Image
               src={src}
@@ -107,38 +72,66 @@ export const CategoryHero = ({
               fill
               priority
               className="scale-110 object-cover"
+              sizes="100vw"
             />
-          </div>
+          </motion.div>
 
-          {/* ③ サブ画像 */}
-          <div className="sub-visual-wrapper absolute -right-4 bottom-[-120px] z-40 aspect-square w-[40vw] max-w-[280px] overflow-hidden rounded-full shadow-2xl md:-right-10 md:bottom-[-160px] md:w-[22vw] lg:bottom-[-120px] lg:w-[18vw]">
+          {/* ③ サブ画像 (ふわふわ浮遊感) */}
+          <motion.div
+            animate={{
+              y: [0, -25, 0],
+              x: [0, 10, 0],
+              rotate: [0, 1.5, 0],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="sub-visual-wrapper absolute -right-4 bottom-[-120px] z-40 aspect-square w-[40vw] max-w-[280px] overflow-hidden rounded-full shadow-2xl md:-right-10 md:bottom-[-160px] md:w-[22vw] lg:bottom-[-120px] lg:w-[18vw]"
+          >
             <Image
               src={subSrc || src}
               alt=""
               fill
               className="scale-110 object-cover"
+              sizes="(max-width: 768px) 40vw, 20vw"
             />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* --- 🖋️ テキストレイヤー --- */}
         <div className="absolute right-0 bottom-[20%] z-30 w-[calc(100%-80px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[8%] md:left-20 md:w-[calc(100%-160px)]">
-          <div className="animate-text mb-4 flex items-center gap-4">
+          <motion.div
+            variants={fadeInUp}
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            className="mb-4 flex items-center gap-4"
+          >
             <div className="pointer-events-none absolute inset-y-0 -left-10 -z-10 w-[200%] bg-gradient-to-r from-[#f8f6f3]/80 via-[#f8f6f3]/40 to-transparent blur-md" />
             <div className="mt-[7px] h-6 w-[1px] bg-zinc-300" />
-            <p className="max-w-[240px] font-[family-name:var(--font-mixed)] text-[9px] text-[10px] leading-relaxed tracking-[0.4em] text-zinc-600 uppercase md:max-w-[400px] md:text-[10px]">
+            <p className="max-w-[240px] font-[family-name:var(--font-mixed)] text-[10px] leading-relaxed tracking-[0.4em] text-zinc-600 uppercase md:max-w-[400px]">
               {subtitle}
             </p>
-          </div>
+          </motion.div>
 
-          <h1 className="animate-text font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-zinc-900 uppercase md:text-7xl lg:text-8xl">
+          <motion.h1
+            variants={fadeInUp}
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            className="font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-zinc-900 uppercase md:text-7xl lg:text-8xl"
+          >
             {title}
-          </h1>
+          </motion.h1>
 
           {desc && (
-            <p className="animate-text mt-10 ml-16 max-w-sm border-l border-zinc-200 pl-6 text-xs leading-relaxed tracking-wider text-zinc-500 md:text-sm">
+            <motion.p
+              variants={fadeInUp}
+              custom={2}
+              initial="hidden"
+              animate="visible"
+              className="mt-10 ml-16 max-w-sm border-l border-zinc-200 pl-6 text-xs leading-relaxed tracking-wider text-zinc-500 md:text-sm"
+            >
               {desc}
-            </p>
+            </motion.p>
           )}
         </div>
 
@@ -151,7 +144,16 @@ export const CategoryHero = ({
             scroll down
           </span>
           <div className="relative h-12 w-[1px] overflow-hidden bg-zinc-200/30">
-            <div className="animate-scroll-line-inner absolute inset-0 bg-zinc-400" />
+            {/* スクロールラインのアニメーション */}
+            <motion.div
+              animate={{ y: ["-100%", "100%"] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute inset-0 bg-zinc-400"
+            />
           </div>
         </div>
       </div>
