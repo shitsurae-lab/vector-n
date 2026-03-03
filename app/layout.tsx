@@ -102,8 +102,8 @@ export default function RootLayout({
           {/* 全ページ共通：フッター */}
           <Footer />
         </OpeningProvider>
+        <GoogleAnalytics gaId="G-DEVPKC45TK" />
       </body>
-      <GoogleAnalytics gaId="G-DEVPKC45TK" />
     </html>
   );
 }
