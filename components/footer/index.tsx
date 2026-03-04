@@ -76,7 +76,7 @@ export const Footer = () => {
               <ul className="space-y-2 text-sm font-light tracking-widest uppercase">
                 <li>
                   <a
-                    href="https://github.com"
+                    href="https://github.com/shitsurae-lab"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 transition-opacity hover:opacity-50"
