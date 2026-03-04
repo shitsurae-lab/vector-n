@@ -1,7 +1,13 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useMotionValueEvent,
+  useTransform,
+  useSpring,
+} from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,7 +32,18 @@ export const Header = () => {
 
   //2. スクロール検知の設定
   const { scrollY } = useScroll();
+  //2. ※rawの変異を作成
+  const rawScale = useTransform(scrollY, [0, 100], [1, 0.8]);
   const [hidden, setHidden] = useState(false);
+
+  // 3. ①スクロール0px〜100pxの間で、パディングを 40px から 10px に変化させる
+  const headerPadding = useTransform(scrollY, [0, 100], ["40px", "10px"]);
+  // 3. ②rawの変位をuseSpringに通す
+  const logoScale = useSpring(rawScale, {
+    stiffness: 100, // 剛性（高いほどキビキビ動く）
+    damping: 30, // 減衰（高いほど揺れがすぐ収まる）
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     if (headerRef.current) {
@@ -53,11 +70,15 @@ export const Header = () => {
         hidden: { y: -headerHeight },
       }}
       animate={hidden ? "hidden" : "visible"}
+      // style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
       className="fixed top-0 left-0 z-50 w-full"
     >
       {/* --- 左上: ロゴ --- */}
-      <div className="pointer-events-none relative top-0 left-0 z-[60] flex h-[160px] w-[140px] items-center justify-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none">
+      <motion.div
+        style={{ scale: logoScale }}
+        className="pointer-events-none relative top-0 left-0 z-[60] flex h-[160px] w-[140px] items-center justify-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none"
+      >
         <Link href="/" className="pointer-events-auto">
           <Image
             src="/logo-thin-y@2x.webp"
@@ -68,7 +89,7 @@ export const Header = () => {
             priority
           />
         </Link>
-      </div>
+      </motion.div>
 
       {/* --- PC版: 右上・縦並びナビゲーション --- */}
       <nav className="absolute top-6 right-6 z-50 hidden md:flex">
