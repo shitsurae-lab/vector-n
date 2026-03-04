@@ -1,6 +1,7 @@
 "use client";
 
-import * as React from "react";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,21 +16,48 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { NavLinks } from "./nav-links";
 
-const navItems = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Works", href: "/works" },
-  { name: "Contact", href: "/contact" },
-];
-
 export const Header = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  //1. headerの高さを取得
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  //2. スクロール検知の設定
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.offsetHeight);
+    }
+  }, []);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    // 100px以上スクロールし、かつ下方向なら隠す
+    if (latest > previous && latest > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
+
   return (
-    <header className="w-full">
+    <motion.header
+      ref={headerRef}
+      variants={{
+        visible: { y: 0 },
+        // 取得した動的な高さ分だけマイナスに動かす
+        hidden: { y: -headerHeight },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-0 left-0 z-50 w-full"
+    >
       {/* --- 左上: ロゴ --- */}
-      <div className="pointer-events-none fixed top-0 left-0 z-[60] flex h-[160px] w-[140px] items-center justify-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none">
+      <div className="pointer-events-none relative top-0 left-0 z-[60] flex h-[160px] w-[140px] items-center justify-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none">
         <Link href="/" className="pointer-events-auto">
           <Image
             src="/logo-thin-y@2x.webp"
@@ -43,7 +71,7 @@ export const Header = () => {
       </div>
 
       {/* --- PC版: 右上・縦並びナビゲーション --- */}
-      <nav className="fixed top-6 right-6 z-50 hidden md:flex">
+      <nav className="absolute top-6 right-6 z-50 hidden md:flex">
         <NavLinks
           pathname={pathname}
           className="flex flex-col items-end gap-4"
@@ -51,7 +79,7 @@ export const Header = () => {
       </nav>
 
       {/* --- モバイル版: ハンバーガーメニュー --- */}
-      <div className="fixed top-4 right-4 z-40 md:hidden">
+      <div className="absolute top-4 right-4 z-40 md:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
@@ -84,6 +112,10 @@ export const Header = () => {
           </SheetContent>
         </Sheet>
       </div>
-    </header>
+      {/* デバッグ用: 取得したheaderの高さ */}
+      {/* <div className="absolute top-40 left-4 text-red-500">
+        Height: {headerHeight}px
+      </div> */}
+    </motion.header>
   );
 };
