@@ -90,6 +90,13 @@ export const HeroSlider = ({ images }: SliderProps) => {
                   priority
                   className="scale-110 object-cover"
                 />
+                {/* ② 粒レイヤー（画像のすぐ後に配置して、親子関係にする） */}
+                <div
+                  className="bg-grain pointer-events-none absolute inset-0 z-[999] opacity-[0.4] mix-blend-soft-light"
+                  style={{
+                    filter: "sepia(20%) brightness(1.1) contrast(110%)",
+                  }}
+                />
               </motion.div>
             </AnimatePresence>
           </motion.div>

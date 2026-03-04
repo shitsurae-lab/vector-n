@@ -74,6 +74,12 @@ export const CategoryHero = ({
               className="scale-110 object-cover"
               sizes="100vw"
             />
+            <div
+              className="bg-grain pointer-events-none absolute inset-0 z-[999] opacity-[0.4] mix-blend-soft-light"
+              style={{
+                filter: "sepia(20%) brightness(1.1) contrast(110%)",
+              }}
+            />
           </motion.div>
 
           {/* ③ サブ画像 (ふわふわ浮遊感) */}
