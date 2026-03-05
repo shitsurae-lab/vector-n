@@ -7,7 +7,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { ArrowRight } from "lucide-react";
-import { Arrow } from "radix-ui/internal";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -83,13 +82,13 @@ export const FluffyContainer = ({
     { scope: containerRef },
   );
   // link がある場合のみ cursor-pointer と hover背景を付与する
-  const wrapperClasses = ` group w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] relative flex flex-col items-center overflow-hidden transition-colors  duration-500 ${bgColorClass} ${link ? "cursor-pointer hover:bg-black/[0.02]" : ""}`;
+  const wrapperClasses = `group w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] relative flex flex-col items-center overflow-hidden transition-colors px-8 md:px-20 duration-500 ${bgColorClass} ${link && index !== 0 ? "cursor-pointer hover:bg-black/[0.02]" : ""}`;
   // コンテンツの中身を共通変数化
   const innerContent = (
     <div
       className={`mx-auto flex w-full max-w-6xl flex-col ${
         isEven ? "md:flex-row-reverse" : "md:flex-row"
-      } group items-start justify-center gap-12 px-6 py-20 md:gap-20 md:px-16`}
+      } items-start justify-center gap-12 px-6 py-20 md:gap-20 md:px-16`}
     >
       {/* 🖼️ 画像領域：PCで大きくなりすぎないよう制限 */}
       <div
@@ -118,14 +117,14 @@ export const FluffyContainer = ({
         <div className="group relative">
           {/* --- 01. ビッグナンバー (Anton) ---
         text-transparent と -webkit-text-stroke で「線」にして、Michromaの空間美を邪魔しないようにします */}
-          <span className="pointer-events-none absolute -top-16 -left-10 font-[family-name:var(--font-anton)] text-[140px] leading-none text-zinc-900 opacity-[0.04] transition-all duration-1000 select-none group-hover:opacity-[0.08] md:-top-24 md:-left-14 md:text-[220px]">
+          <span className="pointer-events-none absolute -top-20 -left-12 font-[family-name:var(--font-anton)] text-[140px] leading-none text-zinc-900 opacity-[0.06] transition-all duration-1000 select-none group-hover:opacity-[0.08] md:-top-24 md:-top-28 md:-left-14 md:-left-16 md:text-[220px]">
             {num}
           </span>
 
           <div className="relative z-10 space-y-6">
             {/* --- 02. 英語メインタイトル (Anton) --- */}
             <div className="transition-transform duration-700 group-hover:translate-x-2">
-              <h3 className="font-[family-name:var(--font-anton)] text-5xl leading-[0.85] tracking-tight text-zinc-900 uppercase md:text-6xl">
+              <h3 className="font-[family-name:var(--font-anton)] text-3xl leading-[0.8] tracking-[0.035em] text-zinc-900 uppercase md:text-4xl">
                 {enTitle}
               </h3>
             </div>
@@ -142,7 +141,7 @@ export const FluffyContainer = ({
 
             {/* --- 04. 本文 (Michroma) --- */}
             <div className="pt-2 pl-1">
-              <div className="max-w-sm border-l-2 border-zinc-50 pl-5 font-[family-name:var(--font-mixed)] text-[12px] leading-[1.8] tracking-widest whitespace-pre-wrap text-zinc-500 transition-colors duration-500 group-hover:border-zinc-200 md:text-[13px]">
+              <div className="max-w-sm border-l-2 border-zinc-50 pl-5 font-[family-name:var(--font-mixed)] text-[12px] leading-[1.8] tracking-[0.12em] whitespace-pre-wrap text-zinc-500 transition-colors duration-500 group-hover:border-zinc-200 md:text-[13px]">
                 {category}
               </div>
             </div>
@@ -150,12 +149,12 @@ export const FluffyContainer = ({
             {/* --- 05. CTAボタン (Michroma) --- */}
             {link && ctaText && (
               <div className="pt-6 pl-1">
-                <div className="group/btn inline-flex items-center gap-5 font-[family-name:var(--font-mixed)] text-[10px] font-black tracking-[0.3em] text-zinc-400 uppercase transition-all hover:text-zinc-900">
+                <div className="inline-flex items-center gap-5 font-[family-name:var(--font-mixed)] text-[11px] font-black tracking-[0.28em] text-zinc-400 uppercase transition-all hover:text-zinc-900 md:text-xs">
                   <span className="relative">
                     {ctaText}
-                    <span className="absolute -bottom-1 left-0 h-[1.5px] w-0 bg-zinc-900 transition-all duration-300 group-hover/btn:w-full" />
+                    <span className="absolute -bottom-1 left-0 h-[1.5px] w-0 bg-zinc-900 transition-all duration-300 group-hover:w-full" />
                   </span>
-                  <span className="rounded-full border border-zinc-100 p-2 transition-all duration-300 group-hover/btn:translate-x-2 group-hover/btn:border-zinc-900">
+                  <span className="rounded-full border border-zinc-100 p-2 transition-all duration-300 group-hover:translate-x-2 group-hover:border-zinc-900">
                     <ArrowRight size={12} />
                   </span>
                 </div>
