@@ -79,7 +79,7 @@ export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
       className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-screen py-20"
     >
       {showTitle && (
-        <h2 className="animate-form-item mb-8 text-center font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.5em] text-gray-800 uppercase md:text-4xl">
+        <h2 className="animate-form-item mb-8 text-center font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-zinc-800 uppercase md:text-4xl">
           contact
         </h2>
       )}
