@@ -155,7 +155,7 @@ export const HeroSlider = ({ images }: SliderProps) => {
                 custom={1}
                 initial="hidden"
                 animate="visible"
-                className="font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-zinc-900 uppercase md:text-7xl lg:text-8xl"
+                className="font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-[#2a2723] uppercase md:text-7xl lg:text-8xl"
               >
                 {images[currentIndex].title}
               </motion.h2>

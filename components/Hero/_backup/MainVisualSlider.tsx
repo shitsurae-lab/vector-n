@@ -160,7 +160,7 @@ export const MainVisualSlider = ({ images }: SliderProps) => {
                 </p>
               </div>
               <h2
-                className={`text-${index} font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-zinc-900 uppercase md:text-7xl lg:text-8xl`}
+                className={`text-${index} font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-[#2a2723] uppercase md:text-7xl lg:text-8xl`}
               >
                 {image.title}
               </h2>

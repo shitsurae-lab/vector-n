@@ -79,7 +79,7 @@ export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
       className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-screen py-20"
     >
       {showTitle && (
-        <h2 className="animate-form-item mb-8 text-center font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-zinc-800 uppercase md:text-4xl">
+        <h2 className="animate-form-item mb-8 text-center font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-[#2a2723] uppercase md:text-4xl">
           contact
         </h2>
       )}
@@ -98,7 +98,7 @@ export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
             name="name"
             required
             placeholder="Your Name"
-            className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-zinc-900 transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
+            className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
           />
         </div>
 
@@ -112,7 +112,7 @@ export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
             type="email"
             required
             placeholder="example@mail.com"
-            className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-zinc-900 transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
+            className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
           />
         </div>
 
@@ -125,7 +125,7 @@ export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
             name="message"
             required
             placeholder="How can I help you?"
-            className="h-auto min-h-[150px] rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-zinc-900 transition-all placeholder:text-sm placeholder:tracking-wide placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
+            className="h-auto min-h-[150px] rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wide placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
           />
         </div>
 

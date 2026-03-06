@@ -17,7 +17,7 @@ export const Breadcrumbs = ({ parent, category, title }: Props) => {
       {/* 1. HOME */}
       <Link
         href={NAV_PATHS.HOME.path}
-        className="shrink-0 transition-colors hover:text-zinc-900"
+        className="shrink-0 transition-colors hover:text-[#2a2723]"
       >
         {NAV_PATHS.HOME.label}
       </Link>
@@ -29,12 +29,12 @@ export const Breadcrumbs = ({ parent, category, title }: Props) => {
           {category || title ? (
             <Link
               href={`/${parent.path}`}
-              className="shrink-0 transition-colors hover:text-zinc-900"
+              className="shrink-0 transition-colors hover:text-[#2a2723]"
             >
               {parent.label}
             </Link>
           ) : (
-            <span className="shrink-0 text-zinc-900">{parent.label}</span>
+            <span className="shrink-0 text-[#2a2723]">{parent.label}</span>
           )}
         </>
       )}
@@ -46,12 +46,12 @@ export const Breadcrumbs = ({ parent, category, title }: Props) => {
           {title ? (
             <Link
               href={`/${parent?.path || "works"}/${category.slug}`}
-              className="shrink-0 transition-colors hover:text-zinc-900"
+              className="shrink-0 transition-colors hover:text-[#2a2723]"
             >
               {category.name}
             </Link>
           ) : (
-            <span className="shrink-0 text-zinc-900">{category.name}</span>
+            <span className="shrink-0 text-[#2a2723]">{category.name}</span>
           )}
         </>
       )}
@@ -60,7 +60,7 @@ export const Breadcrumbs = ({ parent, category, title }: Props) => {
       {title && (
         <>
           <span className="shrink-0 text-zinc-300">/</span>
-          <span className="max-w-[150px] truncate text-zinc-900 md:max-w-[300px]">
+          <span className="max-w-[150px] truncate text-[#2a2723] md:max-w-[300px]">
             {he.decode(title)}
           </span>
         </>

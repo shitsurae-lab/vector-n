@@ -37,8 +37,8 @@ export const NavLinks = ({
               transition={{ duration: 0.3, ease: "easeOut" }}
               className={`font-[family-name:var(--font-michroma)] text-[10px] uppercase transition-colors duration-500 ${
                 isActive
-                  ? "font-bold tracking-[0.4em] text-zinc-900"
-                  : "tracking-[0.3em] text-zinc-400 group-hover:tracking-[0.4em] group-hover:text-zinc-800"
+                  ? "font-bold tracking-[0.4em] text-[#2a2723]"
+                  : "tracking-[0.3em] text-zinc-400 group-hover:tracking-[0.4em] group-hover:text-[#2a2723]"
               } `}
             >
               {item.name}

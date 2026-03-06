@@ -132,7 +132,7 @@ export const ProtectedContent = ({
               </span>
               <div className="h-[1px] w-8 bg-zinc-300"></div>
             </div>
-            <h1 className="mb-10 text-2xl leading-tight font-black text-zinc-900 md:text-4xl">
+            <h1 className="mb-10 text-2xl leading-tight font-black text-[#2a2723]  md:text-4xl">
               {title}
             </h1>
             {displayImage && (
@@ -253,7 +253,7 @@ export const ProtectedContent = ({
                       <div className="h-[1px] w-4 bg-zinc-200"></div>
                     </div>
 
-                    <h3 className="animate-item mb-8 text-xl font-bold tracking-tight text-zinc-900 md:text-2xl lg:text-3xl">
+                    <h3 className="animate-item mb-8 text-xl font-bold tracking-tight text-[#2a2723]  md:text-2xl lg:text-3xl">
                       {item.title}
                     </h3>
 
@@ -322,7 +322,7 @@ export const ProtectedContent = ({
     <div className="animate-in fade-in mx-auto max-w-4xl px-6 py-32 text-center duration-500">
       <div className="rounded-3xl border-2 border-dashed border-zinc-200 bg-zinc-50 p-12">
         <p className="mb-6 text-4xl">🔒</p>
-        <h2 className="mb-2 text-xl font-bold text-zinc-900">
+        <h2 className="mb-2 text-xl font-bold text-[#2a2723] ">
           Protected Content
         </h2>
         <p className="mb-10 text-sm text-zinc-500">

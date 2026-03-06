@@ -49,7 +49,7 @@ export const CategoryList = ({ categories }: { categories: Category[] }) => {
 
         <motion.h2
           variants={itemVariants}
-          className="mb-6 text-center font-[family-name:var(--font-michroma)] text-2xl font-bold tracking-[0.5em] text-zinc-800 uppercase md:text-3xl"
+          className="mb-6 text-center font-[family-name:var(--font-michroma)] text-2xl font-bold tracking-[0.5em] text-[#2a2723] uppercase md:text-3xl"
         >
           Categories
         </motion.h2>
@@ -76,7 +76,7 @@ export const CategoryList = ({ categories }: { categories: Category[] }) => {
                 </div>
                 <CardHeader className="p-5">
                   {/* タイトルの色を zinc-500 へ。少しだけ右に動かす遊び心をプラス */}
-                  <CardTitle className="text-xl text-zinc-800 transition-all duration-500 group-hover:translate-x-1 group-hover:text-zinc-500">
+                  <CardTitle className="text-xl text-[#2a2723] transition-all duration-500 group-hover:translate-x-1 group-hover:text-zinc-500">
                     {cat.acf?.term_title || cat.name}
                   </CardTitle>
                 </CardHeader>

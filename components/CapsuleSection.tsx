@@ -40,7 +40,7 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
             viewport={{ once: true, margin: "-15%" }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="mb-2 font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-zinc-800 uppercase md:text-4xl">
+            <h2 className="mb-2 font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-[#2a2723] uppercase md:text-4xl">
               about
             </h2>
 

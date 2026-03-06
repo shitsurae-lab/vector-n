@@ -14,11 +14,11 @@ export default function ContactPage() {
           <span className="mb-2 text-[10px] font-bold tracking-[0.4em] text-zinc-400 uppercase">
             Ready to start a project?
           </span>
-          <h1 className="font-michroma mb-8 text-center text-2xl font-bold tracking-[0.5em] text-zinc-800 uppercase md:mb-12 md:text-3xl">
+          <h1 className="font-michroma mb-8 text-center text-2xl font-bold tracking-[0.5em] text-[#2a2723]  uppercase md:mb-12 md:text-3xl">
             Contact
           </h1>
         </div>
-        <p className="flex flex-col text-base leading-relaxed font-medium tracking-tight text-zinc-800 md:text-lg">
+        <p className="flex flex-col text-base leading-relaxed font-medium tracking-tight text-[#2a2723]  md:text-lg">
           <span className="inline-block">
             制作のご依頼、採用に関するご相談など、
           </span>

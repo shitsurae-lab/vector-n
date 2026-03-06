@@ -54,7 +54,7 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
       <div className="flex flex-col items-center py-10">
         <motion.h2
           variants={itemVariants}
-          className="mb-8 text-center font-[family-name:var(--font-michroma)] text-2xl font-bold tracking-[0.5em] text-zinc-800 uppercase md:mb-12 md:text-3xl"
+          className="mb-8 text-center font-[family-name:var(--font-michroma)] text-2xl font-bold tracking-[0.5em] text-[#2a2723] uppercase md:mb-12 md:text-3xl"
         >
           {category}
         </motion.h2>
@@ -118,7 +118,7 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
                     <div className="mb-1 text-xs text-gray-500">
                       {formattedDate}
                     </div>
-                    <CardTitle className="text-lg text-zinc-800 transition-all duration-500 group-hover:translate-x-1 group-hover:text-zinc-500">
+                    <CardTitle className="text-lg text-[#2a2723] transition-all duration-500 group-hover:translate-x-1 group-hover:text-zinc-500">
                       {/* <Link
                       href={`/works/${category}/${work.slug}`}
                       className="hover:underline"
@@ -143,7 +143,7 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
                   </CardContent>
 
                   <CardFooter className="p-4 pt-0">
-                    <div className="flex items-center gap-2 text-[10px] font-black tracking-[0.2em] text-zinc-400 uppercase transition-colors duration-500 group-hover:text-zinc-800">
+                    <div className="flex items-center gap-2 text-[10px] font-black tracking-[0.2em] text-zinc-400 uppercase transition-colors duration-500 group-hover:text-[#2a2723]">
                       <span>
                         {isProtected ? "View with Password" : "Read More"}
                       </span>
