@@ -67,19 +67,18 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
             {items.map((item, i) => (
               <motion.li
                 key={item.id}
-                className="w-[70%] flex-none snap-center md:w-[28%]"
                 onClick={() =>
                   setActiveCard(activeCard === item.id ? null : item.id)
                 }
+                className="w-[70%] flex-none snap-center md:w-[28%]"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{
-                  opacity: 1, // 透明度を1にし、登場
-                  // y: [0, -20, 0],
-                }}
-                animate={{
-                  y: activeCard === item.id ? 0 : [0, -20, 0],
+                  opacity: 1,
                 }}
                 viewport={{ once: true, margin: "-10%" }}
+                // animate={{
+                //   y: activeCard === item.id ? 0 : [0, -20, 0],
+                // }}
                 transition={{
                   opacity: {
                     duration: 1.2,
@@ -99,32 +98,85 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
                   // },
                 }}
               >
-                <div className="group relative aspect-[2/3] overflow-hidden rounded-[40px] border border-black/5 bg-slate-200 shadow-sm transition-transform duration-500 hover:-translate-y-3">
-                  {item.image ? (
-                    <Image
-                      src={item.image}
-                      alt={item.enTitle}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-[14px] font-bold tracking-[0.3em] text-gray-400">
+                {/* ================================ */}
+                {/* カード本体 */}
+                {/* ================================ */}
+                <motion.div
+                  className="group [perspective: 1200px] relative aspect-[2/3] cursor-pointer overflow-hidden rounded-[40px] border border-black/5 bg-zinc-100/90 mix-blend-overlay shadow-sm"
+                  animate={{
+                    /* カードが開いていないときだけ浮遊 */
+                    y: activeCard === item.id ? 0 : [0, -20, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    ease: "easeInOut",
+                    delay: i * 0.4,
+                  }}
+                >
+                  <motion.div
+                    className="relative h-full w-full"
+                    style={{
+                      transformStyle: "preserve-3d",
+                    }}
+                    //  ================================
+                    //  flipアニメーション
+                    // =================================
+                    animate={{
+                      rotateY: activeCard === item.id ? 180 : 0,
+                    }}
+                    transition={{
+                      rotateY: {
+                        duration: 0.7,
+                        ease: "easeInOut",
+                      },
+                    }}
+                  >
+                    {/* ================================ */}
+                    {/* 表面 */}
+                    {/* =================================  */}
+                    <div
+                      className="absolute inset-0 top-0 left-0 h-full w-full overflow-hidden rounded-[40px] border border-black/5 shadow-sm"
+                      style={{
+                        backfaceVisibility: "hidden",
+                      }}
+                    >
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.enTitle}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center bg-slate-200">
+                          <span className="text-[14px] font-bold tracking-[0.3em] text-gray-400">
+                            {item.enTitle}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {/* ================================
+          裏面
+      ================================= */}
+                    <div
+                      className="absolute inset-0 flex flex-col items-center justify-center rounded-[40px] bg-[#2a2723] p-6 text-center text-white"
+                      style={{
+                        transform: "rotateY(180deg)",
+                        backfaceVisibility: "hidden",
+                      }}
+                    >
+                      <span className="mb-3 text-xs tracking-[0.2em] text-[#d1ccc4] uppercase">
                         {item.enTitle}
                       </span>
+
+                      <p className="text-sm leading-relaxed opacity-90">
+                        {item.jaTitle}
+                      </p>
                     </div>
-                  )}
-                  {/* ホバー時のオーバーレイ */}
-                  {/* ホバー時のテキスト表示 */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 p-6 text-center text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <span className="mb-2 text-xs tracking-widest uppercase">
-                      {item.enTitle}
-                    </span>
-                    <span className="text-[12px] opacity-80">
-                      {item.jaTitle}
-                    </span>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </motion.li>
             ))}
           </ul>
