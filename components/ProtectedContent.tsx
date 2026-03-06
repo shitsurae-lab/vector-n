@@ -125,9 +125,13 @@ export const ProtectedContent = ({
         {/* 1. ヒーローエリア (左右突き抜け) */}
         <section className="relative right-1/2 left-1/2 -mr-[50vw] mb-12 -ml-[50vw] w-screen border-b border-zinc-100 bg-zinc-50 py-20">
           <div className="mx-auto max-w-4xl px-6 text-center">
-            <span className="mb-4 block text-[10px] font-bold tracking-[0.25em] text-zinc-400 uppercase">
-              {categorySlug}
-            </span>
+            <div className="mb-6 flex items-center justify-center gap-3">
+              <div className="h-[1px] w-8 bg-zinc-300"></div> {/* 横線 */}
+              <span className="text-[10px] font-bold tracking-[0.3em] text-zinc-500 uppercase">
+                Case Study / {categorySlug}
+              </span>
+              <div className="h-[1px] w-8 bg-zinc-300"></div>
+            </div>
             <h1 className="mb-10 text-2xl leading-tight font-black text-zinc-900 md:text-4xl">
               {title}
             </h1>
