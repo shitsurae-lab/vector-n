@@ -152,9 +152,9 @@ export const FluffyContainer = ({
                 <div className="inline-flex items-center gap-5 font-[family-name:var(--font-mixed)] text-[11px] font-black tracking-[0.28em] text-zinc-400 uppercase transition-all hover:text-zinc-900 md:text-xs">
                   <span className="relative">
                     {ctaText}
-                    <span className="absolute -bottom-1 left-0 h-[1.5px] w-0 bg-zinc-900 transition-all duration-300 group-hover:w-full" />
+                    <span className="absolute -bottom-1 left-0 h-[0.5px] w-0 bg-zinc-400 transition-all duration-300 group-hover:w-full" />
                   </span>
-                  <span className="rounded-full border border-zinc-100 p-2 transition-all duration-300 group-hover:translate-x-2 group-hover:border-zinc-900">
+                  <span className="rounded-full border border-zinc-100 p-2 transition-all duration-300 group-hover:translate-x-2 group-hover:border-zinc-400">
                     <ArrowRight size={12} />
                   </span>
                 </div>
