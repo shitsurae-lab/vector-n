@@ -37,7 +37,7 @@ export const CategoryHero = ({
   alt,
 }: HeroProps) => {
   return (
-    <section className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] h-[85vh] w-screen overflow-hidden bg-gradient-to-br from-[#f8f6f3] via-[#f3f1ee] to-[#eceae7] md:h-svh">
+    <section className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] h-[85vh] w-screen overflow-hidden bg-gradient-to-b from-[#eceae7] via-[#f8f6f3] to-[#f8f6f3] md:h-svh">
       <div className="relative mx-auto flex h-full w-full max-w-[1440px] flex-col px-6 md:px-12">
         {/* --- 🖼️ ビジュアルエリア --- */}
         <motion.div
