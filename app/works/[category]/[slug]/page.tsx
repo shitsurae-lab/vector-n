@@ -25,7 +25,8 @@ export async function generateMetadata({
   // 3. 文字列として取り出す（エラー回避のポイント）
   // acf 自体ではなく、その中の「どの文字を使うか」を指定する
   const rawTitle = work?.title?.rendered || slug;
-  const displayTitle = he.decode(rawTitle);
+  const decodedTitle = he.decode(rawTitle);
+  const displayTitle = `制作実績：${decodedTitle}`;
 
   // もしACFの中に特別なタイトル設定（例: project_name）があればそれを使う
   // const displayTitle = acf?.project_name || work?.title?.rendered || slug;
