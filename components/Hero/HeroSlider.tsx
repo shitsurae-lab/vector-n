@@ -150,7 +150,7 @@ export const HeroSlider = ({ images }: SliderProps) => {
                 </p>
               </motion.div>
 
-              <motion.h2
+              <motion.div
                 variants={fadeInUp}
                 custom={1}
                 initial="hidden"
@@ -158,7 +158,7 @@ export const HeroSlider = ({ images }: SliderProps) => {
                 className="font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-[#2a2723] uppercase md:text-7xl lg:text-8xl"
               >
                 {images[currentIndex].title}
-              </motion.h2>
+              </motion.div>
 
               {images[currentIndex].desc && (
                 <motion.p
