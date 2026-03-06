@@ -25,6 +25,7 @@ import { NavLinks } from "./nav-links";
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   //1. headerの高さを取得
   const headerRef = useRef<HTMLElement>(null);
@@ -79,7 +80,34 @@ export const Header = () => {
         style={{ scale: logoScale }}
         className="pointer-events-none relative top-0 left-0 z-[60] flex h-[160px] w-[140px] items-center justify-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none"
       >
-        <Link href="/" className="pointer-events-auto">
+        {isHomePage ? (
+          <h1 className="m-0 leading-none">
+            <Link href="/" className="pointer-events-auto block">
+              <Image
+                src="/logo-thin-y@2x.webp"
+                alt="Vector-n | Toshiyuki Kurashima's Portfolio"
+                width={80}
+                height={102}
+                className="h-auto w-[80px] object-contain"
+                priority
+              />
+            </Link>
+          </h1>
+        ) : (
+          <div className="leading-none">
+            <Link href="/" className="pointer-events-auto block">
+              <Image
+                src="/logo-thin-y@2x.webp"
+                alt="Vector-n | Toshiyuki Kurashima's Portfolio"
+                width={80}
+                height={102}
+                className="h-auto w-[80px] object-contain"
+                priority
+              />
+            </Link>
+          </div>
+        )}
+        {/* <Link href="/" className="pointer-events-auto">
           <Image
             src="/logo-thin-y@2x.webp"
             alt="Vector n"
@@ -88,7 +116,7 @@ export const Header = () => {
             className="h-auto w-[80px] object-contain"
             priority
           />
-        </Link>
+        </Link> */}
       </motion.div>
 
       {/* --- PC版: 右上・縦並びナビゲーション --- */}
