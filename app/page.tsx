@@ -70,20 +70,38 @@ export default async function WorksTopPage() {
       {/* END スライダーを表示 */}
       {/* 2. Capsule Section (Aboutページからのデータを表示) */}
       {capsuleItems.length > 0 && <CapsuleSection items={capsuleItems} />}
-      {/* fluffyコンテナーを表示 */}
-      {filteredCategories.map((cat, index) => (
-        <FluffyContainer
-          key={cat.id}
-          index={index}
-          num={(index + 1).toString().padStart(2, "0")}
-          enTitle={cat.acf?.next_title || cat.slug}
-          jaTitle={cat.name}
-          category={cat.acf?.next_desc || ""}
-          link={`/works/${cat.slug}/`}
-          imageHref={cat.acf!.next_image!} // ここで props に imageHref を渡します
-          ctaText={cat.acf?.next_cta || "View More"}
-        />
-      ))}
+
+      <section className="mt-32">
+        {/* セクションタイトル */}
+        <div className="mb-20 flex flex-col items-center text-center">
+          <h2 className="mb-3 font-[family-name:var(--font-michroma)] text-2xl tracking-[0.35em] text-zinc-800 uppercase md:text-3xl">
+            Selected Works
+          </h2>
+
+          <div className="flex items-center gap-4">
+            <span className="h-[1px] w-6 bg-zinc-300" />
+            <p className="font-[family-name:var(--font-mixed)] text-[10px] tracking-[0.25em] text-zinc-400 uppercase md:text-xs">
+              Featured Categories
+            </p>
+            <span className="h-[1px] w-6 bg-zinc-300" />
+          </div>
+        </div>
+        {/* fluffyコンテナーを表示 */}
+
+        {filteredCategories.map((cat, index) => (
+          <FluffyContainer
+            key={cat.id}
+            index={index}
+            num={(index + 1).toString().padStart(2, "0")}
+            enTitle={cat.acf?.next_title || cat.slug}
+            jaTitle={cat.name}
+            category={cat.acf?.next_desc || ""}
+            link={`/works/${cat.slug}/`}
+            imageHref={cat.acf!.next_image!} // ここで props に imageHref を渡します
+            ctaText={cat.acf?.next_cta || "View More"}
+          />
+        ))}
+      </section>
       <ContactForm />
     </main>
   );
