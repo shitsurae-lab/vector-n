@@ -97,7 +97,7 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
                 href={`/works/${category}/${work.slug}`}
                 className="group block h-full no-underline"
               >
-                <Card className="flex h-full flex-col overflow-hidden bg-slate-50 pt-0 transition-shadow hover:shadow-md">
+                <Card className="flex h-full flex-col overflow-hidden bg-[#faf9f7] pt-0 transition-shadow hover:shadow-md">
                   <div className="relative aspect-video overflow-hidden bg-gray-100">
                     {thumbnail ? (
                       <Image
@@ -106,12 +106,17 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className={`object-cover transition-transform duration-500 hover:scale-105 ${isProtected ? "blur-[0.5px]" : ""}`}
+                        style={{
+                          // サムネイルの青みを抑え、温かみを加える
+                          filter: "sepia(5%) brightness(1.02) contrast(102%)",
+                        }}
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center text-gray-400">
                         No Image
                       </div>
                     )}
+                    <div className="bg-grain pointer-events-none absolute inset-0 z-10 opacity-[0.08] mix-blend-soft-light" />
                   </div>
 
                   <CardHeader className="p-4 pb-2">
