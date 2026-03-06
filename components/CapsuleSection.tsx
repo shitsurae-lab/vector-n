@@ -191,7 +191,7 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
           >
             <Button
               asChild
-              className="rounded-full border-none bg-zinc-900 px-8 py-6 text-white transition-all hover:bg-zinc-700 hover:text-white"
+              className="rounded-full border-none bg-[#2a2723] px-8 py-6 text-white transition-all hover:bg-[#3d3934] hover:text-white"
             >
               <Link href="/about">View More About</Link>
             </Button>

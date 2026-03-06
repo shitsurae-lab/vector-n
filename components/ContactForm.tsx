@@ -134,7 +134,7 @@ export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
           <Button
             type="submit"
             disabled={pending}
-            className="group min-w-[240px] rounded-full bg-zinc-900 px-12 py-8 text-[10px] font-bold tracking-[0.3em] text-white uppercase shadow-2xl transition-all hover:bg-black"
+            className="group min-w-[240px] rounded-full bg-[#2a2723] px-12 py-8 text-[10px] font-bold tracking-[0.3em] text-white uppercase shadow-2xl transition-all hover:bg-[#3d3934]"
           >
             {pending ? "Sending..." : "Send Message"}
             <ArrowRight className="ml-3 h-4 w-4 transform transition-transform group-hover:translate-x-2" />
