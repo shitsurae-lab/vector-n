@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 
 import { motion } from "framer-motion";
@@ -15,14 +15,14 @@ type CapsuleItem = {
 
 export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const [activeCard, setActiveCard] = useState<string | null>(null);
   return (
     <section ref={containerRef} className="relative w-full">
       {/*
     背景を absolute ではなく、コンテンツを包む「器」として配置。
     w-[150vw] で左右に突き抜けさせ、rounded で上部を丸めます。
   */}
-      <div className="relative left-1/2 w-[120vw] -translate-x-1/2 overflow-hidden rounded-[100%_100%_0_0] bg-gradient-to-b from-[#f3f1ee] to-[#e5e2de] py-32 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.03)] md:py-48">
+      <div className="relative left-1/2 w-[120vw] -translate-x-1/2 overflow-hidden rounded-[100%_100%_0_0] bg-gradient-to-b from-[#f3f1ee] to-[#e5e2de] py-32 shadow-[0_-20px_60px_-20px_rgba(100,90,80,0.05)] md:py-48">
         <div
           className="bg-grain pointer-events-none absolute inset-0 z-0 opacity-[0.18] mix-blend-soft-light"
           style={{
@@ -68,11 +68,16 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
               <motion.li
                 key={item.id}
                 className="w-[70%] flex-none snap-center md:w-[28%]"
+                onClick={() =>
+                  setActiveCard(activeCard === item.id ? null : item.id)
+                }
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{
-                  opacity: 1, //1. 透明度を1にし、登場
-                  y: [0, -20, 0], //2. [開始, 頂点, 戻り]の動きを...
-                  rotate: [0, 1, 0],
+                  opacity: 1, // 透明度を1にし、登場
+                  // y: [0, -20, 0],
+                }}
+                animate={{
+                  y: activeCard === item.id ? 0 : [0, -20, 0],
                 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{
@@ -87,14 +92,14 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
                     ease: "easeInOut",
                     delay: 0.4 + i * 0.15,
                   },
-                  rotate: {
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  },
+                  // rotate: {
+                  //   duration: 8,
+                  //   repeat: Infinity,
+                  //   ease: "easeInOut",
+                  // },
                 }}
               >
-                <div className="group relative aspect-[2/3] overflow-hidden rounded-full border border-black/5 bg-slate-200 shadow-sm transition-transform duration-500 hover:-translate-y-3">
+                <div className="group relative aspect-[2/3] overflow-hidden rounded-[40px] border border-black/5 bg-slate-200 shadow-sm transition-transform duration-500 hover:-translate-y-3">
                   {item.image ? (
                     <Image
                       src={item.image}
