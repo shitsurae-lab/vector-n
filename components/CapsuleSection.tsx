@@ -1,13 +1,10 @@
 "use client";
 import { useRef } from "react";
 import Link from "next/link";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type CapsuleItem = {
   id: string;
@@ -19,74 +16,83 @@ type CapsuleItem = {
 export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      if (!items?.length || !containerRef.current) return;
-
-      // 1. 初期状態をGSAPで一括セット（CSSのopacity-0等に頼りすぎない）
-      gsap.set(".animate-target", { opacity: 0, y: 40 });
-
-      // Timelineを作成して、順番（ステージ）を管理
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 65%", // 画面の70%位置で開始
-          once: true, // 1回だけ実行
-        },
-      });
-
-      tl.to(".animate-target", {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "expo.out",
-        stagger: 0.15, // 👈 これで H2 -> P -> Button -> LI が順番に動く
-      });
-    },
-    { scope: containerRef, dependencies: [items] },
-  );
-
   return (
-    <section
-      ref={containerRef}
-      className="100svh relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-screen overflow-hidden pt-20"
-    >
-      <div className="min-h-[80vh] rounded-[50vw_50vw_0_0] bg-[#f3f1ee] py-[10vh]">
-        <div className="mx-auto max-w-5xl px-6 pt-10">
-          {/* opacity-0 と translate-y-8 で初期状態を隠す */}
-          <div className="mb-12 flex flex-col items-center">
-            {/* 英語メイン: Michromaで「設計」の精密さを表現 */}
-            <h2 className="animate-target mb-2 translate-y-8 font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.5em] text-zinc-800 uppercase opacity-0 md:text-4xl">
+    <section ref={containerRef} className="relative w-full">
+      {/*
+    背景を absolute ではなく、コンテンツを包む「器」として配置。
+    w-[150vw] で左右に突き抜けさせ、rounded で上部を丸めます。
+  */}
+      <div className="relative left-1/2 w-[120vw] -translate-x-1/2 overflow-hidden rounded-[100%_100%_0_0] bg-gradient-to-b from-[#f3f1ee] to-[#e5e2de] py-32 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.03)] md:py-48">
+        <div
+          className="bg-grain pointer-events-none absolute inset-0 z-0 opacity-[0.18] mix-blend-soft-light"
+          style={{
+            filter: "sepia(10%) brightness(1.11) contrast(110%)",
+            // 親の rounded を引き継ぐために一応指定（overflow-hiddenがあれば不要ですが念のため）
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-5xl px-6">
+          {/* --- タイトルエリア(Scroll発火)---  */}
+          <motion.div
+            className="mb-14 flex flex-col items-center"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h2 className="mb-2 font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-zinc-800 uppercase md:text-4xl">
               about
             </h2>
 
-            {/* 日本語サブ: 意味を補完し、視線を本文へ繋ぐ */}
-            <div className="animate-target flex translate-y-8 items-center gap-3 opacity-0">
+            <div className="mb-8 flex items-center justify-center gap-3">
               <span className="h-[1px] w-4 bg-zinc-400" />
-              <p className="font-[family-name:var(--font-mixed)] text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase md:text-xs">
+              <p className="font-[family-name:var(--font-mixed)] text-[10px] font-medium tracking-[0.25em] text-zinc-400 uppercase md:text-xs">
                 Creative Philosophy
               </p>
               <span className="h-[1px] w-4 bg-zinc-400" />
             </div>
-          </div>
-          {/* 4. Button (shadcn/ui) */}
-          <div className="animate-target mb-10 text-center">
-            <Button
-              asChild
-              className="rounded-full border-none bg-zinc-900 px-8 py-6 text-white transition-all hover:bg-zinc-700 hover:text-white"
-            >
-              <Link href="/about">View More About</Link>
-            </Button>
-          </div>
 
+            <p className="max-w-2xl px-4 text-sm leading-relaxed tracking-[0.06em] text-zinc-600 md:text-base">
+              デザインと実装、その先にある「運用」までを設計する。
+              <br className="hidden md:block" />
+              見た目の美しさだけでなく、更新する人、使う人、
+              <br className="hidden md:block" />
+              育てていく人のことまで考える。
+            </p>
+          </motion.div>
           <ul
-            className="no-scrollbar flex snap-x snap-mandatory justify-start gap-8 overflow-x-auto px-[10vw] pt-3 md:justify-center md:px-0"
+            className="no-scrollbar mt-14 mb-24 flex snap-x snap-mandatory justify-start gap-8 overflow-x-auto px-[10vw] md:justify-between md:gap-0 md:overflow-x-visible md:px-0"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {items.map((item) => (
-              <li
+            {items.map((item, i) => (
+              <motion.li
                 key={item.id}
-                className="animate-target w-[70%] flex-none translate-y-10 snap-center opacity-0 md:w-[28%]"
+                className="w-[70%] flex-none snap-center md:w-[28%]"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{
+                  opacity: 1, //1. 透明度を1にし、登場
+                  y: [0, -20, 0], //2. [開始, 頂点, 戻り]の動きを...
+                  rotate: [0, 1, 0],
+                }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{
+                  opacity: {
+                    duration: 1.2,
+                    delay: 0.4 + i * 0.15,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                  y: {
+                    duration: 6 + i,
+                    repeat: Infinity, //無限に繰り返す
+                    ease: "easeInOut",
+                    delay: 0.4 + i * 0.15,
+                  },
+                  rotate: {
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  },
+                }}
               >
                 <div className="group relative aspect-[2/3] overflow-hidden rounded-full border border-black/5 bg-slate-200 shadow-sm transition-transform duration-500 hover:-translate-y-3">
                   {item.image ? (
@@ -114,9 +120,25 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
                     </span>
                   </div>
                 </div>
-              </li>
+              </motion.li>
             ))}
           </ul>
+
+          {/*  Button (shadcn/ui: Scroll発火 + stagger風のdelay) */}
+          <motion.div
+            className="animate-target mb-10 text-center"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Button
+              asChild
+              className="rounded-full border-none bg-zinc-900 px-8 py-6 text-white transition-all hover:bg-zinc-700 hover:text-white"
+            >
+              <Link href="/about">View More About</Link>
+            </Button>
+          </motion.div>
         </div>
       </div>
     </section>
