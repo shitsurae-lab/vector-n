@@ -60,7 +60,7 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
             </p>
           </motion.div>
           <ul
-            className="no-scrollbar mt-14 mb-24 flex snap-x snap-mandatory justify-start gap-8 overflow-x-auto px-[10vw] py-10 md:justify-between md:gap-0 md:overflow-x-visible md:px-0"
+            className="no-scrollbar mt-14 mb-24 flex snap-x snap-mandatory justify-start gap-8 overflow-x-auto px-6 py-10 md:justify-between md:gap-0 md:overflow-x-visible md:px-0"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {items.map((item, i) => (
