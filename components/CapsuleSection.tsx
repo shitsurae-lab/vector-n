@@ -22,7 +22,7 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
     背景を absolute ではなく、コンテンツを包む「器」として配置。
     w-[150vw] で左右に突き抜けさせ、rounded で上部を丸めます。
   */}
-      <div className="relative left-1/2 w-[120vw] -translate-x-1/2 overflow-hidden rounded-[100%_100%_0_0] bg-gradient-to-b from-[#f3f1ee] to-[#e5e2de] py-32 shadow-[0_-20px_60px_-20px_rgba(100,90,80,0.05)] md:py-48">
+      <div className="relative left-1/2 w-[120vw] -translate-x-1/2 overflow-hidden rounded-[25%_25%_0_0] bg-gradient-to-b from-[#f3f1ee] to-[#e5e2de] py-32 shadow-[0_-20px_60px_-20px_rgba(100,90,80,0.05)] md:rounded-[100%_100%_0_0] md:py-48">
         <div
           className="bg-grain pointer-events-none absolute inset-0 z-0 opacity-[0.18] mix-blend-soft-light"
           style={{
@@ -31,7 +31,7 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
           }}
         />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-6">
+        <div className="relative z-10 mx-auto max-w-sm px-6 md:max-w-5xl">
           {/* --- タイトルエリア(Scroll発火)---  */}
           <motion.div
             className="mb-14 flex flex-col items-center"
@@ -61,7 +61,7 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
             </p>
           </motion.div>
           <ul
-            className="no-scrollbar mt-14 mb-24 flex snap-x snap-mandatory justify-start gap-8 overflow-x-auto px-[10vw] md:justify-between md:gap-0 md:overflow-x-visible md:px-0"
+            className="no-scrollbar mt-14 mb-24 flex snap-x snap-mandatory justify-start gap-8 overflow-x-auto px-[10vw] py-10 md:justify-between md:gap-0 md:overflow-x-visible md:px-0"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {items.map((item, i) => (
