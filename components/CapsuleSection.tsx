@@ -17,12 +17,11 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState<string | null>(null);
   return (
-    <section ref={containerRef} className="relative w-full">
-      {/*
-    背景を absolute ではなく、コンテンツを包む「器」として配置。
-    w-[150vw] で左右に突き抜けさせ、rounded で上部を丸めます。
-  */}
-      <div className="relative left-1/2 w-[120vw] -translate-x-1/2 overflow-hidden rounded-[25%_25%_0_0] bg-gradient-to-b from-[#f3f1ee] to-[#e5e2de] py-32 shadow-[0_-20px_60px_-20px_rgba(100,90,80,0.05)] md:rounded-[100%_100%_0_0] md:py-48">
+    <section
+      ref={containerRef}
+      className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden py-30"
+    >
+      <div className="relative left-1/2 w-[180vw] -translate-x-1/2 overflow-hidden rounded-t-[100%] bg-gradient-to-b from-[#f6f5f3] via-[#f0eeea] to-[#e5e2de] py-32 shadow-[0_-40px_80px_-30px_rgba(80,70,60,0.15)] before:absolute before:inset-x-0 before:top-0 before:h-20 before:bg-gradient-to-b before:from-white/40 before:to-transparent md:w-[120vw] md:py-48">
         <div
           className="bg-grain pointer-events-none absolute inset-0 z-0 opacity-[0.18] mix-blend-soft-light"
           style={{
