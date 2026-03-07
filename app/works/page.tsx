@@ -33,7 +33,7 @@ export default async function WorksTopPage() {
     //   <h1 className='text-2xl font-bold mb-6'>カテゴリー一覧</h1>
     //   <pre>{JSON.stringify(categories, null, 2)}</pre>
     // </main>
-    <main className="mx-auto max-w-6xl px-6 md:px-16">
+    <main className="mx-auto max-w-6xl px-4 sm:px-6">
       <CategoryHero
         src={acf?.works_hero_main || ""}
         subSrc={acf?.works_hero_sub || ""}

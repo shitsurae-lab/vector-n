@@ -62,7 +62,7 @@ export default async function Page({ params }: customPageProps) {
   const acf = categoryData?.acf;
   //画面に表示する
   return (
-    <main className="mx-auto max-w-6xl px-6 md:px-16">
+    <main className="mx-auto max-w-6xl px-4 sm:px-6">
       {/* 修正ポイント：GSAPアニメーション付きのクライアントコンポーネントへ */}
       {acf?.next_image ? (
         <CategoryHero

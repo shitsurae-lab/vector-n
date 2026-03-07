@@ -64,7 +64,7 @@ export default async function WorksTopPage() {
   );
 
   return (
-    <main className="mx-auto max-w-6xl">
+    <main className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       {/* スライダーを表示 */}
       {sliderImages.length > 0 && <HeroSlider images={sliderImages} />}
       {/* END スライダーを表示 */}

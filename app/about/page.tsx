@@ -27,7 +27,7 @@ export default async function AboutPage() {
   ];
 
   return (
-    <main className="mx-auto max-w-6xl px-6 md:px-16">
+    <main className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       {/* CategoryHero に流し込む。ACF名は作成したものに合わせて調整してください */}
       <CategoryHero
         src={acf?.about_hero_main || ""}
