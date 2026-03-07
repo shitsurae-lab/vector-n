@@ -73,12 +73,12 @@ export const Header = () => {
       animate={hidden ? "hidden" : "visible"}
       // style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-0 left-0 z-50 w-full"
+      className="fixed top-0 left-0 z-50 flex w-full justify-between"
     >
       {/* --- 左上: ロゴ --- */}
       <motion.div
         style={{ scale: logoScale }}
-        className="pointer-events-none relative top-0 left-0 z-[60] flex h-[160px] w-[140px] items-center justify-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none"
+        className="pointer-events-none z-[60] grid h-[160px] w-[140px] place-items-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none"
       >
         {isHomePage ? (
           <h1 className="m-0 leading-none">
@@ -120,7 +120,7 @@ export const Header = () => {
       </motion.div>
 
       {/* --- PC版: 右上・縦並びナビゲーション --- */}
-      <nav className="absolute top-6 right-6 z-50 hidden md:flex">
+      <nav className="z-50 hidden p-6 md:flex">
         <NavLinks
           pathname={pathname}
           className="flex flex-col items-end gap-4"
@@ -128,7 +128,7 @@ export const Header = () => {
       </nav>
 
       {/* --- モバイル版: ハンバーガーメニュー --- */}
-      <div className="absolute top-4 right-4 z-40 md:hidden">
+      <div className="z-40 md:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
