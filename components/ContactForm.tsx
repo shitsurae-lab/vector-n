@@ -76,71 +76,73 @@ export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-screen py-20"
+      className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-screen px-8 py-20 md:px-20"
     >
-      {showTitle && (
-        <h2 className="animate-form-item mb-8 text-center font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-[#2a2723] uppercase md:text-4xl">
-          contact
-        </h2>
-      )}
+      <div className="px-6 md:px-16">
+        {showTitle && (
+          <h2 className="animate-form-item mb-8 text-center font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-[#2a2723] uppercase md:text-4xl">
+            contact
+          </h2>
+        )}
 
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="mx-auto max-w-2xl space-y-12 px-6"
-      >
-        {/* 名前入力 */}
-        <div className="animate-form-item space-y-4">
-          <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
-            Name
-          </label>
-          <Input
-            name="name"
-            required
-            placeholder="Your Name"
-            className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
-          />
-        </div>
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="mx-auto max-w-2xl space-y-12 px-6"
+        >
+          {/* 名前入力 */}
+          <div className="animate-form-item space-y-4">
+            <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
+              Name
+            </label>
+            <Input
+              name="name"
+              required
+              placeholder="Your Name"
+              className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
+            />
+          </div>
 
-        {/* メールアドレス入力 */}
-        <div className="animate-form-item space-y-4">
-          <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
-            Email Address
-          </label>
-          <Input
-            name="email"
-            type="email"
-            required
-            placeholder="example@mail.com"
-            className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
-          />
-        </div>
+          {/* メールアドレス入力 */}
+          <div className="animate-form-item space-y-4">
+            <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
+              Email Address
+            </label>
+            <Input
+              name="email"
+              type="email"
+              required
+              placeholder="example@mail.com"
+              className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
+            />
+          </div>
 
-        {/* メッセージ入力 */}
-        <div className="animate-form-item space-y-4">
-          <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
-            Message
-          </label>
-          <Textarea
-            name="message"
-            required
-            placeholder="How can I help you?"
-            className="h-auto min-h-[150px] rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wide placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
-          />
-        </div>
+          {/* メッセージ入力 */}
+          <div className="animate-form-item space-y-4">
+            <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
+              Message
+            </label>
+            <Textarea
+              name="message"
+              required
+              placeholder="How can I help you?"
+              className="h-auto min-h-[150px] rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wide placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
+            />
+          </div>
 
-        {/* 送信ボタン */}
-        <div className="animate-form-item pt-10 text-center">
-          <Button
-            type="submit"
-            disabled={pending}
-            className="group min-w-[240px] rounded-full bg-[#2a2723] px-12 py-8 text-[10px] font-bold tracking-[0.3em] text-white uppercase shadow-2xl transition-all hover:bg-[#3d3934]"
-          >
-            {pending ? "Sending..." : "Send Message"}
-            <ArrowRight className="ml-3 h-4 w-4 transform transition-transform group-hover:translate-x-2" />
-          </Button>
-        </div>
-      </form>
+          {/* 送信ボタン */}
+          <div className="animate-form-item pt-10 text-center">
+            <Button
+              type="submit"
+              disabled={pending}
+              className="group min-w-[240px] rounded-full bg-[#2a2723] px-12 py-8 text-[10px] font-bold tracking-[0.3em] text-white uppercase shadow-2xl transition-all hover:bg-[#3d3934]"
+            >
+              {pending ? "Sending..." : "Send Message"}
+              <ArrowRight className="ml-3 h-4 w-4 transform transition-transform group-hover:translate-x-2" />
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
