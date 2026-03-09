@@ -87,7 +87,7 @@ export const FluffyContainer = ({
   const innerContent = (
     <div
       className={`mx-auto flex w-full max-w-6xl flex-col ${
-        isEven ? "md:flex-row-reverse" : "md:flex-row"
+        isEven ? "lg:flex-row-reverse" : "lg:flex-row"
       } items-start justify-center gap-12 px-6 py-20 md:gap-20 md:px-16`}
     >
       {/* 🖼️ 画像領域：PCで大きくなりすぎないよう制限 */}
@@ -117,7 +117,9 @@ export const FluffyContainer = ({
         <div className="group relative">
           {/* --- 01. ビッグナンバー (Anton) ---
         text-transparent と -webkit-text-stroke で「線」にして、Michromaの空間美を邪魔しないようにします */}
-          <span className="pointer-events-none absolute -top-20 -left-12 font-[family-name:var(--font-anton)] text-[140px] leading-none text-[#2a2723] opacity-[0.06] transition-all duration-1000 select-none group-hover:opacity-[0.08] md:-top-24 md:-top-28 md:-left-14 md:-left-16 md:text-[220px]">
+          <span
+            className={`pointer-events-none absolute -top-20 font-[family-name:var(--font-anton)] text-[140px] leading-none text-[#2a2723] opacity-[0.06] transition-all duration-1000 select-none group-hover:opacity-[0.08] ${isEven ? "lg:right-auto lg:-left-16" : "md:left-auto lg:right-0"} lg:text-[220px]`}
+          >
             {num}
           </span>
 
