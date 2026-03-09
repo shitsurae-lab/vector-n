@@ -63,14 +63,18 @@ export const CategoryList = ({ categories }: { categories: Category[] }) => {
               href={`/works/${cat.slug}`}
               className="group block h-full no-underline"
             >
-              <Card className="h-full overflow-hidden border-none bg-slate-50 pt-0 transition-shadow hover:shadow-md">
-                <div className="relative aspect-4/3 overflow-hidden bg-slate-200">
+              <Card className="h-full overflow-hidden border-none bg-[#faf9f7] pt-0 transition-shadow hover:shadow-md">
+                <div className="relative aspect-video overflow-hidden bg-gray-100">
                   {cat.acf?.next_image && (
                     <Image
                       src={cat.acf.next_image}
                       alt={cat.name}
                       fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      style={{
+                        // サムネイルの青みを抑え、温かみを加える
+                        filter: "sepia(5%) brightness(1.02) contrast(102%)",
+                      }}
                     />
                   )}
                 </div>
