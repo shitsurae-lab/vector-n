@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { NavLinks } from "./nav-links";
+import { AnimatedHamburger } from "./AnimatedHamburger";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -107,16 +108,6 @@ export const Header = () => {
             </Link>
           </div>
         )}
-        {/* <Link href="/" className="pointer-events-auto">
-          <Image
-            src="/logo-thin-y@2x.webp"
-            alt="Vector n"
-            width={80}
-            height={102}
-            className="h-auto w-[80px] object-contain"
-            priority
-          />
-        </Link> */}
       </motion.div>
 
       {/* --- PC版: 右上・縦並びナビゲーション --- */}
@@ -137,12 +128,13 @@ export const Header = () => {
               className="relative h-12 w-12 hover:bg-transparent focus-visible:ring-0"
             >
               {/* アイコンのアニメーション切り替え */}
-              <div className="relative h-8 w-8">
+              {/* <div className="relative h-8 w-8">
                 <Menu
                   className={`absolute inset-0 h-6 w-6 transition-all duration-300`}
                 />
                 <span className="sr-only">Open menu</span>
-              </div>
+              </div> */}
+              <AnimatedHamburger isOpen={isOpen} />
               <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>
