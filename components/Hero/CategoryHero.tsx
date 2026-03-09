@@ -37,14 +37,14 @@ export const CategoryHero = ({
   alt,
 }: HeroProps) => {
   return (
-    <section className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] h-[85vh] w-screen overflow-hidden bg-gradient-to-b from-[#eceae7] via-[#f8f6f3] to-[#f8f6f3] md:h-svh">
-      <div className="relative mx-auto flex h-full w-full max-w-[1440px] flex-col px-6 md:px-12">
-        {/* --- 🖼️ ビジュアルエリア --- */}
+    <section className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] h-[80svh] max-h-[900px] w-screen overflow-hidden bg-gradient-to-b from-[#eceae7] via-[#f8f6f3] to-[#f8f6f3] md:h-[70vh] lg:h-svh">
+      <div className="relative mx-auto flex h-full w-full max-w-[1280px] flex-col px-6 md:px-12">
+        {/* ---  メインビジュアルエリア --- */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] as const }}
-          className="main-visual-wrapper relative mx-auto aspect-[4/3] w-full max-w-[1280px] md:aspect-[4/3] lg:aspect-[16/9]"
+          className="main-visual-wrapper relative mr-auto ml-0 aspect-[4/3] w-full md:aspect-[4/3] lg:aspect-[16/9] lg:max-w-[80vw] xl:max-w-[1080px]"
         >
           {/* ① 背面のゆらゆら動く影 (生命感) */}
           <motion.div
@@ -58,13 +58,13 @@ export const CategoryHero = ({
             style={{ clipPath: "url(#fluid-mask-mv)" }}
           />
 
-          {/* ② メイン画像 (常時の伸縮アニメーション) */}
+          {/* ② 🖼️メイン画像 (マスク/アニメーション) */}
           <motion.div
             animate={{ scaleY: [1, 1.03, 1] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
             className="main-mask-container relative z-10 h-full w-full overflow-hidden"
             style={{ clipPath: "url(#fluid-mask-mv)" }}
-            onContextMenu={(e) => e.preventDefault()} // イラスト保護の例
+            onContextMenu={(e) => e.preventDefault()}
           >
             <Image
               src={src}
@@ -90,7 +90,7 @@ export const CategoryHero = ({
               rotate: [0, 1.5, 0],
             }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="sub-visual-wrapper absolute -right-4 bottom-[-120px] z-40 aspect-square w-[40vw] max-w-[280px] overflow-hidden rounded-full shadow-2xl md:-right-10 md:bottom-[-160px] md:w-[22vw] lg:bottom-[-120px] lg:w-[18vw]"
+            className="sub-visual-wrapper absolute -right-4 -bottom-30 z-40 aspect-square w-[40vw] max-w-[280px] overflow-hidden rounded-full shadow-2xl md:-right-6 md:-bottom-20 md:w-[22vw] lg:-right-2 lg:-bottom-15 lg:w-[18vw]"
           >
             <Image
               src={subSrc || src}
@@ -103,7 +103,7 @@ export const CategoryHero = ({
         </motion.div>
 
         {/* --- 🖋️ テキストレイヤー --- */}
-        <div className="absolute right-0 bottom-[20%] z-30 w-[calc(100%-80px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[8%] md:left-20 md:w-[calc(100%-160px)]">
+        <div className="absolute bottom-[20%] left-6 z-30 w-[calc(100%-80px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[8%] md:left-20 md:w-[calc(100%-160px)]">
           <motion.div
             variants={fadeInUp}
             custom={0}
@@ -140,31 +140,30 @@ export const CategoryHero = ({
             </motion.p>
           )}
         </div>
-
-        {/* --- 🖱️ Scroll Indicator --- */}
-        <div className="absolute right-auto bottom-20 left-8 z-50 flex flex-col items-start gap-4 overflow-hidden sm:bottom-8 md:bottom-24 md:left-0 lg:bottom-12 lg:bottom-40">
-          <span
-            className="vertical-text font-[family-name:var(--font-michroma)] text-[6px] tracking-[0.2em] text-zinc-400 uppercase"
-            style={{ writingMode: "vertical-rl" }}
-          >
-            scroll down
-          </span>
-          <div className="relative h-12 w-[1px] overflow-hidden bg-zinc-200/30">
-            {/* スクロールラインのアニメーション */}
-            <motion.div
-              animate={{ y: ["-100%", "100%"] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 bg-zinc-400"
-            />
-          </div>
+      </div>
+      <FluidMaskPrimary />
+      {/* --- 🖱️ Scroll Indicator --- */}
+      <div className="absolute right-6 bottom-10 left-auto z-50 flex flex-col items-end gap-4 overflow-hidden sm:bottom-8 md:right-6 md:bottom-10 lg:right-6 lg:bottom-12 lg:bottom-40 xl:right-6">
+        <span
+          className="vertical-text font-[family-name:var(--font-michroma)] text-[8px] tracking-[0.2em] text-zinc-400 uppercase"
+          style={{ writingMode: "vertical-rl" }}
+        >
+          scroll down
+        </span>
+        <div className="relative h-20 w-[1px] overflow-hidden bg-zinc-200/30">
+          {/* スクロールラインのアニメーション */}
+          <motion.div
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-0 bg-zinc-400"
+          />
         </div>
       </div>
-
-      <FluidMaskPrimary />
+      {/* --- END 🖱️ Scroll Indicator --- */}
     </section>
   );
 };
