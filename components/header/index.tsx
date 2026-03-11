@@ -119,13 +119,13 @@ export const Header = () => {
       </nav>
 
       {/* --- モバイル版: ハンバーガーメニュー --- */}
-      <div className="z-40 md:hidden">
+      <div className="z-40 mt-2 mr-2 md:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="relative h-12 w-12 hover:bg-transparent focus-visible:ring-0"
+              className="relative h-10 w-10 hover:bg-transparent focus-visible:ring-0"
             >
               {/* アイコンのアニメーション切り替え */}
               {/* <div className="relative h-8 w-8">

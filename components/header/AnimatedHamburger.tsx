@@ -8,12 +8,11 @@ export const AnimatedHamburger = ({ isOpen }: { isOpen: boolean }) => {
   return (
     <div className="flex h-8 w-8 items-center justify-center">
       <svg
-        width="24"
-        height="24"
+        className="size-8"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.4"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
