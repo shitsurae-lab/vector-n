@@ -5,7 +5,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="mt-20 w-full border-t border-black/5 px-10 py-20 text-[#4f545a]">
+    <footer className="mt-20 w-full border-t border-black/5 p-10 text-[#4f545a]">
       <div className="mx-auto flex max-w-[1600px] flex-col space-y-6">
         <div className="flex flex-col items-start justify-between gap-12 md:flex-row">
           {/* 左側：ロゴ */}
@@ -15,12 +15,12 @@ export const Footer = () => {
               className="block transition-opacity hover:opacity-70"
             >
               <Image
-                src="/logo-thin-y@2x.webp"
+                src="/logo-vector@2x.webp"
                 alt="Vector n"
                 /* 比率を 40:51 に合わせる (80x102) */
-                width={80}
-                height={102}
-                className="h-auto w-[80px] object-contain"
+                width={160}
+                height={200}
+                className="h-auto w-[64px] object-contain md:w-[80px]"
                 priority
               />
             </Link>

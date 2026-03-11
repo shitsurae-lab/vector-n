@@ -79,17 +79,17 @@ export const Header = () => {
       {/* --- 左上: ロゴ --- */}
       <motion.div
         style={{ scale: logoScale }}
-        className="pointer-events-none z-[60] grid h-[160px] w-[140px] place-items-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:bg-none md:backdrop-blur-none"
+        className="pointer-events-none z-[60] grid h-[120px] w-[96px] place-items-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:h-[150px] md:w-[120px] md:bg-none md:backdrop-blur-none"
       >
         {isHomePage ? (
           <h1 className="m-0 leading-none">
             <Link href="/" className="pointer-events-auto block">
               <Image
-                src="/logo-thin-y@2x.webp"
+                src="/logo-vector@2x.webp"
                 alt="Vector-n | Toshiyuki Kurashima's Portfolio"
-                width={80}
-                height={102}
-                className="h-auto w-[80px] object-contain"
+                width={160}
+                height={200}
+                className="h-auto w-[64px] object-contain md:w-[80px]"
                 priority
               />
             </Link>
