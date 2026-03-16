@@ -2,7 +2,7 @@
 
 import Lottie from "lottie-react";
 import { motion } from "framer-motion";
-import logoAnimation from "@/public/data.json";
+import logoAnimation from "@/public/data/data.json";
 
 export default function LoadingScreen() {
   const easeQuart = [0.22, 1, 0.36, 1] as const;
