@@ -15,7 +15,7 @@ export const Footer = () => {
               className="block transition-opacity hover:opacity-70"
             >
               <Image
-                src="/logo-vector@2x.webp"
+                src="/assets/logo-vector@2x.webp"
                 alt="Vector n"
                 /* 比率を 40:51 に合わせる (80x102) */
                 width={160}

@@ -85,7 +85,7 @@ export const Header = () => {
           <h1 className="m-0 leading-none">
             <Link href="/" className="pointer-events-auto block">
               <Image
-                src="/logo-vector@2x.webp"
+                src="/assets/logo-vector@2x.webp"
                 alt="Vector-n | Toshiyuki Kurashima's Portfolio"
                 width={160}
                 height={200}
