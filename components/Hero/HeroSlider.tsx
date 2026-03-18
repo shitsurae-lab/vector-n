@@ -19,18 +19,96 @@ interface SliderProps {
   images: MainVisualImage[];
 }
 
-// テキスト等の登場アニメーション
+//共通設定
+const easeCustom = [0.22, 1, 0.36, 1] as const;
+// 登場時のふわっとしたアニメーション設定
 const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.15,
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1] as const,
+      delay: 1.2 + i * 0.15, // オープニング後の発火を想定して少し遅延
+      duration: 1,
+      ease: easeCustom,
     },
   }),
+};
+
+// 親コンテナ：子要素のアニメーション開始を管理
+export const revealContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.4, // 各要素（帯、文字、座布団）を0.4秒ずらしで発火
+    },
+  },
+};
+
+// ① 最初の「リビール帯」：左から伸びて、右へハケる
+export const initialBar: Variants = {
+  hidden: { left: "0%", width: "0%" },
+  visible: {
+    // 伸びて(0.4s) → そのまま右へ消える(0.4s) = 計0.8sの動き
+    left: ["0%", "0%", "100%"],
+    width: ["0%", "100%", "0%"],
+    transition: {
+      duration: 0.8,
+      times: [0, 0.5, 1], // 各状態の時間配分
+      ease: easeCustom,
+    },
+  },
+};
+
+// ② 土台の文字：帯がハケた後に「スッ」と現れる
+export const baseText: Variants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      delay: 0.8, // 帯(0.8s)が消えた直後に発火
+      ease: easeCustom,
+    },
+  },
+};
+
+// ③ 座布団：文字が出た後に、さらに一呼吸置いてから敷かれる
+export const cushion: Variants = {
+  hidden: { width: "0%" },
+  visible: {
+    width: "100%",
+    transition: {
+      duration: 0.8,
+      delay: 1.4, // 帯(0.8s) + 文字(0.6s) = 1.4s 後に発火
+      ease: easeCustom,
+    },
+  },
+};
+// メインタイトル用：座布団なし。帯が走るのとほぼ同時に文字がリビール
+export const mainTitleVariants = {
+  bar: {
+    hidden: { left: "0%", width: "0%" },
+    visible: {
+      left: ["0%", "0%", "100%"],
+      width: ["0%", "100%", "0%"],
+      transition: {
+        duration: 0.8,
+        delay: 1.7,
+        times: [0, 0.5, 1],
+        ease: easeCustom,
+      }, // サブタイトル完了後に発火
+    },
+  },
+  text: {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.7, delay: 2.1, ease: easeCustom }, // 帯が伸びた瞬間に文字を出す
+    },
+  },
 };
 
 export const HeroSlider = ({ images }: SliderProps) => {
@@ -137,30 +215,57 @@ export const HeroSlider = ({ images }: SliderProps) => {
           <AnimatePresence mode="wait">
             <motion.div key={`text-${currentIndex}`}>
               <motion.div
-                variants={fadeInUp}
+                variants={revealContainer}
                 custom={0}
                 initial="hidden"
                 animate="visible"
-                className="mb-4 flex items-center gap-4"
+                className="relative mb-2 w-fit max-w-full overflow-hidden" // w-fit かつ max-w-full にすることで、短い時は文字幅、長い時は親の幅
               >
-                <div className="pointer-events-none absolute inset-y-0 -left-10 -z-10 w-[200%] bg-gradient-to-r from-[#f8f6f3]/80 via-[#f8f6f3]/40 to-transparent blur-md" />
-                <div className="mt-[7px] h-6 w-[1px] bg-zinc-300" />
-                <p className="max-w-[240px] font-[family-name:var(--font-mixed)] text-[10px] leading-relaxed tracking-[0.4em] text-zinc-600 uppercase md:max-w-[400px]">
+                <motion.p
+                  variants={baseText}
+                  className="px-2 py-1 font-[family-name:var(--font-mixed)] text-xs leading-[1.8] tracking-[0.4em] text-zinc-600 uppercase"
+                >
                   {images[currentIndex].subtitle}
-                </p>
+                </motion.p>
+                {/* ② 通り過ぎる帯（inset-0で土台を完全に覆う） */}
+                <motion.div
+                  variants={initialBar}
+                  className="absolute inset-0 z-20 bg-[#2A2723]"
+                />
+                {/* ③ 座布団と白文字 */}
+                <motion.div
+                  variants={cushion}
+                  className="absolute inset-0 z-30 overflow-hidden bg-[#2A2723]"
+                >
+                  {/* 土台と全く同じフォント設定・パディングにするのがコツ */}
+                  <p className="w-full px-2 py-1 font-[family-name:var(--font-mixed)] text-xs leading-[1.8] tracking-[0.4em] wrap-break-word text-white uppercase md:w-max md:whitespace-nowrap">
+                    {images[currentIndex].subtitle}
+                  </p>
+                </motion.div>
               </motion.div>
-
               <motion.div
-                variants={fadeInUp}
-                custom={1}
+                variants={revealContainer}
                 initial="hidden"
                 animate="visible"
-                className="font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-[#2a2723] uppercase md:text-7xl lg:text-8xl"
+                className="relative w-fit max-w-full overflow-hidden"
               >
-                {images[currentIndex].title}
+                <motion.div
+                  variants={mainTitleVariants.text}
+                  custom={1}
+                  initial="hidden"
+                  animate="visible"
+                  className="font-[family-name:var(--font-anton)] text-5xl leading-[1.1] tracking-wider wrap-break-word text-[#2a2723] uppercase md:text-7xl lg:text-8xl"
+                >
+                  {images[currentIndex].title}
+                </motion.div>
+                <motion.div
+                  variants={mainTitleVariants.bar}
+                  initial="hidden"
+                  animate="visible"
+                  className="absolute inset-0 z-20 bg-[#2A2723]"
+                />
               </motion.div>
-
-              {images[currentIndex].desc && (
+              {/* {images[currentIndex].desc && (
                 <motion.p
                   variants={fadeInUp}
                   custom={2}
@@ -170,7 +275,7 @@ export const HeroSlider = ({ images }: SliderProps) => {
                 >
                   {images[currentIndex].desc}
                 </motion.p>
-              )}
+              )} */}
             </motion.div>
           </AnimatePresence>
         </div>

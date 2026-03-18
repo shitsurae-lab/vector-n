@@ -13,7 +13,8 @@ type HeroProps = {
   alt: string;
   date?: string;
 };
-
+//共通設定
+const easeCustom = [0.22, 1, 0.36, 1] as const;
 // 登場時のふわっとしたアニメーション設定
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -23,9 +24,85 @@ const fadeInUp: Variants = {
     transition: {
       delay: 1.2 + i * 0.15, // オープニング後の発火を想定して少し遅延
       duration: 1,
-      ease: [0.22, 1, 0.36, 1] as const,
+      ease: easeCustom,
     },
   }),
+};
+
+// 親コンテナ：子要素のアニメーション開始を管理
+export const revealContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.4, // 各要素（帯、文字、座布団）を0.4秒ずらしで発火
+    },
+  },
+};
+
+// ① 最初の「リビール帯」：左から伸びて、右へハケる
+export const initialBar: Variants = {
+  hidden: { left: "0%", width: "0%" },
+  visible: {
+    // 伸びて(0.4s) → そのまま右へ消える(0.4s) = 計0.8sの動き
+    left: ["0%", "0%", "100%"],
+    width: ["0%", "100%", "0%"],
+    transition: {
+      duration: 0.8,
+      times: [0, 0.5, 1], // 各状態の時間配分
+      ease: easeCustom,
+    },
+  },
+};
+
+// ② 土台の文字：帯がハケた後に「スッ」と現れる
+export const baseText: Variants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      delay: 0.8, // 帯(0.8s)が消えた直後に発火
+      ease: easeCustom,
+    },
+  },
+};
+
+// ③ 座布団：文字が出た後に、さらに一呼吸置いてから敷かれる
+export const cushion: Variants = {
+  hidden: { width: "0%" },
+  visible: {
+    width: "100%",
+    transition: {
+      duration: 0.8,
+      delay: 1.4, // 帯(0.8s) + 文字(0.6s) = 1.4s 後に発火
+      ease: easeCustom,
+    },
+  },
+};
+// メインタイトル用：座布団なし。帯が走るのとほぼ同時に文字がリビール
+export const mainTitleVariants = {
+  bar: {
+    hidden: { left: "0%", width: "0%" },
+    visible: {
+      left: ["0%", "0%", "100%"],
+      width: ["0%", "100%", "0%"],
+      transition: {
+        duration: 0.8,
+        delay: 1.7,
+        times: [0, 0.5, 1],
+        ease: easeCustom,
+      }, // サブタイトル完了後に発火
+    },
+  },
+  text: {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.7, delay: 2.1, ease: easeCustom }, // 帯が伸びた瞬間に文字を出す
+    },
+  },
 };
 
 export const CategoryHero = ({
@@ -104,30 +181,62 @@ export const CategoryHero = ({
 
         {/* --- 🖋️ テキストレイヤー --- */}
         <div className="absolute bottom-[20%] left-6 z-30 w-[calc(100%-80px)] sm:bottom-[24%] sm:w-[calc(100%-40px)] md:right-auto md:bottom-[8%] md:left-20 md:w-[calc(100%-160px)]">
+          {/* --- Subtitle Area --- */}
           <motion.div
-            variants={fadeInUp}
-            custom={0}
+            variants={revealContainer}
             initial="hidden"
             animate="visible"
-            className="mb-4 flex items-center gap-4"
+            className="relative mb-2 w-fit max-w-full overflow-hidden" // w-fit かつ max-w-full にすることで、短い時は文字幅、長い時は親の幅
           >
-            <div className="pointer-events-none absolute inset-y-0 -left-10 -z-10 w-[200%] bg-gradient-to-r from-[#f8f6f3]/80 via-[#f8f6f3]/40 to-transparent blur-md" />
-            <div className="mt-[7px] h-6 w-[1px] bg-zinc-300" />
-            <p className="max-w-[240px] font-[family-name:var(--font-mixed)] text-[10px] leading-relaxed tracking-[0.4em] text-zinc-600 uppercase md:max-w-[400px]">
+            {/* ① 土台の文字（余白をここで作る） */}
+            <motion.p
+              variants={baseText}
+              className="px-2 py-1 font-[family-name:var(--font-mixed)] text-xs leading-[1.8] tracking-[0.4em] text-zinc-600 uppercase"
+            >
               {subtitle}
-            </p>
+            </motion.p>
+
+            {/* ② 通り過ぎる帯（inset-0で土台を完全に覆う） */}
+            <motion.div
+              variants={initialBar}
+              className="absolute inset-0 z-20 bg-[#2A2723]"
+            />
+
+            {/* ③ 座布団と白文字 */}
+            <motion.div
+              variants={cushion}
+              className="absolute inset-0 z-30 overflow-hidden bg-[#2A2723]"
+            >
+              {/* 土台と全く同じフォント設定・パディングにするのがコツ */}
+              <p className="w-full px-2 py-1 font-[family-name:var(--font-mixed)] text-xs leading-[1.8] tracking-[0.4em] wrap-break-word text-white uppercase md:w-max md:whitespace-nowrap">
+                {subtitle}
+              </p>
+            </motion.div>
           </motion.div>
 
-          <motion.h1
-            variants={fadeInUp}
-            custom={1}
+          <motion.div
+            variants={revealContainer}
             initial="hidden"
             animate="visible"
-            className="font-[family-name:var(--font-anton)] text-5xl leading-tight tracking-wider text-[#2a2723] uppercase md:text-7xl lg:text-8xl"
+            className="relative w-fit max-w-full overflow-hidden"
           >
-            {title}
-          </motion.h1>
-
+            <motion.h1
+              variants={mainTitleVariants.text}
+              custom={1}
+              initial="hidden"
+              animate="visible"
+              className="font-[family-name:var(--font-anton)] text-5xl leading-[1.1] tracking-wider wrap-break-word text-[#2a2723] uppercase md:text-7xl lg:text-8xl"
+            >
+              {title}
+            </motion.h1>
+            <motion.div
+              variants={mainTitleVariants.bar}
+              initial="hidden"
+              animate="visible"
+              className="absolute inset-0 z-20 bg-[#2A2723]"
+            />
+          </motion.div>
+          {/*
           {desc && (
             <motion.p
               variants={fadeInUp}
@@ -138,7 +247,7 @@ export const CategoryHero = ({
             >
               {desc}
             </motion.p>
-          )}
+          )} */}
         </div>
       </div>
       <FluidMaskPrimary />
