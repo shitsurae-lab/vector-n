@@ -68,7 +68,7 @@ export default async function Page({ params }: customPageProps) {
         <CategoryHero
           src={acf.next_image}
           subSrc={acf.next_image_sub}
-          title={acf.next_title || categoryData?.name || category}
+          title={acf.mv_title || categoryData?.name || category}
           subtitle={acf.mv_subtitle}
           desc={acf.term_desc}
           alt={acf.term_title || categoryData?.name || category}
