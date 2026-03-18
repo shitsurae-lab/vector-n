@@ -5,6 +5,8 @@ import {
   Orbitron,
   Michroma,
   Montserrat,
+  Noto_Sans_JP,
+  Space_Grotesk,
 } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "@/components/ui/sonner";
@@ -43,11 +45,23 @@ const michroma = Michroma({
   display: "swap",
 });
 
+const noto = Noto_Sans_JP({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-noto-sans-jp", // Tailwind v4用
+});
+
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "700", "900"],
   variable: "--font-montserrat",
   display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-space-grotesk", // CSS変数名を指定
 });
 
 export const metadata: Metadata = {
@@ -91,7 +105,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${bebasNeue.variable} ${montserrat.variable}`}
+      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${noto.variable} ${bebasNeue.variable} ${montserrat.variable} ${spaceGrotesk.variable}`}
     >
       <body className="bg-[#f8f6f3] text-[#4f545a] antialiased selection:bg-black selection:text-white">
         <OpeningProvider>

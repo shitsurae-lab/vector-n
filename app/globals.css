@@ -55,7 +55,9 @@
   --font-orbitron: var(--font-orbitron);
   --font-michroma: var(--font-michroma);
   --font-montserrat: var(--font-montserrat);
-  --font-mixed: var(--font-michroma), ui-sans-serif, system-ui, sans-serif;
+  --font-grotesk: var(--font-space-grotesk);
+  --font-mixed:
+    var(--font-grotesk), var(--font-noto-sans-jp), ui-sans-serif, system-ui;
 }
 
 :root {
