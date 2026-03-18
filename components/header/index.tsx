@@ -79,7 +79,7 @@ export const Header = () => {
       {/* --- 左上: ロゴ --- */}
       <motion.div
         style={{ scale: logoScale }}
-        className="pointer-events-none z-[60] grid h-[120px] w-[96px] place-items-center rounded-br-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.9)_0%,_rgba(255,255,255,0.6)_40%,_rgba(255,255,255,0.2)_70%,_transparent_100%)] backdrop-blur-[6px] md:h-[150px] md:w-[120px] md:bg-none md:backdrop-blur-none"
+        className="pointer-events-none z-[60] grid h-[80px] w-[64px] place-items-center md:h-[150px] md:w-[120px]"
       >
         {isHomePage ? (
           <h1 className="m-0 leading-none">
