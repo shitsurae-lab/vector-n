@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { DecorationDots } from "./ui/DecorationDots";
 
 type CapsuleItem = {
   id: string;
@@ -196,6 +197,14 @@ export const CapsuleSection = ({ items }: { items: CapsuleItem[] }) => {
             </Button>
           </motion.div>
         </div>
+        {/* ドットあしらい */}
+        {/* <DecorationDots
+          rotate={0}
+          opacity={0.2}
+          width="clamp(40px, 13.26vw - 9.72px, 160px)"
+          zIndex={5}
+          className="absolute top-[36%] left-8 z-5 md:left-[16%]"
+        /> */}
       </div>
     </section>
   );

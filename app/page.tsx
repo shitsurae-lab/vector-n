@@ -6,6 +6,7 @@ import {
 import { CapsuleSection } from "../components/CapsuleSection";
 import { HeroSlider } from "../components/Hero/HeroSlider";
 import { FluffyContainer } from "@/components/FluffyContainer";
+import { DecorationDots } from "@/components/ui/DecorationDots";
 
 export default async function WorksTopPage() {
   // 1. カテゴリー一覧と、Aboutページ（固定ページ）のデータを同時に取得
@@ -64,11 +65,26 @@ export default async function WorksTopPage() {
   );
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-      {/* スライダーを表示 */}
-      {sliderImages.length > 0 && <HeroSlider images={sliderImages} />}
-      {/* END スライダーを表示 */}
-      {/* 2. Capsule Section (Aboutページからのデータを表示) */}
+    <main className="relative mx-auto w-full max-w-6xl px-4 sm:px-6">
+      {/* -- Hero Area Wrapper:
+      overflow-hiddenを回避して「あしらい」を跨がせるための親コンテナ --- */}
+      <div className="relative">
+        {/* スライダーを表示 */}
+        {sliderImages.length > 0 && <HeroSlider images={sliderImages} />}
+        {/* END スライダーを表示 */}
+
+        {/* セクションを跨いで配置するドットのあしらい */}
+        {/* <DecorationDots
+          shape="triangle"
+          rotate={-75}
+          className="absolute right-4 bottom-6 z-50 md:-right-20 md:bottom-0"
+          zIndex={10}
+          // z-50にし、、CapsuleSectionの背景や影よりも上に
+        /> */}
+      </div>
+      {/* -- Capsule Area Wrapper:
+      overflow-hiddenを回避して「あしらい」を跨がせるための親コンテナ --- */}
+
       {capsuleItems.length > 0 && <CapsuleSection items={capsuleItems} />}
 
       <section className="mt-32">
@@ -87,7 +103,6 @@ export default async function WorksTopPage() {
           </div>
         </div>
         {/* fluffyコンテナーを表示 */}
-
         {filteredCategories.map((cat, index) => (
           <FluffyContainer
             key={cat.id}
