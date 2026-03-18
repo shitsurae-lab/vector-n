@@ -32,7 +32,7 @@ export const Footer = () => {
               <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
                 Navigation
               </p>
-              <ul className="space-y-2 text-sm font-light tracking-widest uppercase">
+              <ul className="space-y-2 font-[family-name:var(--font-michroma)] text-[10px] tracking-[0.3em] text-zinc-400 uppercase transition-colors duration-500 group-hover:tracking-[0.4em] group-hover:text-[#2a2723]">
                 <li>
                   <Link
                     href="/"
@@ -73,13 +73,13 @@ export const Footer = () => {
               <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
                 Source
               </p>
-              <ul className="space-y-2 text-sm font-light tracking-widest uppercase">
+              <ul className="space-y-2 font-[family-name:var(--font-michroma)] text-[10px] tracking-[0.3em] text-zinc-400 uppercase transition-colors duration-500 group-hover:tracking-[0.4em] group-hover:text-[#2a2723]">
                 <li>
                   <a
                     href="https://github.com/shitsurae-lab"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 transition-opacity hover:opacity-50"
+                    className="flex items-center gap-2"
                   >
                     GitHub
                     <span className="text-[8px]">↗</span>
