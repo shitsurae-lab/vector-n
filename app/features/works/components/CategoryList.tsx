@@ -63,33 +63,43 @@ export const CategoryList = ({ categories }: { categories: Category[] }) => {
               href={`/works/${cat.slug}`}
               className="group block h-full no-underline"
             >
-              <Card className="h-full overflow-hidden border-none bg-[#faf9f7] pt-0 transition-shadow hover:shadow-md">
-                <div className="relative aspect-video overflow-hidden bg-gray-100">
-                  {cat.acf?.next_image && (
-                    <Image
-                      src={cat.acf.next_image}
-                      alt={cat.name}
-                      fill
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      style={{
-                        // サムネイルの青みを抑え、温かみを加える
-                        filter: "sepia(5%) brightness(1.02) contrast(102%)",
-                      }}
-                    />
-                  )}
-                </div>
-                <CardHeader className="p-5">
-                  {/* タイトルの色を zinc-500 へ。少しだけ右に動かす遊び心をプラス */}
-                  <CardTitle className="text-xl text-[#2a2723] transition-all duration-500 group-hover:translate-x-1 group-hover:text-zinc-500">
-                    {cat.acf?.term_title || cat.name}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="px-5 pb-5">
-                  <p className="line-clamp-2 text-sm leading-relaxed text-zinc-500">
-                    {cat.acf?.term_desc || cat.description}
-                  </p>
-                </CardContent>
-              </Card>
+              <motion.div
+                whileHover={{ y: -6, scale: 1.01 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                // チラつき防止用のスタイル
+                style={{ willChange: "transform" }}
+              >
+                <Card className="group h-full transform-gpu overflow-hidden border-none bg-[#faf9f7] pt-0 ring-1 ring-transparent transition-all transition-shadow group-hover:ring-[#2a2723]/10 hover:shadow-xl">
+                  {/* 画像エリア */}
+                  <div className="relative aspect-video overflow-hidden bg-gray-100">
+                    {cat.acf?.next_image && (
+                      <Image
+                        src={cat.acf.next_image}
+                        alt={cat.name}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                        style={{
+                          filter: "sepia(5%) brightness(1.02) contrast(102%)",
+                        }}
+                      />
+                    )}
+                  </div>
+
+                  {/* テキストエリア：paddingのバランスを調整 */}
+                  <div className="relative px-5 py-4">
+                    <CardHeader className="mb-2 p-0">
+                      <CardTitle className="text-xl text-[#363f51] transition-colors duration-300 group-hover:text-zinc-500">
+                        {cat.acf?.term_title || cat.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0 pb-6">
+                      <p className="line-clamp-2 min-h-[2.8rem] text-sm leading-relaxed text-zinc-500">
+                        {cat.acf?.term_desc || cat.description}
+                      </p>
+                    </CardContent>
+                  </div>
+                </Card>
+              </motion.div>
             </Link>
           </motion.li>
         ))}

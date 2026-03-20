@@ -1,12 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
-
 import {
   fetchAllCategories,
   fetchPageBySlug,
 } from "../features/works/api/works";
 import { CategoryList } from "../features/works/components/CategoryList";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { NAV_PATHS } from "../constants/config";
 import { CategoryHero } from "../../components/Hero/CategoryHero";
