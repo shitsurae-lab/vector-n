@@ -230,12 +230,12 @@ export const HeroSlider = ({ images }: SliderProps) => {
                 {/* ② 通り過ぎる帯（inset-0で土台を完全に覆う） */}
                 <motion.div
                   variants={initialBar}
-                  className="absolute inset-0 z-20 bg-[#2A2723]"
+                  className="absolute inset-0 z-20 bg-[#363f51]"
                 />
                 {/* ③ 座布団と白文字 */}
                 <motion.div
                   variants={cushion}
-                  className="absolute inset-0 z-30 overflow-hidden bg-[#2A2723]"
+                  className="absolute inset-0 z-30 overflow-hidden bg-[#363f51]"
                 >
                   {/* 土台と全く同じフォント設定・パディングにするのがコツ */}
                   <p className="w-full px-2 py-1 font-[family-name:var(--font-mixed)] text-xs leading-[1.8] tracking-[0.4em] wrap-break-word text-white uppercase md:w-max md:whitespace-nowrap">
@@ -254,7 +254,7 @@ export const HeroSlider = ({ images }: SliderProps) => {
                   custom={1}
                   initial="hidden"
                   animate="visible"
-                  className="font-[family-name:var(--font-anton)] text-5xl leading-[1.1] tracking-wider wrap-break-word text-[#2a2723] uppercase md:text-7xl lg:text-8xl"
+                  className="font-[family-name:var(--font-anton)] text-5xl leading-[1.1] tracking-wider wrap-break-word text-[#363f51] uppercase md:text-7xl lg:text-8xl"
                 >
                   {images[currentIndex].title}
                 </motion.div>
@@ -262,7 +262,7 @@ export const HeroSlider = ({ images }: SliderProps) => {
                   variants={mainTitleVariants.bar}
                   initial="hidden"
                   animate="visible"
-                  className="absolute inset-0 z-20 bg-[#2A2723]"
+                  className="absolute inset-0 z-20 bg-[#363f51]"
                 />
               </motion.div>
               {/* {images[currentIndex].desc && (
