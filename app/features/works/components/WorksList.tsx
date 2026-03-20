@@ -92,12 +92,16 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
               key={work.id}
               variants={itemVariants}
               className="list-none"
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              style={{ willChange: "transform" }}
             >
               <Link
                 href={`/works/${category}/${work.slug}`}
                 className="group block h-full no-underline"
               >
-                <Card className="flex h-full flex-col overflow-hidden bg-[#faf9f7] pt-0 transition-shadow hover:shadow-md">
+                <Card className="flex h-full transform-gpu flex-col overflow-hidden border-none bg-[#faf9f7] p-0 ring-1 ring-transparent transition-all hover:shadow-xl hover:ring-[#2a2723]/10">
+                  {/* 1. 画像エリア：Card(p-0)の直下に置くことで隙間を排除 */}
                   <div className="relative aspect-video overflow-hidden bg-gray-100">
                     {thumbnail ? (
                       <Image
@@ -105,9 +109,8 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
                         alt={altText}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className={`object-cover transition-transform duration-500 hover:scale-105 ${isProtected ? "blur-[0.5px]" : ""}`}
+                        className={`object-cover transition-transform duration-700 ease-out group-hover:scale-110 ${isProtected ? "blur-[0.5px]" : ""}`}
                         style={{
-                          // サムネイルの青みを抑え、温かみを加える
                           filter: "sepia(5%) brightness(1.02) contrast(102%)",
                         }}
                       />
@@ -116,54 +119,46 @@ export const WorksList = ({ works, category, categoryDesc }: WorkListProps) => {
                         No Image
                       </div>
                     )}
+                    {/* グレインエフェクト */}
                     <div className="bg-grain pointer-events-none absolute inset-0 z-10 opacity-[0.08] mix-blend-soft-light" />
                   </div>
 
-                  <CardHeader className="p-4 pb-2">
-                    <div className="mb-1 text-xs text-gray-500">
-                      {formattedDate}
-                    </div>
-                    <CardTitle className="text-lg text-[#2a2723] transition-all duration-500 group-hover:translate-x-1 group-hover:text-zinc-500">
-                      {/* <Link
-                      href={`/works/${category}/${work.slug}`}
-                      className="hover:underline"
-                    > */}
-                      {he.decode(work.title.rendered)}
-                      {/* </Link> */}
-                    </CardTitle>
-                  </CardHeader>
+                  {/* 2. テキストコンテンツエリア：px-5 pb-6 で全体の余白を定義 */}
+                  <div className="flex flex-grow flex-col px-5 pb-6">
+                    <CardHeader className="mb-2 p-0">
+                      <div className="mb-1 text-[10px] font-medium tracking-wider text-gray-400">
+                        {formattedDate}
+                      </div>
+                      <CardTitle className="text-lg leading-snug text-[#363f51] transition-colors duration-300 group-hover:text-zinc-500">
+                        {he.decode(work.title.rendered)}
+                      </CardTitle>
+                    </CardHeader>
 
-                  <CardContent className="grow p-4 pt-0">
-                    <div className="line-clamp-3 text-sm text-gray-600">
-                      {isProtected ? (
-                        <p>この投稿はパスワードで保護されています</p>
-                      ) : (
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: work.excerpt.rendered,
-                          }}
-                        />
-                      )}
-                    </div>
-                  </CardContent>
+                    <CardContent className="flex-grow p-0">
+                      <div className="line-clamp-3 min-h-[3.75rem] text-sm leading-relaxed text-gray-600">
+                        {isProtected ? (
+                          <p>この投稿はパスワードで保護されています</p>
+                        ) : (
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: work.excerpt.rendered,
+                            }}
+                          />
+                        )}
+                      </div>
+                    </CardContent>
 
-                  <CardFooter className="p-4 pt-0">
-                    <div className="flex items-center gap-2 text-[10px] font-black tracking-[0.2em] text-zinc-400 uppercase transition-colors duration-500 group-hover:text-[#2a2723]">
-                      <span>
-                        {isProtected ? "View with Password" : "Read More"}
-                      </span>
-                      <motion.span
-                        variants={{
-                          hidden: { x: 0 },
-                          visible: { x: 5 },
-                        }}
-                        transition={{ duration: 0.3 }}
-                        className="inline-block"
-                      >
-                        →
-                      </motion.span>
-                    </div>
-                  </CardFooter>
+                    <CardFooter className="mt-4 p-0">
+                      <div className="flex items-center gap-2 text-[10px] font-black tracking-[0.2em] text-zinc-400 uppercase transition-all duration-300 group-hover:text-[#2a2723]">
+                        <span>
+                          {isProtected ? "View with Password" : "Read More"}
+                        </span>
+                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                          →
+                        </span>
+                      </div>
+                    </CardFooter>
+                  </div>
                 </Card>
               </Link>
             </motion.li>
