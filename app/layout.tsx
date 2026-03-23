@@ -13,8 +13,9 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import ScrollToTop from "@/components/ScrollToTop";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import OpeningProvider from "./features/works/components/OpeningProvider";
+import { UpTo } from "@/components/UpTo";
 
 // h2用: インパクトのある英単語
 const anton = Anton({
@@ -110,6 +111,7 @@ export default function RootLayout({
       <body className="bg-[#f8f6f3] text-[#4f545a] antialiased selection:bg-black selection:text-white">
         <OpeningProvider>
           <ScrollToTop />
+          <UpTo />
           {/* 全ページ共通：ヘッダー */}
           <Header />
 
