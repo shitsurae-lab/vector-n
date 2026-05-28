@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".cline-notes/_backup/index.tsx"
   ],
   "exclude": ["node_modules"]
 }
