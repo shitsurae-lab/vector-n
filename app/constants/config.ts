@@ -7,10 +7,10 @@ export const NAV_PATHS = {
     label: "Works", // '制作実績' から英語に変えるとデザインが統一されます
     path: "works",
   },
-  ABOUT: {
-    label: "About",
-    path: "about",
-  },
+  // ABOUT: {
+  //   label: "About",
+  //   path: "about",
+  // },
   CONTACT: {
     label: "Contact",
     path: "contact",
