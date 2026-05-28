@@ -19,6 +19,7 @@ import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import OpeningProvider from "./features/works/components/OpeningProvider";
 import { UpTo } from "@/components/UpTo";
+import Cursor from "@/components/Cursor";
 
 // h2用: インパクトのある英単語
 const anton = Anton({
@@ -132,7 +133,7 @@ export default function RootLayout({
       lang="ja"
       className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${noto.variable} ${bebasNeue.variable} ${montserrat.variable} ${spaceGrotesk.variable} ${robotoCondensed.variable} ${inter.variable} ${zalandoSans.variable}`}
     >
-      <body className="bg-[#f8f6f3] text-[#4f545a] antialiased selection:bg-black selection:text-white">
+      <body className="text-[#333333] antialiased selection:bg-black selection:text-white">
         <OpeningProvider>
           <ScrollToTop />
           <UpTo />
@@ -145,6 +146,7 @@ export default function RootLayout({
           {/* 全ページ共通：フッター */}
           <Footer />
         </OpeningProvider>
+        <Cursor />
         <GoogleAnalytics gaId="G-DEVPKC45TK" />
       </body>
     </html>
