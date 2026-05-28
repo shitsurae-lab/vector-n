@@ -1,73 +1,73 @@
-import {
-  fetchWorkBySlug,
-  fetchCategoryBySlug,
-} from "@/app/features/works/api/works";
-import { ProtectedContent } from "@/components/ProtectedContent";
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import he from "he";
+import { Metadata } from "next";
+import { worksRepository } from "@/app/features/works/api/repository";
+import { WorkDetailContent } from "@/app/features/works/components/WorkDetailContent";
 
-type customPageProps = {
+// ----------------------------------------------------------------
+// 型定義
+// ----------------------------------------------------------------
+type PageProps = {
   params: Promise<{ category: string; slug: string }>;
 };
 
+// ----------------------------------------------------------------
+// generateMetadata
+// ----------------------------------------------------------------
 export async function generateMetadata({
   params,
-}: customPageProps): Promise<Metadata> {
-  const { category, slug } = await params;
-
-  // 1. 記事データを取得
-  const work = await fetchWorkBySlug(slug);
-
-  // 2. ACFのオブジェクトを変数に入れる
-  const acf = work?.acf;
-
-  // 3. 文字列として取り出す（エラー回避のポイント）
-  // acf 自体ではなく、その中の「どの文字を使うか」を指定する
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const work = await worksRepository.getWorkBySlug(slug);
   const rawTitle = work?.title?.rendered || slug;
-  const decodedTitle = he.decode(rawTitle);
-  const displayTitle = `制作実績：${decodedTitle}`;
-
-  // もしACFの中に特別なタイトル設定（例: project_name）があればそれを使う
-  // const displayTitle = acf?.project_name || work?.title?.rendered || slug;
-
   return {
-    title: displayTitle,
+    title: `制作実績：${he.decode(rawTitle)}`,
   };
 }
 
-export default async function WorkDetailPage({ params }: customPageProps) {
-  // ① URLパラメータ（カテゴリーとスラッグ）を取得
+// ----------------------------------------------------------------
+// ページ本体
+// page.tsx はデータ取得のみ。表示は WorkDetailContent に委譲。
+// ----------------------------------------------------------------
+export default async function WorkDetailPage({ params }: PageProps) {
   const { category, slug } = await params;
 
-  // ② デコードしたスラッグで取得を試みる（日本語スラッグ対策）
-  const decodedSlug = decodeURIComponent(slug);
-
-  // ③ 作品データとカテゴリーデータを並列で取得
-  // fetchWorkBySlug の戻り値は WorkData 型、fetchCategoryBySlug は Category 型
   const [work, categoryData] = await Promise.all([
-    fetchWorkBySlug(slug),
-    fetchCategoryBySlug(category),
+    worksRepository.getWorkBySlug(slug),
+    worksRepository.getCategoryBySlug(category),
   ]);
 
-  // ③ データが見つからない場合は 404
   if (!work || !categoryData) {
-    // 🔍 デバッグ用：何を探そうとして失敗したかコンソールに出す
     console.log(
-      `❌ データが見つかりません: category=${category}, slug=${decodedSlug}`,
+      `❌ データが見つかりません: category=${category}, slug=${slug}`,
     );
     notFound();
   }
 
   return (
-    // 左右突き抜けのヒーローエリアを正しく表示するため、
-    // 親に余計な padding や max-width をつけない状態でコンポーネントを呼び出す
-    <div className="min-h-screen bg-white">
-      <ProtectedContent
-        slug={slug}
-        categorySlug={category}
-        initialWork={work}
-      />
-    </div>
+    <WorkDetailContent
+      work={work}
+      categorySlug={category}
+      categoryName={categoryData.acf?.next_title || categoryData.name}
+    />
   );
+}
+
+// ----------------------------------------------------------------
+// SSG用: ビルド時に詳細ページを静的生成
+// ----------------------------------------------------------------
+export async function generateStaticParams() {
+  const categories = await worksRepository.getAllCategories();
+
+  const results = await Promise.all(
+    categories.map(async (cat) => {
+      const works = await worksRepository.getWorksByCategory(cat.slug);
+      return works.map((work) => ({
+        category: cat.slug,
+        slug: work.slug,
+      }));
+    }),
+  );
+
+  return results.flat();
 }
