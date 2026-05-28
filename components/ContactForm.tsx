@@ -1,147 +1,231 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner"; // sonnerをインポート
+import { motion, Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { sendEmail } from "@/app/actions/sendEmail";
-import { Contact } from "resend";
+import { toast } from "sonner";
 
-gsap.registerPlugin(ScrollTrigger);
+// ----------------------------------------------------------------
+// 必須バッジ
+// ----------------------------------------------------------------
+function RequiredBadge() {
+  return (
+    <span className="inline-flex items-center rounded-lg bg-[#F5CA22] px-[10px] py-[2px] font-sans text-xs text-[#333]">
+      必須
+    </span>
+  );
+}
 
+// ----------------------------------------------------------------
+// フィールドアニメーション設定
+// ----------------------------------------------------------------
+const fieldVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+// ----------------------------------------------------------------
+// ContactForm
+// ----------------------------------------------------------------
 interface ContactFormProps {
   showTitle?: boolean;
 }
 
 export const ContactForm = ({ showTitle = true }: ContactFormProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [pending, setPending] = useState(false);
-
-  // 入力項目がふわっと出るアニメーション
-  useGSAP(
-    () => {
-      if (!containerRef.current) return;
-
-      gsap.from(".animate-form-item", {
-        opacity: 0,
-        y: 30,
-        stagger: 0.15,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
-    },
-    { scope: containerRef },
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">(
+    "idle",
   );
 
-  // 送信処理
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setPending(true);
+  async function handleSubmit() {
+    if (!name || !email || !message) return;
 
-    const formData = new FormData(e.currentTarget);
+    setStatus("sending");
+
+    const formData = new FormData();
+    formData.set("name", name);
+    formData.set("email", email);
+    formData.set("message", message);
 
     try {
       const result = await sendEmail(formData);
 
       if (result.success) {
-        // ✨ 美しい通知を表示
         toast.success("メッセージを送信しました", {
           description: "内容を確認次第、折り返しご連絡いたします。",
         });
-        formRef.current?.reset();
+        setName("");
+        setEmail("");
+        setMessage("");
+        setStatus("done");
       } else {
         toast.error("送信に失敗しました", {
           description: "お手数ですが、時間をおいて再度お試しください。",
         });
+        setStatus("error");
       }
-    } catch (error) {
+    } catch {
       toast.error("通信エラーが発生しました");
-    } finally {
-      setPending(false);
+      setStatus("error");
     }
   }
 
+  const inputClass =
+    "h-12 w-full rounded-lg border border-[#ccc] bg-white px-4 font-sans text-base text-[#333] transition-colors focus:border-[#003366] focus:ring-1 focus:ring-[#003366] focus:outline-none";
+
   return (
-    <div
-      ref={containerRef}
-      className="relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-screen px-8 py-20 md:px-20"
-    >
-      <div className="px-6 md:px-16">
-        {showTitle && (
-          <h2 className="animate-form-item mb-8 text-center font-[family-name:var(--font-michroma)] text-3xl font-bold tracking-[0.35em] text-[#2a2723] uppercase md:text-4xl">
-            contact
-          </h2>
-        )}
-
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          className="mx-auto max-w-2xl space-y-12 px-6"
+    <div className="flex w-full flex-col items-center gap-20 rounded-lg border border-[#e8e8e8] bg-white px-5 py-10 md:rounded-2xl md:px-10 md:py-20 lg:px-40">
+      {/* 説明文 */}
+      {showTitle && (
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full text-center font-sans text-sm leading-[2] font-normal text-[#333] md:max-w-[640px] md:text-base"
         >
-          {/* 名前入力 */}
-          <div className="animate-form-item space-y-4">
-            <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
-              Name
-            </label>
-            <Input
-              name="name"
-              required
-              placeholder="Your Name"
-              className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
-            />
-          </div>
+          お問い合わせ内容をご入力ください。
+          <br />
+          お問い合わせの内容により、お返事させていただくまでに、
+          <br className="hidden md:block" />
+          お時間を頂く場合がございます。
+        </motion.p>
+      )}
 
-          {/* メールアドレス入力 */}
-          <div className="animate-form-item space-y-4">
-            <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
-              Email Address
-            </label>
-            <Input
-              name="email"
-              type="email"
-              required
-              placeholder="example@mail.com"
-              className="h-auto rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wider placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
-            />
-          </div>
-
-          {/* メッセージ入力 */}
-          <div className="animate-form-item space-y-4">
-            <label className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase">
-              Message
-            </label>
-            <Textarea
-              name="message"
-              required
-              placeholder="How can I help you?"
-              className="h-auto min-h-[150px] rounded-none border-x-0 border-t-0 border-b border-zinc-200 bg-transparent px-1 pb-4 text-base text-[#2a2723] transition-all placeholder:text-sm placeholder:tracking-wide placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0 md:text-lg"
-            />
-          </div>
-
-          {/* 送信ボタン */}
-          <div className="animate-form-item pt-10 text-center">
-            <Button
-              type="submit"
-              disabled={pending}
-              className="group min-w-[240px] rounded-full bg-[#2a2723] px-12 py-8 text-[10px] font-bold tracking-[0.3em] text-white uppercase shadow-2xl transition-all hover:bg-[#3d3934]"
+      {/* フォーム */}
+      <div className="flex w-full flex-col gap-8 md:max-w-[640px]">
+        {/* お名前 */}
+        <motion.div
+          className="flex flex-col gap-[10px]"
+          custom={0}
+          initial="hidden"
+          animate="visible"
+          variants={fieldVariants}
+        >
+          <div className="flex flex-row items-center gap-[10px]">
+            <label
+              htmlFor="name"
+              className="font-sans text-base font-normal text-[#333]"
             >
-              {pending ? "Sending..." : "Send Message"}
-              <ArrowRight className="ml-3 h-4 w-4 transform transition-transform group-hover:translate-x-2" />
-            </Button>
+              お名前
+            </label>
+            <RequiredBadge />
           </div>
-        </form>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className={inputClass}
+          />
+        </motion.div>
+
+        {/* メールアドレス */}
+        <motion.div
+          className="flex flex-col gap-[10px]"
+          custom={1}
+          initial="hidden"
+          animate="visible"
+          variants={fieldVariants}
+        >
+          <div className="flex flex-row items-center gap-[10px]">
+            <label
+              htmlFor="email"
+              className="font-sans text-base font-normal text-[#333]"
+            >
+              メールアドレス
+            </label>
+            <RequiredBadge />
+          </div>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className={inputClass}
+          />
+        </motion.div>
+
+        {/* お問い合わせ内容 */}
+        <motion.div
+          className="flex flex-col gap-[10px]"
+          custom={2}
+          initial="hidden"
+          animate="visible"
+          variants={fieldVariants}
+        >
+          <div className="flex flex-row items-center gap-[10px]">
+            <label
+              htmlFor="message"
+              className="font-sans text-base font-normal text-[#333]"
+            >
+              お問い合わせ内容
+            </label>
+            <RequiredBadge />
+          </div>
+          <textarea
+            id="message"
+            rows={10}
+            maxLength={2000}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            required
+            className="w-full resize-none rounded-lg border border-[#ccc] bg-white px-4 py-3 font-sans text-base text-[#333] transition-colors focus:border-[#003366] focus:ring-1 focus:ring-[#003366] focus:outline-none"
+          />
+          {/* 文字数カウント */}
+          <p className="text-right font-sans text-xs text-[#999]">
+            {message.length} / 2000
+          </p>
+        </motion.div>
+
+        {/* 送信ボタン */}
+        <motion.div
+          className="flex justify-center pt-4"
+          custom={3}
+          initial="hidden"
+          animate="visible"
+          variants={fieldVariants}
+        >
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={status === "sending" || status === "done"}
+            className="group flex h-12 w-[200px] items-center justify-center gap-2 rounded-full border border-[#ccc] bg-white font-sans text-base text-[#333] transition-all duration-200 hover:border-[#003366] hover:bg-[#003366] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {status === "sending"
+              ? "送信中..."
+              : status === "done"
+                ? "送信しました"
+                : "送信する"}
+            {status !== "sending" && status !== "done" && (
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            )}
+          </button>
+        </motion.div>
+
+        {/* エラー表示 */}
+        {status === "error" && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center font-sans text-sm text-red-500"
+          >
+            送信に失敗しました。時間をおいて再度お試しください。
+          </motion.p>
+        )}
       </div>
     </div>
   );
