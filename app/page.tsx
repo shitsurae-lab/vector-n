@@ -1,123 +1,18 @@
-import { ContactForm } from "@/components/ContactForm";
-import {
-  fetchAllCategories,
-  fetchPageBySlug,
-} from "./features/works/api/works";
-import { CapsuleSection } from "../components/CapsuleSection";
-import { HeroSlider } from "../components/Hero/HeroSlider";
-import { FluffyContainer } from "@/components/FluffyContainer";
-import { DecorationDots } from "@/components/ui/DecorationDots";
-
-export default async function WorksTopPage() {
-  // 1. カテゴリー一覧と、Aboutページ（固定ページ）のデータを同時に取得
-  const [categories, aboutData] = await Promise.all([
-    fetchAllCategories(),
-    fetchPageBySlug("about"),
-  ]);
-
-  // スライダー用に画像を抽出（画像があるカテゴリーだけを対象にする）
-  const sliderImages = categories
-    .filter((cat) => cat.acf?.term_image_api)
-    .map((cat) => ({
-      src: cat.acf?.next_image || "",
-      subSrc: cat.acf?.next_image_sub || "",
-      alt: cat.name || "",
-      title: cat.acf?.mv_title || "",
-      subtitle: cat.acf?.mv_subtitle || "",
-    }));
-
-  // --- CapsuleSection（Aboutデータ）用データの整形 ---
-  const acfAbout = aboutData?.acf;
-  const capsuleItems = acfAbout
-    ? [
-        {
-          id: "identity",
-          enTitle: acfAbout.about_identity?.next_title || "IDENTITY",
-          jaTitle: acfAbout.about_identity?.next_ja_title || "アイデンティティ",
-          image: acfAbout.about_identity?.next_image || "",
-        },
-        {
-          id: "capabilities",
-          enTitle: acfAbout.about_capabilities?.next_title || "CAPABILITIES",
-          jaTitle:
-            acfAbout.about_capabilities?.next_ja_title || "ケイパビリティ",
-          image: acfAbout.about_capabilities?.next_image || "",
-        },
-        {
-          id: "expertise",
-          enTitle: acfAbout.about_expertise?.next_title || "EXPERTISE",
-          jaTitle: acfAbout.about_expertise?.next_ja_title || "エキスパート",
-          image: acfAbout.about_expertise?.next_image || "",
-        },
-      ]
-    : [];
-
-  // 2. FluffyContainer用：特定のスラッグだけで絞り込み
-  const targetSlugs = [
-    "wordpress",
-    "woocommerce",
-    "website-building",
-    "design",
-  ];
-
-  const filteredCategories = categories.filter((cat) =>
-    targetSlugs.includes(cat.slug),
-  );
-
+import Hero from "@/components/Hero/HeroSection";
+import About from "@/components/top/AboutSection";
+import Toolbox from "@/components/top/ToolboxSection";
+import { worksRepository } from "@/app/features/works/api/repository";
+import WorksSection from "@/components/top/WorksSection";
+export default async function Page() {
+  // Server Component でデータ取得
+  // WorksSection は "use client" なので、ここで fetch して props で渡す
+  const categories = await worksRepository.getAllCategories();
   return (
-    <main className="relative mx-auto w-full max-w-6xl px-4 sm:px-6">
-      {/* -- Hero Area Wrapper:
-      overflow-hiddenを回避して「あしらい」を跨がせるための親コンテナ --- */}
-      <div className="relative">
-        {/* スライダーを表示 */}
-        {sliderImages.length > 0 && <HeroSlider images={sliderImages} />}
-        {/* END スライダーを表示 */}
-
-        {/* セクションを跨いで配置するドットのあしらい */}
-        {/* <DecorationDots
-          shape="triangle"
-          rotate={-75}
-          className="absolute right-4 bottom-6 z-50 md:-right-20 md:bottom-0"
-          zIndex={10}
-          // z-50にし、、CapsuleSectionの背景や影よりも上に
-        /> */}
-      </div>
-      {/* -- Capsule Area Wrapper:
-      overflow-hiddenを回避して「あしらい」を跨がせるための親コンテナ --- */}
-
-      {capsuleItems.length > 0 && <CapsuleSection items={capsuleItems} />}
-
-      <section className="mt-32">
-        {/* セクションタイトル */}
-        <div className="mb-20 flex flex-col items-center text-center">
-          <h2 className="mb-3 font-[family-name:var(--font-michroma)] text-2xl tracking-[0.35em] text-[#2a2723] uppercase md:text-3xl">
-            Selected Works
-          </h2>
-
-          <div className="flex items-center gap-4">
-            <span className="h-[1px] w-6 bg-zinc-300" />
-            <p className="font-[family-name:var(--font-mixed)] text-[10px] tracking-[0.25em] text-zinc-400 uppercase md:text-xs">
-              Featured Categories
-            </p>
-            <span className="h-[1px] w-6 bg-zinc-300" />
-          </div>
-        </div>
-        {/* fluffyコンテナーを表示 */}
-        {filteredCategories.map((cat, index) => (
-          <FluffyContainer
-            key={cat.id}
-            index={index}
-            num={(index + 1).toString().padStart(2, "0")}
-            enTitle={cat.acf?.next_title || cat.slug}
-            jaTitle={cat.name}
-            category={cat.acf?.next_desc || ""}
-            link={`/works/${cat.slug}/`}
-            imageHref={cat.acf!.next_image!} // ここで props に imageHref を渡します
-            ctaText={cat.acf?.next_cta || "View More"}
-          />
-        ))}
-      </section>
-      <ContactForm />
-    </main>
+    <>
+      <Hero />
+      <About />
+      <Toolbox />
+      <WorksSection categories={categories} />
+    </>
   );
 }
