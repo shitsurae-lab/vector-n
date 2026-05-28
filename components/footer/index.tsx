@@ -101,10 +101,7 @@ export const Footer = () => {
               height={48}
               className="h-[48px] w-[38px] shrink-0"
             />
-            <span
-              className="w-[234px] text-[20px] leading-[1.1] font-medium whitespace-nowrap text-[#333]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <span className="font-zalando w-[234px] text-[20px] leading-[1.1] font-medium whitespace-nowrap text-[#333]">
               Toshiyuki Kurashima
             </span>
           </Link>
@@ -115,8 +112,8 @@ export const Footer = () => {
           全デバイス: var(--font-display) 12px 500 #333 text-center
         */}
         <p
-          className="w-full text-center text-[12px] leading-normal font-medium text-[#333]"
-          style={{ fontFamily: "var(--font-display)" }}
+          className="font-zalando w-full text-center text-[12px] leading-normal font-medium text-[#333]"
+          aria-label="著作権表示"
         >
           © 2026 VECTOR -N
         </p>
