@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 
 export const AnimatedHamburger = ({ isOpen }: { isOpen: boolean }) => {
   return (
-    <div className="flex h-8 w-8 items-center justify-center">
+    <div className="flex h-6 w-6 items-center justify-center">
       <svg
-        className="size-8"
+        className="size-6"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
