@@ -23,6 +23,11 @@ export const UpTo = () => {
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (launchingRef.current) return;
 
+    if (latest < 120) {
+      setIsVisible(false);
+      return;
+    }
+
     const previous = scrollY.getPrevious() ?? 0;
 
     // Headerの hidden 条件と全く同じにする
