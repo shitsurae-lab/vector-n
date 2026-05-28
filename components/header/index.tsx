@@ -79,32 +79,58 @@ export const Header = () => {
       {/* --- 左上: ロゴ --- */}
       <motion.div
         style={{ scale: logoScale }}
-        className="pointer-events-none z-[60] grid h-[80px] w-[64px] place-items-center md:h-[150px] md:w-[120px]"
+        className="pointer-events-none z-[60] grid h-[80px] w-[64px] place-items-center md:h-[88px] md:w-[88px]"
       >
+        {/* ─── Logo (mark + text) ─── */}
+        {/*
+            PC/Tablet: mark 38×48px + text 234px / SP: mark 32×40px + text 210px
+            ロゴ画像: public/images/logo.svg (マークのみ)
+            テキスト: "Toshiyuki Kurashima" — ZalandoSans相当 → var(--font-display) で代替
+          */}
         {isHomePage ? (
           <h1 className="m-0 leading-none">
-            <Link href="/" className="pointer-events-auto block">
+            <Link
+              href="/"
+              className="flex items-center gap-2"
+              aria-label="トップページへ"
+            >
+              {/* Logo mark */}
               <Image
                 src="/assets/logo-vector@2x.webp"
-                alt="Vector-n | Toshiyuki Kurashima's Portfolio"
-                width={160}
-                height={200}
-                className="h-auto w-[64px] object-contain md:w-[80px]"
+                alt="Toshiyuki Kurashima logo mark"
+                width={38}
+                height={48}
                 priority
+                className="h-[40px] w-[32px] md:h-[48px] md:w-[38px]"
               />
+
+              {/* Logo text — always visible (unlike the old scrolled-only behavior) */}
+              <span className="font-zalando w-[210px] text-[18px] leading-[1.1] font-medium whitespace-nowrap text-[#333] uppercase md:w-[234px] md:text-[20px]">
+                Toshiyuki Kurashima
+              </span>
             </Link>
           </h1>
         ) : (
           <div className="leading-none">
-            <Link href="/" className="pointer-events-auto block">
+            <Link
+              href="/"
+              className="flex items-center gap-2"
+              aria-label="トップページへ"
+            >
+              {/* Logo mark */}
               <Image
-                src="/logo-thin-y@2x.webp"
-                alt="Vector-n | Toshiyuki Kurashima's Portfolio"
-                width={80}
-                height={102}
-                className="h-auto w-[80px] object-contain"
+                src="/assets/logo-vector@2x.webp"
+                alt="Toshiyuki Kurashima logo mark"
+                width={38}
+                height={48}
                 priority
+                className="h-[40px] w-[32px] md:h-[48px] md:w-[38px]"
               />
+
+              {/* Logo text — always visible (unlike the old scrolled-only behavior) */}
+              <span className="font-zalandow-[210px] text-[18px] leading-[1.1] font-medium whitespace-nowrap text-[#333] uppercase md:w-[234px] md:text-[20px]">
+                Toshiyuki Kurashima
+              </span>
             </Link>
           </div>
         )}
@@ -114,7 +140,8 @@ export const Header = () => {
       <nav className="z-50 hidden p-6 md:flex">
         <NavLinks
           pathname={pathname}
-          className="flex flex-col items-end gap-4"
+          variant="horizontal"
+          className="hidden items-center gap-10 md:flex"
         />
       </nav>
 
@@ -146,8 +173,9 @@ export const Header = () => {
             <nav>
               <NavLinks
                 pathname={pathname}
+                variant="drawer"
                 onItemClick={() => setIsOpen(false)}
-                className="flex flex-col items-center gap-10"
+                className="flex flex-col"
               />
             </nav>
           </SheetContent>
