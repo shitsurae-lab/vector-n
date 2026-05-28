@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import {
+  Inter,
+  Roboto_Condensed,
   Anton,
   Bebas_Neue,
   Orbitron,
@@ -7,6 +9,7 @@ import {
   Montserrat,
   Noto_Sans_JP,
   Space_Grotesk,
+  Zalando_Sans,
 } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "@/components/ui/sonner";
@@ -25,11 +28,32 @@ const anton = Anton({
   display: "swap",
 });
 
-//数字
+//タイトル
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const zalandoSans = Zalando_Sans({
+  subsets: ["latin"],
+  variable: "--font-zalando-sans",
+  display: "swap",
+  adjustFontFallback: false,
+});
+
+//数字①
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   weight: "400", // Bebas Neueは通常400のみ
   variable: "--font-bebas-neue",
+});
+//数字②
+const robotoCondensed = Roboto_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-roboto-condensed",
+  display: "swap",
 });
 
 // h3(英)用: 近未来的な英単語
@@ -106,7 +130,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${noto.variable} ${bebasNeue.variable} ${montserrat.variable} ${spaceGrotesk.variable}`}
+      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${noto.variable} ${bebasNeue.variable} ${montserrat.variable} ${spaceGrotesk.variable} ${robotoCondensed.variable} ${inter.variable} ${zalandoSans.variable}`}
     >
       <body className="bg-[#f8f6f3] text-[#4f545a] antialiased selection:bg-black selection:text-white">
         <OpeningProvider>
