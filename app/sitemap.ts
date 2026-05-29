@@ -25,7 +25,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 1. 静的ページ（トップ、About、Contact、Works一覧）
   const staticPaths: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/`, lastModified: new Date() },
-    { url: `${BASE_URL}/about`, lastModified: new Date() },
     { url: `${BASE_URL}/contact`, lastModified: new Date() },
     { url: `${BASE_URL}/works`, lastModified: new Date() },
   ];
