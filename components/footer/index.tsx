@@ -56,7 +56,7 @@ export const Footer = () => {
                   )}
                   <Link
                     href={item.href}
-                    className="hover:text-primary flex w-[100px] items-center justify-center px-[2px] text-[14px] leading-normal font-medium text-[#333] transition-colors duration-150 md:w-auto md:justify-start md:px-0 md:py-[2px] md:text-[16px]"
+                    className="hover:text-primary flex w-20 items-center justify-center px-[2px] text-[14px] leading-normal font-medium text-[#333] uppercase transition-colors duration-150 md:w-[100px] md:w-auto md:justify-start md:px-0 md:py-[2px] md:text-[16px]"
                   >
                     {item.label}
                   </Link>
@@ -77,7 +77,7 @@ export const Footer = () => {
                   aria-label="GitHubを開く"
                 >
                   <Github size={18} strokeWidth={1.8} />
-                  <span>GITHUB</span>
+                  <span className="uppercase">Github</span>
                 </a>
               </li>
             </ul>
@@ -101,7 +101,7 @@ export const Footer = () => {
               height={48}
               className="h-[48px] w-[38px] shrink-0"
             />
-            <span className="font-zalando w-[234px] text-[20px] leading-[1.1] font-medium whitespace-nowrap text-[#333]">
+            <span className="font-zalando w-[234px] text-[20px] leading-[1.1] font-medium whitespace-nowrap text-[#333] uppercase">
               Toshiyuki Kurashima
             </span>
           </Link>
