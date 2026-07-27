@@ -46,19 +46,26 @@ export type WorkData = {
   acf: {
     work_detail: {
       next_api_image?: string;
-      period: string;
-      role: string;
-      tools_design: string;
-      tools_coding: string;
-      background: string;
-      design_intent: string;
-      creative_logic: string;
-      results: string;
-      site_url: string;
+      period?: string;
+      role?: string;
+      tools_design?: string;
+      tools_coding?: string;
+      background?: string;
+      design_intent?: string;
+      creative_logic?: string;
+      results?: string;
+      site_url?: string;
       sub_image_01?: string;
       sub_image_02?: string;
       sub_image_03?: string;
       sub_image_04?: string;
+      // 👇 バナー用などに追加するカスタムフィールド
+      industry?: string; // 業種
+      taste?: string; // テイスト
+      shape?: string; // 形状
+      color_scheme?: string; // 配色
+      media?: string; // 媒体
+      size?: string; // サイズ
     };
     next_api_image?: string;
   };

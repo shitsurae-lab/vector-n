@@ -213,6 +213,12 @@ function WorkContent({
 
   const title = he.decode(work.title.rendered);
 
+  // 1. バナーカテゴリーかどうかの判定
+  const isBanner = categorySlug === "banner";
+
+  // 2. 見出しのテキストを切り替え
+  const sectionTitle = isBanner ? "バナー詳細" : "プロジェクト概要";
+
   const displayImage =
     detail?.next_api_image ||
     work._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
@@ -224,40 +230,79 @@ function WorkContent({
     detail?.sub_image_04,
   ].filter(Boolean) as string[];
 
-  const tableRows: TableRow[] = [
-    {
-      label: "制作期間",
-      value: detail?.period || "—",
-    },
-    {
-      label: "担当分野",
-      value: detail?.role || "—",
-    },
-    {
-      label: "Design Tools",
-      value: detail?.tools_design || "—",
-    },
-    {
-      label: "Coding Tools",
-      value: detail?.tools_coding || "—",
-    },
-    {
-      label: "URL",
-      value: detail?.site_url ? (
-        <a
-          href={detail.site_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-[#003366] underline underline-offset-2 transition-colors hover:text-[#F5CA22]"
-        >
-          {detail.site_url}
-          <ExternalLink size={12} />
-        </a>
-      ) : (
-        "非公開"
-      ),
-    },
-  ];
+  const tableRows: TableRow[] = isBanner
+    ? [
+        {
+          label: "業種",
+          value: detail?.industry || "—",
+        },
+        {
+          label: "テイスト",
+          value: detail?.taste || "—",
+        },
+        {
+          label: "形状",
+          value: detail?.shape || "—",
+        },
+        {
+          label: "配色",
+          value: detail?.color_scheme || "—",
+        },
+        {
+          label: "媒体",
+          value: detail?.media || "—",
+        },
+        {
+          label: "サイズ",
+          value: detail?.size || "—",
+        },
+        {
+          label: "制作期間",
+          value: detail?.period || "—",
+        },
+        {
+          label: "担当分野",
+          value: detail?.role || "—",
+        },
+        {
+          label: "使用ツール",
+          value: detail?.tools_design || "—",
+        },
+      ]
+    : [
+        {
+          label: "制作期間",
+          value: detail?.period || "—",
+        },
+        {
+          label: "担当分野",
+          value: detail?.role || "—",
+        },
+        {
+          label: "Design Tools",
+          value: detail?.tools_design || "—",
+        },
+        {
+          label: "Coding Tools",
+          value: detail?.tools_coding || "—",
+        },
+        {
+          label: "URL",
+          value: detail?.site_url ? (
+            <a
+              href={detail.site_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[#003366] underline underline-offset-2 transition-colors hover:text-[#F5CA22]"
+            >
+              {detail.site_url}
+              <ExternalLink size={12} />
+            </a>
+          ) : (
+            "非公開"
+          ),
+        },
+      ];
 
   const articles = [
     {
@@ -308,78 +353,80 @@ function WorkContent({
 
       {/* プロジェクト概要 */}
       <div className="w-full">
-        <SectionHeading text="プロジェクト概要" />
+        <SectionHeading text={sectionTitle} />
 
         <ProjectTable rows={tableRows} />
       </div>
+      {!isBanner && (
+        <>
+          {/* 本文 */}
+          <div className="flex w-full flex-col gap-16 md:gap-20">
+            {articles.map((article, i) => (
+              <motion.article
+                key={i}
+                className="w-full"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={fadeUp}
+                custom={i}
+              >
+                <SectionHeading text={article.heading} />
 
-      {/* 本文 */}
-      <div className="flex w-full flex-col gap-16 md:gap-20">
-        {articles.map((article, i) => (
-          <motion.article
-            key={i}
-            className="w-full"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={fadeUp}
-            custom={i}
-          >
-            <SectionHeading text={article.heading} />
+                <p className="text-left font-sans text-sm leading-[1.7] font-normal text-[#444] md:text-base">
+                  {article.body}
+                </p>
+              </motion.article>
+            ))}
+          </div>
 
-            <p className="text-left font-sans text-sm leading-[1.7] font-normal text-[#444] md:text-base">
-              {article.body}
-            </p>
-          </motion.article>
-        ))}
-      </div>
+          {/* サブ画像 */}
+          {subImages.length > 0 && (
+            <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+              {subImages.map((img, i) => (
+                <Dialog key={i}>
+                  <DialogTrigger asChild>
+                    <motion.div
+                      className="group relative aspect-video cursor-pointer overflow-hidden rounded-2xl bg-[#d9d9d9]"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20,
+                      }}
+                    >
+                      <Image
+                        src={img}
+                        alt=""
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-90"
+                      />
 
-      {/* サブ画像 */}
-      {subImages.length > 0 && (
-        <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
-          {subImages.map((img, i) => (
-            <Dialog key={i}>
-              <DialogTrigger asChild>
-                <motion.div
-                  className="group relative aspect-video cursor-pointer overflow-hidden rounded-2xl bg-[#d9d9d9]"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20,
-                  }}
-                >
-                  <Image
-                    src={img}
-                    alt=""
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-90"
-                  />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                        <ZoomIn className="h-8 w-8 text-white" />
 
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                    <ZoomIn className="h-8 w-8 text-white" />
+                        <span className="font-sans text-[10px] font-bold tracking-widest text-white uppercase">
+                          View Image
+                        </span>
+                      </div>
+                    </motion.div>
+                  </DialogTrigger>
 
-                    <span className="font-sans text-[10px] font-bold tracking-widest text-white uppercase">
-                      View Image
-                    </span>
-                  </div>
-                </motion.div>
-              </DialogTrigger>
-
-              <DialogContent className="flex max-h-[95vh] max-w-[95vw] items-center justify-center overflow-hidden border-none bg-transparent p-0 shadow-none">
-                <Image
-                  src={img}
-                  alt=""
-                  width={1200}
-                  height={800}
-                  className="h-auto max-h-[90vh] w-full rounded-lg object-contain"
-                />
-              </DialogContent>
-            </Dialog>
-          ))}
-        </div>
+                  <DialogContent className="flex max-h-[95vh] max-w-[95vw] items-center justify-center overflow-hidden border-none bg-transparent p-0 shadow-none">
+                    <Image
+                      src={img}
+                      alt=""
+                      width={1200}
+                      height={800}
+                      className="h-auto max-h-[90vh] w-full rounded-lg object-contain"
+                    />
+                  </DialogContent>
+                </Dialog>
+              ))}
+            </div>
+          )}
+        </>
       )}
-
       {/* 戻る */}
       <div className="w-full border-t border-[#e8e8e8] pt-10 text-center">
         <Link
