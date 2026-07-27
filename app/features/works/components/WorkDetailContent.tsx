@@ -213,8 +213,6 @@ function WorkContent({
 
   const title = he.decode(work.title.rendered);
 
-  console.log("現在のcategorySlug:", categorySlug);
-
   // 1. バナーカテゴリーかどうかの判定
   const isBanner = categorySlug === "banner";
 
@@ -257,18 +255,6 @@ function WorkContent({
         {
           label: "サイズ",
           value: detail?.size || "—",
-        },
-        {
-          label: "制作期間",
-          value: detail?.period || "—",
-        },
-        {
-          label: "担当分野",
-          value: detail?.role || "—",
-        },
-        {
-          label: "使用ツール",
-          value: detail?.tools_design || "—",
         },
       ]
     : [
