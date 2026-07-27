@@ -213,6 +213,8 @@ function WorkContent({
 
   const title = he.decode(work.title.rendered);
 
+  console.log("現在のcategorySlug:", categorySlug);
+
   // 1. バナーカテゴリーかどうかの判定
   const isBanner = categorySlug === "banner";
 
