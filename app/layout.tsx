@@ -2,13 +2,7 @@ import type { Metadata } from "next";
 import {
   Inter,
   Roboto_Condensed,
-  Anton,
-  Bebas_Neue,
-  Orbitron,
-  Michroma,
-  Montserrat,
   Noto_Sans_JP,
-  Space_Grotesk,
   Zalando_Sans,
 } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -22,13 +16,12 @@ import { UpTo } from "@/components/UpTo";
 import Cursor from "@/components/Cursor";
 
 // h2用: インパクトのある英単語
-const anton = Anton({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-anton",
-  display: "swap",
-  preload: false, //ビルド時の事前読み込みを無効化
-});
+// const anton = Anton({
+//   weight: "400",
+//   subsets: ["latin"],
+//   variable: "--font-anton",
+//   display: "swap",
+// });
 
 //タイトル
 const inter = Inter({
@@ -44,14 +37,7 @@ const zalandoSans = Zalando_Sans({
   adjustFontFallback: false,
 });
 
-//数字①
-const bebasNeue = Bebas_Neue({
-  subsets: ["latin"],
-  weight: "400", // Bebas Neueは通常400のみ
-  variable: "--font-bebas-neue",
-  preload: false, //ビルド時の事前読み込みを無効化
-});
-//数字②
+//数字
 const robotoCondensed = Roboto_Condensed({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -59,41 +45,10 @@ const robotoCondensed = Roboto_Condensed({
   display: "swap",
 });
 
-// h3(英)用: 近未来的な英単語
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  variable: "--font-orbitron",
-  display: "swap",
-  preload: false, //ビルド時の事前読み込みを無効化
-});
-
-const michroma = Michroma({
-  weight: "400", // Michromaは400のみ
-  subsets: ["latin"],
-  variable: "--font-michroma",
-  display: "swap",
-  preload: false, //ビルド時の事前読み込みを無効化
-});
-
 const noto = Noto_Sans_JP({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-noto-sans-jp", // Tailwind v4用
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  variable: "--font-montserrat",
-  display: "swap",
-  preload: false, //ビルド時の事前読み込みを無効化
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-space-grotesk", // CSS変数名を指定
-  preload: false, //ビルド時の事前読み込みを無効化
 });
 
 export const metadata: Metadata = {
@@ -137,7 +92,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${anton.variable} ${orbitron.variable} ${michroma.variable} ${noto.variable} ${bebasNeue.variable} ${montserrat.variable} ${spaceGrotesk.variable} ${robotoCondensed.variable} ${inter.variable} ${zalandoSans.variable}`}
+      className={`${noto.variable} ${robotoCondensed.variable} ${inter.variable} ${zalandoSans.variable}`}
     >
       <body className="text-[#333333] antialiased selection:bg-black selection:text-white">
         <OpeningProvider>
