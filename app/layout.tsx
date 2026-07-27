@@ -27,6 +27,7 @@ const anton = Anton({
   subsets: ["latin"],
   variable: "--font-anton",
   display: "swap",
+  preload: false, //ビルド時の事前読み込みを無効化
 });
 
 //タイトル
@@ -48,6 +49,7 @@ const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   weight: "400", // Bebas Neueは通常400のみ
   variable: "--font-bebas-neue",
+  preload: false, //ビルド時の事前読み込みを無効化
 });
 //数字②
 const robotoCondensed = Roboto_Condensed({
@@ -62,6 +64,7 @@ const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-orbitron",
   display: "swap",
+  preload: false, //ビルド時の事前読み込みを無効化
 });
 
 const michroma = Michroma({
@@ -69,6 +72,7 @@ const michroma = Michroma({
   subsets: ["latin"],
   variable: "--font-michroma",
   display: "swap",
+  preload: false, //ビルド時の事前読み込みを無効化
 });
 
 const noto = Noto_Sans_JP({
@@ -82,12 +86,14 @@ const montserrat = Montserrat({
   weight: ["400", "700", "900"],
   variable: "--font-montserrat",
   display: "swap",
+  preload: false, //ビルド時の事前読み込みを無効化
 });
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-space-grotesk", // CSS変数名を指定
+  preload: false, //ビルド時の事前読み込みを無効化
 });
 
 export const metadata: Metadata = {
