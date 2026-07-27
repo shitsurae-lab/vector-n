@@ -209,7 +209,6 @@ function WorkContent({
   categoryName: string;
 }) {
   const detail = work.acf?.work_detail;
-
   const title = he.decode(work.title.rendered);
 
   // 1. バナーカテゴリーかどうかの判定
@@ -231,48 +230,18 @@ function WorkContent({
 
   const tableRows: TableRow[] = isBanner
     ? [
-        {
-          label: "業種",
-          value: detail?.industry || "—",
-        },
-        {
-          label: "テイスト",
-          value: detail?.taste || "—",
-        },
-        {
-          label: "形状",
-          value: detail?.shape || "—",
-        },
-        {
-          label: "配色",
-          value: detail?.color_scheme || "—",
-        },
-        {
-          label: "媒体",
-          value: detail?.media || "—",
-        },
-        {
-          label: "サイズ",
-          value: detail?.size || "—",
-        },
+        { label: "業種", value: detail?.industry || "—" },
+        { label: "テイスト", value: detail?.taste || "—" },
+        { label: "形状", value: detail?.shape || "—" },
+        { label: "配色", value: detail?.color_scheme || "—" },
+        { label: "媒体", value: detail?.media || "—" },
+        { label: "サイズ", value: detail?.size || "—" },
       ]
     : [
-        {
-          label: "制作期間",
-          value: detail?.period || "—",
-        },
-        {
-          label: "担当分野",
-          value: detail?.role || "—",
-        },
-        {
-          label: "Design Tools",
-          value: detail?.tools_design || "—",
-        },
-        {
-          label: "Coding Tools",
-          value: detail?.tools_coding || "—",
-        },
+        { label: "制作期間", value: detail?.period || "—" },
+        { label: "担当分野", value: detail?.role || "—" },
+        { label: "Design Tools", value: detail?.tools_design || "—" },
+        { label: "Coding Tools", value: detail?.tools_coding || "—" },
         {
           label: "URL",
           value: detail?.site_url ? (
@@ -292,22 +261,10 @@ function WorkContent({
       ];
 
   const articles = [
-    {
-      heading: "なぜこの制作が必要だったのか",
-      body: detail?.background,
-    },
-    {
-      heading: "デザインで意識したこと",
-      body: detail?.design_intent,
-    },
-    {
-      heading: "実装で工夫した点",
-      body: detail?.creative_logic,
-    },
-    {
-      heading: "振り返りと今後の展望",
-      body: detail?.results,
-    },
+    { heading: "なぜこの制作が必要だったのか", body: detail?.background },
+    { heading: "デザインで意識したこと", body: detail?.design_intent },
+    { heading: "実装で工夫した点", body: detail?.creative_logic },
+    { heading: "振り返りと今後の展望", body: detail?.results },
   ].filter((a) => a.body);
 
   return (
@@ -318,7 +275,7 @@ function WorkContent({
       custom={1}
       className="flex w-full flex-col items-center gap-20 rounded-lg border border-[#e8e8e8] bg-white px-5 py-10 md:gap-10 md:rounded-2xl md:border-0 md:px-5 md:py-20 lg:gap-[120px] lg:rounded-2xl lg:border lg:border-[#e8e8e8] lg:px-10"
     >
-      {/* タイトル + メイン画像 */}
+      {/* 1. タイトル + メイン画像 */}
       <div className="flex w-full flex-col">
         <h2 className="pb-6 text-left font-sans text-lg font-bold text-[#003366] md:pb-10 md:text-2xl">
           {title}
@@ -333,27 +290,29 @@ function WorkContent({
               className="object-cover"
               sizes="(max-width: 767px) 335px, (max-width: 1023px) 688px, 880px"
               priority
+              loading="eager"
             />
           </div>
         )}
       </div>
 
-      {/* プロジェクト概要 */}
+      {/* 2. プロジェクト概要テーブル */}
       <div className="w-full">
         <SectionHeading text={sectionTitle} />
-
         <ProjectTable rows={tableRows} />
       </div>
-      {/* サブ画像 */}
+
+      {/* 3. サブ画像（バナー・通常 共通してテーブルの直後に配置） */}
       {subImages.length > 0 && (
         <div className="w-full">
-          <SectionHeading text="バリエーション・展開例" />
+          <SectionHeading
+            text={isBanner ? "バリエーション・展開例" : "制作イメージ・詳細"}
+          />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
             {subImages.map((img, i) => (
               <Dialog key={i}>
                 <DialogTrigger asChild>
                   <motion.div
-                    /* isBanner の時は bg を少し明るめにして、内側に余白(p-4)を作る */
                     className={`group relative aspect-video cursor-pointer overflow-hidden rounded-2xl border border-[#e8e8e8] ${
                       isBanner ? "bg-[#f9f9f9] p-4" : "bg-[#d9d9d9]"
                     }`}
@@ -368,7 +327,10 @@ function WorkContent({
                       src={img}
                       alt={`サブ画像 ${i + 1}`}
                       fill
-                      /* バナーの時は切り取られないように object-contain にする */
+                      priority
+                      loading="eager"
+                      quality={80}
+                      sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 440px"
                       className={`${
                         isBanner ? "object-contain p-2" : "object-cover"
                       } transition-transform duration-500 group-hover:scale-105 group-hover:brightness-90`}
@@ -376,7 +338,6 @@ function WorkContent({
 
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
                       <ZoomIn className="h-8 w-8 text-white" />
-
                       <span className="font-sans text-[10px] font-bold tracking-widest text-white uppercase">
                         View Image
                       </span>
@@ -384,13 +345,13 @@ function WorkContent({
                   </motion.div>
                 </DialogTrigger>
 
-                <DialogContent className="flex max-h-[95vh] max-w-[95vw] items-center justify-center overflow-hidden border-none bg-transparent p-0 shadow-none">
+                <DialogContent className="flex max-h-[98vh] max-w-[98vw] items-center justify-center border-none bg-transparent p-0 shadow-none">
                   <Image
                     src={img}
                     alt={`サブ画像 ${i + 1}`}
                     width={1200}
                     height={800}
-                    className="h-auto max-h-[90vh] w-full rounded-lg object-contain"
+                    className="h-auto max-h-[85vh] w-full rounded-lg object-contain md:max-h-[95vh]"
                   />
                 </DialogContent>
               </Dialog>
@@ -399,80 +360,29 @@ function WorkContent({
         </div>
       )}
 
-      {!isBanner && (
-        <>
-          {/* 本文 */}
-          <div className="flex w-full flex-col gap-16 md:gap-20">
-            {articles.map((article, i) => (
-              <motion.article
-                key={i}
-                className="w-full"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                variants={fadeUp}
-                custom={i}
-              >
-                <SectionHeading text={article.heading} />
-
-                <p className="text-left font-sans text-sm leading-[1.7] font-normal text-[#444] md:text-base">
-                  {article.body}
-                </p>
-              </motion.article>
-            ))}
-          </div>
-
-          {/* サブ画像 */}
-          {subImages.length > 0 && (
-            <>
-              <SectionHeading text="制作イメージ・詳細" />
-              <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
-                {subImages.map((img, i) => (
-                  <Dialog key={i}>
-                    <DialogTrigger asChild>
-                      <motion.div
-                        className="group relative aspect-video cursor-pointer overflow-hidden rounded-2xl bg-[#d9d9d9]"
-                        whileHover={{ scale: 1.02 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 20,
-                        }}
-                      >
-                        <Image
-                          src={img}
-                          alt=""
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-90"
-                        />
-
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                          <ZoomIn className="h-8 w-8 text-white" />
-
-                          <span className="font-sans text-[10px] font-bold tracking-widest text-white uppercase">
-                            View Image
-                          </span>
-                        </div>
-                      </motion.div>
-                    </DialogTrigger>
-
-                    <DialogContent className="flex max-h-[95vh] max-w-[95vw] items-center justify-center overflow-hidden border-none bg-transparent p-0 shadow-none">
-                      <Image
-                        src={img}
-                        alt=""
-                        width={1200}
-                        height={800}
-                        className="h-auto max-h-[90vh] w-full rounded-lg object-contain"
-                      />
-                    </DialogContent>
-                  </Dialog>
-                ))}
-              </div>
-            </>
-          )}
-        </>
+      {/* 4. 本文（バナー以外のときだけ、サブ画像の下に配置） */}
+      {!isBanner && articles.length > 0 && (
+        <div className="flex w-full flex-col gap-16 md:gap-20">
+          {articles.map((article, i) => (
+            <motion.article
+              key={i}
+              className="w-full"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={fadeUp}
+              custom={i}
+            >
+              <SectionHeading text={article.heading} />
+              <p className="text-left font-sans text-sm leading-[1.7] font-normal text-[#444] md:text-base">
+                {article.body}
+              </p>
+            </motion.article>
+          ))}
+        </div>
       )}
-      {/* 戻る */}
+
+      {/* 5. 戻るボタン */}
       <div className="w-full border-t border-[#e8e8e8] pt-10 text-center">
         <Link
           href={`/works/${categorySlug}`}
@@ -515,6 +425,8 @@ export function WorkDetailContent({
           alt=""
           fill
           className="object-cover object-left-top"
+          priority
+          loading="eager"
         />
       </div>
 
