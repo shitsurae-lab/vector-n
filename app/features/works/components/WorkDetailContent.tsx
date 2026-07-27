@@ -344,8 +344,11 @@ function WorkContent({
         <SectionHeading text={sectionTitle} />
 
         <ProjectTable rows={tableRows} />
-        {/* サブ画像 */}
-        {subImages.length > 0 && (
+      </div>
+      {/* サブ画像 */}
+      {subImages.length > 0 && (
+        <div className="w-full">
+          <SectionHeading text="バリエーション・展開例" />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
             {subImages.map((img, i) => (
               <Dialog key={i}>
@@ -394,8 +397,8 @@ function WorkContent({
               </Dialog>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {!isBanner && (
         <>
@@ -422,48 +425,51 @@ function WorkContent({
 
           {/* サブ画像 */}
           {subImages.length > 0 && (
-            <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
-              {subImages.map((img, i) => (
-                <Dialog key={i}>
-                  <DialogTrigger asChild>
-                    <motion.div
-                      className="group relative aspect-video cursor-pointer overflow-hidden rounded-2xl bg-[#d9d9d9]"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 20,
-                      }}
-                    >
+            <>
+              <SectionHeading text="制作イメージ・詳細" />
+              <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+                {subImages.map((img, i) => (
+                  <Dialog key={i}>
+                    <DialogTrigger asChild>
+                      <motion.div
+                        className="group relative aspect-video cursor-pointer overflow-hidden rounded-2xl bg-[#d9d9d9]"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 20,
+                        }}
+                      >
+                        <Image
+                          src={img}
+                          alt=""
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-90"
+                        />
+
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                          <ZoomIn className="h-8 w-8 text-white" />
+
+                          <span className="font-sans text-[10px] font-bold tracking-widest text-white uppercase">
+                            View Image
+                          </span>
+                        </div>
+                      </motion.div>
+                    </DialogTrigger>
+
+                    <DialogContent className="flex max-h-[95vh] max-w-[95vw] items-center justify-center overflow-hidden border-none bg-transparent p-0 shadow-none">
                       <Image
                         src={img}
                         alt=""
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-90"
+                        width={1200}
+                        height={800}
+                        className="h-auto max-h-[90vh] w-full rounded-lg object-contain"
                       />
-
-                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                        <ZoomIn className="h-8 w-8 text-white" />
-
-                        <span className="font-sans text-[10px] font-bold tracking-widest text-white uppercase">
-                          View Image
-                        </span>
-                      </div>
-                    </motion.div>
-                  </DialogTrigger>
-
-                  <DialogContent className="flex max-h-[95vh] max-w-[95vw] items-center justify-center overflow-hidden border-none bg-transparent p-0 shadow-none">
-                    <Image
-                      src={img}
-                      alt=""
-                      width={1200}
-                      height={800}
-                      className="h-auto max-h-[90vh] w-full rounded-lg object-contain"
-                    />
-                  </DialogContent>
-                </Dialog>
-              ))}
-            </div>
+                    </DialogContent>
+                  </Dialog>
+                ))}
+              </div>
+            </>
           )}
         </>
       )}
