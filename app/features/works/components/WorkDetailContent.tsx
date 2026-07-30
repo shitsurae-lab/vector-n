@@ -374,7 +374,7 @@ function WorkContent({
               custom={i}
             >
               <SectionHeading text={article.heading} />
-              <p className="text-left font-sans text-sm leading-[1.7] font-normal text-[#444] md:text-base">
+              <p className="text-left font-sans text-sm leading-[1.7] font-normal whitespace-pre-line text-[#444] md:text-base">
                 {article.body}
               </p>
             </motion.article>
