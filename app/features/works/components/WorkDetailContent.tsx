@@ -345,14 +345,24 @@ function WorkContent({
                   </motion.div>
                 </DialogTrigger>
 
-                <DialogContent className="flex max-h-[98vh] max-w-[98vw] items-center justify-center border-none bg-transparent p-0 shadow-none">
-                  <Image
-                    src={img}
-                    alt={`サブ画像 ${i + 1}`}
-                    width={1200}
-                    height={800}
-                    className="h-auto max-h-[85vh] w-full rounded-lg object-contain md:max-h-[95vh]"
-                  />
+                <DialogContent
+                  aria-describedby={undefined}
+                  className="flex max-h-[90vh] w-auto max-w-[90vw] items-center justify-center border-none bg-transparent p-0 shadow-none sm:max-w-[90vw]"
+                >
+                  <DialogTitle className="sr-only">
+                    サブ画像 {i + 1} の拡大表示
+                  </DialogTitle>
+
+                  <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-xl">
+                    <Image
+                      src={img}
+                      alt={`サブ画像 ${i + 1}`}
+                      width={1200}
+                      height={800}
+                      unoptimized // 大型画面でも元画像のクオリティをそのまま表示
+                      className="h-auto max-h-[85vh] w-auto max-w-[90vw] rounded-lg object-contain"
+                    />
+                  </div>
                 </DialogContent>
               </Dialog>
             ))}
