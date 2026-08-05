@@ -48,7 +48,8 @@ export default function WorkCard({ work }: { work: WorkCardData }) {
             alt={work.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 767px) 335px, (max-width: 1139px) 332px, 340px"
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, (max-width: 1440px) 33vw, 400px"
+            quality={85}
           />
         ) : (
           <div className="h-full w-full bg-[#ebedee]" />
