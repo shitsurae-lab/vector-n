@@ -31,5 +31,5 @@
     "**/*.mts",
     ".cline-notes/_backup/index.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "_backup"]
 }
