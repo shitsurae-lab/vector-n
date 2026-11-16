@@ -69,6 +69,8 @@
   /* 690pxは、1366x768のアスペクト比のディスプレイに対して、高さ90vhの割合を想定 */
   --hero-h-pc: calc(100vw * 768 / 1366);
   --hero-h-tab: calc(100vw * 590 / 768);
+  /*カードUI シャドウ*/
+  --shadow-card: 0px 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 :root {

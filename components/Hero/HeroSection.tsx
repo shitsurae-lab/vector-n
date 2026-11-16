@@ -151,6 +151,7 @@ export default function HeroSection() {
               <HeroButton href="#about" label="ABOUT" />
               <HeroButton href="#toolbox" label="TOOLBOX" />
               <HeroButton href="#works" label="WORKS" />
+              <HeroButton href="#latest" label="LATEST" />
               {/* 4セル目は空 */}
               <div aria-hidden="true" />
             </motion.div>

@@ -86,7 +86,7 @@ const fadeUp: Variants = {
 // ============================================
 function SectionHeading({ label }: { label: string }) {
   return (
-    <div className="py-20">
+    <div className="pb-20">
       <h2 className="flex_line_heading">{label}</h2>
     </div>
   );

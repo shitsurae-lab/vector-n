@@ -39,8 +39,10 @@ export const worksRepository = {
     const res = await fetch(
       `${BASE_URL}/achievement_cat?_embed&_fields=id,name,slug,description,acf,_embedded`,
       { cache: "no-store" },
-    );
-    return res.json();
+    ); //①通信する（持っているものは`res`であり、通信の結果を包んだ箱のみ）
+    return res.json(); //②中身を取って返す
+    //②-1. res.jsonではまだPromiseに包まれている状態時間がかかる
+    //②-2. returnがつくことで`関数の外に結果を渡す
   },
 
   /**
@@ -111,5 +113,17 @@ export const worksRepository = {
     );
     const data = await res.json();
     return data && data.length > 0 ? (data[0] as PageData) : null;
+  },
+
+  /**
+   * 最新の実績をカテゴリー関係なく取得(公開日の新しい順)
+   * 使用箇所: トップページの LatestWorksSection
+   */
+  getLatestWorks: async (limit = 6): Promise<WorkData[]> => {
+    const res = await fetch(
+      `${BASE_URL}/achievement?per_page=${limit}&orderby=date&order=desc&_embed&_fields=id,title,excerpt,content,slug,date,acf,featured_media,_links,_embedded`,
+      { cache: "no-cache" },
+    );
+    return res.ok ? res.json() : [];
   },
 };
