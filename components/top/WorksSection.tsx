@@ -67,7 +67,7 @@ function WorksCardSlide({ category }: { category: Category }) {
   return (
     <Link
       href={`/works/${category.slug}`}
-      className="group focus-visible:ring-accent flex flex-col items-center border border-[#e8e8e8] bg-white transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] focus-visible:ring-2 focus-visible:outline-none"
+      className="group focus-visible:ring-accent flex flex-col items-center overflow-hidden rounded-lg border border-[#e8e8e8] bg-white transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] focus-visible:ring-2 focus-visible:outline-none"
       aria-label={`${title}の実績を見る`}
     >
       {/* 画像エリア
@@ -95,7 +95,7 @@ function WorksCardSlide({ category }: { category: Category }) {
         Tab: padding 24px 24px 48px  gap 16px
         SP:  padding 20px 20px 32px  gap 16px
       */}
-      <div className="flex w-full flex-col gap-4 px-5 pt-5 pb-8 md:px-6 md:pt-6 md:pb-12 lg:px-5 lg:pt-5 lg:pb-10">
+      <div className="flex aspect-5/3 w-full flex-col gap-4 px-5 pt-5 pb-8 md:px-6 md:pt-6 md:pb-12 lg:px-5 lg:pt-5 lg:pb-10">
         {/* タイトル
           PC:  18px bold
           Tab: 18px medium
@@ -154,7 +154,7 @@ export default function WorksSection({ categories }: Props) {
           initial={{ opacity: 0, y: 32 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.1 }}
-          className="relative w-full overflow-hidden lg:max-w-[1020px]"
+          className="relative mx-auto w-full overflow-hidden lg:max-w-[1020px]"
         >
           {/* 右端のフェードアウト */}
           <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-16 bg-gradient-to-l from-white to-transparent" />
