@@ -17,12 +17,14 @@ function formatDate(date: string): string {
 
 // サムネイル: アイキャッチ → ACFの画像の順に探す
 function getThumbnail(work: WorkData): string {
-  return (
-    work._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-    work.acf?.next_api_image ||
-    work.acf?.work_detail?.next_api_image ||
-    ""
-  );
+  const isProtected = work.content.protected;
+  const protectedImage = "/assets/images/common/auth-image.webp";
+  return isProtected
+    ? protectedImage
+    : work._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+        work.acf?.next_api_image ||
+        work.acf?.work_detail?.next_api_image ||
+        "";
 }
 
 //条件にあったカテゴリー情報（複数）を取得する
@@ -43,7 +45,7 @@ function getCategoryFromWork(work: WorkData) {
 function plainText(text: string): string {
   const decodeText = he.decode(text);
   return decodeText
-    .replace(/<\/p>/g, " ")
+    .replace(/<\/p>/g, " ") //</p>（閉じタグ）のみを"(空白)"に
     .replace(/<[^>]*>?/gm, "")
     .replace(/\s+/g, " ");
 }
@@ -56,16 +58,21 @@ function shortenText(text: string): string {
 }
 
 function getWorkDescription(work: WorkData): string {
+  const isProtected = work.content.protected;
+  const protectedDescription = "この実績の閲覧にはパスワードが必要です。";
+
+  if (isProtected) {
+    return protectedDescription;
+  }
+  // 次は表示する文章を選ぶ
   const excerpt = work.excerpt.rendered;
   const content = work.content.rendered;
-
-  // 次は表示する文章を選ぶ
   const description =
     plainText(excerpt).trim() ||
     plainText(content).trim() ||
     "制作実績をご紹介します";
-
   return shortenText(description);
+  // return isProtected ? protectedDescription : shortenText(description);
 }
 
 /**
@@ -91,8 +98,28 @@ function LatestWorkCard({ work }: CardProps) {
   const thumbnail = getThumbnail(work);
   const categories = getCategoryFromWork(work);
   const workSlug = work.slug; //投稿スラッグ
-  const categorySlug = categories[0]?.slug; //カテゴリースラッグ
-  const categoryName = categories[0]?.name ?? "未分類"; //カテゴリー名称(日本語)
+
+  /** ①ACFで指定した優先カテゴリー */
+  const priorityCat = work.acf?.work_detail?.priority_category;
+
+  const primaryCategory = categories.find((category) => {
+    return category.slug === priorityCat;
+  });
+
+  /** ② 優先カテゴリーが存在すればそのslug、存在しなければ複数のカテゴリーの最初のオブジェクトを枝葉 */
+  const categorySlug = primaryCategory?.slug || categories[0]?.slug;
+
+  /**優先カテゴリー以外の複数 */
+  const otherCategories = categories.filter((category) => {
+    return category.slug !== categorySlug;
+  });
+
+  /**優先カテゴリーを先頭、2つ以下にまとめる */
+  const displayCategories = [
+    ...(primaryCategory ? [primaryCategory] : []),
+    ...otherCategories,
+  ].slice(0, 2);
+
   const href = categorySlug ? `/works/${categorySlug}/${workSlug}` : "/works";
 
   const ref = useRef(null);
@@ -118,24 +145,33 @@ function LatestWorkCard({ work }: CardProps) {
     >
       <Link
         href={href}
-        className="shadow-card flex flex-col p-4 md:flex-row md:border-b md:border-neutral-300 md:px-0 md:py-5 md:shadow-none"
+        className="group shadow-card flex flex-col overflow-hidden rounded-lg p-4 md:flex-row md:rounded-none md:px-0 md:py-5 md:shadow-none"
       >
-        <div className="relative aspect-13/8 md:min-w-0 md:flex-[2]">
+        <div className="relative aspect-13/8 overflow-hidden md:min-w-0 md:flex-[2]">
           {thumbnail && (
             <Image
               src={thumbnail}
               alt=""
               fill
-              className="object-cover object-top"
+              className="rounded-lg object-cover object-top transition-transform duration-500 group-hover:scale-105"
             />
           )}
         </div>
         <div className="pt-4 md:min-w-0 md:flex-[3] md:pt-0 md:pl-6">
-          <div className="mb-1 inline-flex items-center gap-[10px] text-[13px] text-neutral-400">
+          <div className="mb-1 flex items-center gap-[10px] text-[13px] text-neutral-400">
             <time dateTime={work.date}>{formatDate(work.date)}</time>
-            <span className="rounded-[0.5em] border border-neutral-300 px-[0.6em] py-[0.2em] text-[10px] uppercase">
-              {categoryName}
-            </span>
+            <ul className="flex flex-row gap-[6px]">
+              {displayCategories.map((category) => {
+                return (
+                  <li
+                    key={category.slug}
+                    className="rounded-[0.5em] border border-neutral-300 px-[0.6em] py-[0.2em] text-[10px] uppercase"
+                  >
+                    {category.name}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
           <h3 className="mb-2 font-bold">{work.title.rendered}</h3>
           <p className="text-sm">{getWorkDescription(work)}</p>
@@ -169,9 +205,9 @@ export default function LatestWorksSection({ works }: Props) {
         <div className="w-full pb-20">
           <h2 className="flex_line_heading">LATEST WORKS</h2>
         </div>
-        <ul className="flex w-full flex-col gap-y-10 md:gap-y-0">
+        <ul className="flex w-full flex-col gap-y-10 md:gap-y-0 md:border-t md:border-neutral-300">
           {works.map((work) => (
-            <li key={work.id}>
+            <li key={work.id} className="md:border-b md:border-neutral-300">
               {/* {formatDate(work.date)} */}
               {/* {getThumbnail(work) || "画像なし"} */}
               <LatestWorkCard work={work} />
