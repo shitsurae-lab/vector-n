@@ -66,6 +66,7 @@ export type WorkData = {
       color_scheme?: string; // 配色
       media?: string; // 媒体
       size?: string; // サイズ
+      priority_category?: string; //優先カテゴリー
     };
     next_api_image?: string;
   };
