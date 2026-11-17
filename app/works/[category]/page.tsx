@@ -35,12 +35,16 @@ export async function generateMetadata({
 // ----------------------------------------------------------------
 function toWorkCardData(work: WorkData, categorySlug: string): WorkCardData {
   // アイキャッチ画像: ACFの next_api_image → wp:featuredmedia の順で参照
-  const image =
-    work.acf?.next_api_image ||
-    work._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-    "";
 
   const isProtected = work.content.protected;
+
+  const protectedImage = "/assets/images/common/auth-image.webp";
+
+  const image = isProtected
+    ? protectedImage
+    : work.acf?.next_api_image ||
+      work._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+      "";
 
   // 本文の抜粋: excerpt の HTML タグを除去
   const excerpt = isProtected
