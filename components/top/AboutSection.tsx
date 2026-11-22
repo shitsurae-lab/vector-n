@@ -96,7 +96,7 @@ export default function AboutSection() {
         ② Aboutセクション専用色にする場合 → style属性のgradientを差し替え
       現在は ① の共通グラデーションに統一（style属性なし）
     */
-    <section id="about" className="w-full pb-20 md:pb-[120px]">
+    <section id="about" className="w-full py-20 md:pb-[120px]">
       {/*
         コンテンツ幅:
           PC:     max-w-[960px] //当初の設定は1140px
