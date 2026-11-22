@@ -21,7 +21,7 @@ const stagger: Variants = {
 export default function HeroSection() {
   return (
     <section
-      className="relative min-h-[939px] w-full overflow-hidden bg-white md:h-[590px] md:min-h-0 lg:[height:var(--hero-h-pc)]"
+      className="relative min-h-[939px] w-full overflow-hidden bg-white md:h-[590px] md:min-h-0 lg:[height:var(--hero-h-pc)] 2xl:[height:var(--hero-h-2xl)]"
       aria-label="メインビジュアル"
     >
       {/* SP shape */}
